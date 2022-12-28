@@ -9,7 +9,7 @@ public class ServerMain implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
-        System.out.println("Actual server init");
+        //This doesn't run, why? ServerModInitializer is not recognized?
         initializeMessages();
     }
 
