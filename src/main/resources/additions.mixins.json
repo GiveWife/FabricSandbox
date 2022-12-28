@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.givewife.additions.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "AdditionsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
