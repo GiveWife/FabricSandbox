@@ -1,5 +1,6 @@
 package net.givewife.additions.objects.items;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.givewife.additions.registry.MessageRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -43,11 +45,10 @@ public class ItemLifeStealSword extends SwordItem {
                 System.out.println("Here3");
 
                 helper.setInt(AMOUNT_HITS, 0, stack);
+                System.out.println("Before? amount: " + 3.0F + ", uuid: " + attacker.getUuidAsString());
 
                 PacketByteBuf buf = PacketByteBufs.create();
-                System.out.println("Before? amount: " + 3.0F + ", uuid: " + attacker.getUuidAsString());
                 buf.writeUuid(attacker.getUuid());
-                //buf.writeFloat(3.0F);
                 ServerPlayNetworking.send((ServerPlayerEntity) attacker, MessageRegistry.HEAL_BORK.getIdentifier(), buf);
 
             } else {

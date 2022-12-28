@@ -25,7 +25,7 @@
       "net.givewife.additions.registry.initializers.ClientMain"
     ],
     "server": [
-      "net.givewife.additions.registry.initializers.ServerMain"
+      "net.givewife.additions.Main"
     ]
     
   },

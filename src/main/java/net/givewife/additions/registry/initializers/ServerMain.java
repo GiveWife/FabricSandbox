@@ -5,11 +5,12 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.givewife.additions.registry.MessageRegistry;
 import net.minecraft.client.sound.Channel;
 
-public class ServerMain implements DedicatedServerModInitializer {
+public class ServerMain  {
 
-    @Override
+    //@Override
     public void onInitializeServer() {
         //This doesn't run, why? ServerModInitializer is not recognized?
+        System.out.println("Entry point server");
         initializeMessages();
     }
 
