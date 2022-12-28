@@ -47,9 +47,6 @@ public class ItemLifeStealSword extends SwordItem {
                 helper.setInt(AMOUNT_HITS, 0, stack);
                 System.out.println("Before? amount: " + 3.0F + ", uuid: " + attacker.getUuidAsString());
 
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeUuid(attacker.getUuid());
-                ServerPlayNetworking.send((ServerPlayerEntity) attacker, MessageRegistry.HEAL_BORK.getIdentifier(), buf);
 
             } else {
 

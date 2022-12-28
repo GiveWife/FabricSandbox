@@ -15,7 +15,7 @@ public class ClientMain implements ClientModInitializer {
     private void initializeMessages() {
         System.out.println("[Client] Initializing messages");
         for(int i = 0; i < MessageRegistry.getMessages().length; i++) {
-            MessageRegistry.getMessages()[i].registerServer();
+            MessageRegistry.getMessages()[i].registerClient();
         }
     }
 

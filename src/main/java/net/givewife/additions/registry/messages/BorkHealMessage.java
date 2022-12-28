@@ -16,16 +16,13 @@ public class BorkHealMessage extends CustomMessage {
     @Override
     public void registerClient() {
 
-
-        System.out.println("Client Register heal message");
-
         ClientPlayNetworking.registerGlobalReceiver(getIdentifier(), (client, handler, buf, responseSender) -> {
 
             PlayerEntity player = client.world.getPlayerByUuid(buf.readUuid());
 
             client.execute(() -> {
 
-                player.heal(3.0F);
+
 
             });
         });
@@ -34,8 +31,6 @@ public class BorkHealMessage extends CustomMessage {
 
     @Override
     public void registerServer() {
-
-        System.out.println("Server Register heal message");
 
         ServerPlayNetworking.registerGlobalReceiver(getIdentifier(), (server, player, handler, buf, responseSender) -> {
 
@@ -52,6 +47,3 @@ public class BorkHealMessage extends CustomMessage {
 
     }
 }
-
-//System.out.println("Hello? amount: " + amount + ", uuid: " + player.getUuidAsString());
-// System.out.println("Hello? amount: " + amount + ", uuid: " + player.getUuidAsString());

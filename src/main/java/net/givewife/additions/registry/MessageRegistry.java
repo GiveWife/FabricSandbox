@@ -15,4 +15,11 @@ public class MessageRegistry {
         return new CustomMessage[] {HEAL_BORK};
     }
 
+    /**
+     * Send messages by:
+     *                PacketByteBuf buf = PacketByteBufs.create();
+     *                 buf.writeUuid(attacker.getUuid());
+     *                 ServerPlayNetworking.send((ServerPlayerEntity) attacker, MessageRegistry.HEAL_BORK.getIdentifier(), buf);
+     */
+
 }

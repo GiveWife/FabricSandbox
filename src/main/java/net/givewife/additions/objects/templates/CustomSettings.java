@@ -5,8 +5,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Rarity;
 
-public class CustomSettings extends Item.Settings {
+public class CustomSettings {
 
-
+    public static Item.Settings getDefaultSettings() {
+        return new Item.Settings().maxCount(64);
+    }
 
 }
