@@ -27,15 +27,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TestItem extends Item {
+public class TestItem extends ModItem {
 
-    NbtHelper nbt = new NbtHelper();
     private final String USE = "use";
     private final String COUNT = "count";
     private final int USETIME = 200;
 
-    public TestItem() {
-        super(CustomSettings.getDefaultSettings());
+    public TestItem(String name) {
+        super(name, CustomSettings.getDefaultSettings());
     }
 
     @Override
