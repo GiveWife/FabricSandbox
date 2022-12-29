@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "additions:block/ctrue_1"
+    "all": "additions:block/ctrue_3"
   }
 }

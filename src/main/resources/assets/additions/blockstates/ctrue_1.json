@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "brightness=4": { "model": "additions:block/ctrue_4" },
+        "brightness=3": { "model":  "additions:block/ctrue_3" },
+        "brightness=2": { "model": "additions:block/ctrue_2" },
+        "brightness=1": { "model": "additions:block/ctrue_1" }
+    }
+}
