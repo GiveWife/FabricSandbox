@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class EffectTrace extends CustomEffect {
 
-    public EffectTrace(String name, boolean debug, int tick) { super(name, debug, tick); }
+    public EffectTrace(String name, boolean debug) { super(name, debug); }
 
     public void run(ServerWorld world, Pos pos) {
 

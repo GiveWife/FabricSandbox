@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.givewife.additions.registry.MessageRegistry;
 import net.givewife.additions.util.NbtHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -27,6 +28,11 @@ public class ItemLifeStealSword extends SwordItem {
 
     public ItemLifeStealSword() {
         super(ToolMaterials.IRON, 2, 4.0F, new Item.Settings().maxCount(1).maxDamage(1200));
+    }
+
+    @Override
+    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+        return 10.0F;
     }
 
     @Override

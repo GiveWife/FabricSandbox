@@ -32,10 +32,8 @@ public class ProjectorBlockEntity extends BlockEntity {
         if(world.isClient) return;
 
         current_lifetime--;
-        System.out.println("life: " + current_lifetime + " - state: " + state.get(ProjectorBlock.BRIGHTNESS));
 
         if(current_lifetime <= 0) {
-            System.out.println("Expired. Brightnes: " + state.get(ProjectorBlock.BRIGHTNESS));
             if (state.get(ProjectorBlock.BRIGHTNESS) - 1 > 0) {
                 //state.with(ProjectorBlock.BRIGHTNESS, state.get(ProjectorBlock.BRIGHTNESS) - 1);
                 world.setBlockState(pos, BlockRegistry.PROJECTOR_1.getDefaultState().with(ProjectorBlock.BRIGHTNESS, state.get(ProjectorBlock.BRIGHTNESS) - 1));

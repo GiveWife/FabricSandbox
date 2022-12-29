@@ -8,6 +8,7 @@ public class NbtHelper {
     public NbtHelper() {
     }
 
+
     public boolean checkNbt(ItemStack stack) {
         if(!stack.hasNbt()) {
             System.out.println("NBT Helper: " + stack.getItem().getName() + " doesn't have an nbt compound");
@@ -28,6 +29,7 @@ public class NbtHelper {
         NbtCompound nbt = stack.getNbt();
         nbt.putString(tag, value);
     }
+
 
     /**
      * Sets an integer on the given tag. Incase of no Nbt Compound it will be created first.
