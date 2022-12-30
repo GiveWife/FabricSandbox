@@ -36,7 +36,6 @@ public class BorkHealMessage extends CustomMessage {
 
             PlayerEntity player2 = player.world.getPlayerByUuid(buf.readUuid());
 
-
             server.execute(() -> {
 
                 player2.heal(3.0F);
