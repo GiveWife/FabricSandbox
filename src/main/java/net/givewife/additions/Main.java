@@ -1,9 +1,7 @@
 package net.givewife.additions;
 
 import net.fabricmc.api.ModInitializer;
-import net.givewife.additions.registry.BlockEntityRegistry;
-import net.givewife.additions.registry.BlockRegistry;
-import net.givewife.additions.registry.ItemRegistry;
+import net.givewife.additions.registry.*;
 import net.givewife.additions.registry.initializers.ServerMain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +17,7 @@ public class Main implements ModInitializer {
         BlockRegistry.register();
         ServerMain.initializeMessages();
         ItemRegistry.register();
+        CommandRegistry.registerCommands();
         //TILE_ENTITIES = new BlockEntityRegistry();
     }
 
