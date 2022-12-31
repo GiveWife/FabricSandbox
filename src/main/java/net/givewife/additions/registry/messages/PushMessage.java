@@ -3,8 +3,10 @@ package net.givewife.additions.registry.messages;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.givewife.additions.particles.CustomEffect;
+import net.givewife.additions.particles.effects.EffectLine;
 import net.givewife.additions.particles.effects.EffectSingle;
 import net.givewife.additions.util.Pos;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -44,15 +46,13 @@ public class PushMessage extends CustomMessage {
 
                 System.out.println("Message sent?");
 
-                Vec3d vec = serverplayer.getRotationVec(0.0f);
-
                 double camX = serverplayer.getRotationVec(1f).x;
                 double camY = serverplayer.getRotationVec(1f).y;
                 double camZ = serverplayer.getRotationVec(1f).z;
 
-                double velocityAddedX = camX * 1.005F;
-                double velocityAddedY = camY * 1.0001F;
-                double velocityAddedZ = camZ * 1.05F;
+                double velocityAddedX = camX * 3F;
+                double velocityAddedY = camY * 1.0011F;
+                double velocityAddedZ = camZ * 3F;
 
                 double currentVelocityX = serverplayer.getVelocity().x + velocityAddedX;
                 double currentVelocityY = serverplayer.getVelocity().y + velocityAddedY;

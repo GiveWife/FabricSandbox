@@ -1,6 +1,10 @@
 package net.givewife.additions.util;
 
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.givewife.additions.particles.effects.EffectLine;
+import net.givewife.additions.registry.MessageRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -9,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
@@ -65,40 +70,24 @@ public class GeneralHelper {
     /**
      * Returns the entity which gets hit by the player's crosshair from given distance. Returns null if the hit is not an entity
      */
-    public HitResult raycastInDirection(MinecraftClient client, float tickDelta, Vec3d direction) {
-        Entity entity = client.getCameraEntity();
+    public Entity raycastInDirection(MinecraftClient client, float tickDelta, Vec3d direction) {;
 
-        System.out.println(" GH: entity: " + entity.getDisplayName());
+        Entity entity = client.getCameraEntity();
 
         if (entity == null || client.world == null) {
             return null;
         }
 
-        double reachDistance = client.interactionManager.getReachDistance() * 10;//Change this to extend the reach
-        HitResult target = raycast(entity, reachDistance, tickDelta, false, client.cameraEntity.getRotationVec(tickDelta));
-
-        System.out.println(" GH: target: " + target.getType());
-
-        boolean tooFar = false;
-        double extendedReach = reachDistance;
-        if (client.interactionManager.hasExtendedReach()) {
-            extendedReach = 6.0D;//Change this to extend the reach
-            reachDistance = extendedReach;
-        } else {
-            if (reachDistance > 3.0D) {
-                tooFar = true;
-            }
-        }
+        double reachDistance = client.interactionManager.getReachDistance() + 50;//Change this to extend the reach
+        HitResult target = raycast(entity, reachDistance, tickDelta, true, client.cameraEntity.getCameraPosVec(0f));
 
         Vec3d cameraPos = entity.getCameraPosVec(tickDelta);
-        System.out.println(" GH: vec: " + cameraPos);
 
-        extendedReach = extendedReach * extendedReach;
         if (target != null) {
-            extendedReach = target.getPos().squaredDistanceTo(cameraPos);
+            reachDistance = target.getPos().squaredDistanceTo(cameraPos);
         }
 
-        Vec3d vec3d3 = cameraPos.add(direction.multiply(reachDistance));
+        Vec3d vec3d3 = cameraPos.add(entity.getRotationVec(0f).multiply(reachDistance));
         Box box = entity
                 .getBoundingBox()
                 .stretch(entity.getRotationVec(1.0F).multiply(reachDistance))
@@ -108,38 +97,40 @@ public class GeneralHelper {
                 cameraPos,
                 vec3d3,
                 box,
-                (entityx) -> !entityx.isSpectator() && entityx.collidedSoftly,
-                extendedReach
+                (entityx) -> !entityx.isSpectator(),
+                reachDistance
         );
 
         if (entityHitResult == null) {
-            return target;
+            //System.out.println("Hit result?");
+            return null;
+        } else {
+            target = entityHitResult;
         }
 
         Entity entity2 = entityHitResult.getEntity();
         Vec3d vec3d4 = entityHitResult.getPos();
-        double g = cameraPos.squaredDistanceTo(vec3d4);
-        if (tooFar && g > 9.0D) {
-            return null;
-        } else if (g < extendedReach || target == null) {
+
+        if (target != null) {
             target = entityHitResult;
             if (entity2 instanceof LivingEntity || entity2 instanceof ItemFrameEntity) {
                 client.targetedEntity = entity2;
             }
         }
 
-        return target;
+        return entityHitResult.getEntity();
     }
 
     /**
      * Returns a hitresult from the raycast starting from the given entity
      */
     public HitResult raycast(Entity from, double distance, float tickDelta, boolean includeFluids, Vec3d direction) {
-        Vec3d end = from.getCameraPosVec(tickDelta).add(direction.multiply(distance));
+        Vec3d rot = from.getRotationVec(0f).multiply(distance);
+
         return from.world.raycast(
                 new RaycastContext(
                         from.getCameraPosVec(tickDelta),
-                        end,
+                        rot,
                         RaycastContext.ShapeType.OUTLINE,
                         includeFluids ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE,
                         from

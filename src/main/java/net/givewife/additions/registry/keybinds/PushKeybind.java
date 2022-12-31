@@ -25,35 +25,26 @@ public class PushKeybind extends CustomKeybind {
     @Override
     public void run(MinecraftClient client) {
 
-        System.out.println("B is pressed");
-
         ClientPlayerEntity player = client.player;
         HitResult hit = client.crosshairTarget;
 
-        HitResult e = helper.raycastInDirection(client, 1f, player.getCameraPosVec(1f));
-        helper.print("E is: " + e.getType().name());
+        Entity e = helper.raycastInDirection(client, 1f, player.getCameraPosVec(1f));
         if(e == null) return;
 
 
-        if(hit.getType() == HitResult.Type.ENTITY) {
-
-            EntityHitResult entityHit = (EntityHitResult) hit;
-            Entity entity = entityHit.getEntity();
-
-            System.out.println("Entity found: " + entity.getDisplayName());
+        if(e != null) {
 
             PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeUuid(entity.getUuid());
+            buf.writeUuid(e.getUuid());
             buf.writeUuid(player.getUuid());
 
-            System.out.println("Trying to send package.");
             ClientPlayNetworking.send(MessageRegistry.PUSH.getIdentifier(), buf);
 
             /*for (ServerPlayerEntity serverPlayer : PlayerLookup.tracking((ServerWorld) client.world, player.getBlockPos())) {
                 ServerPlayNetworking.send(serverPlayer, MessageRegistry.PUSH.getIdentifier(), buf);
             }*/
 
-        } 
+        }
 
     }
 }
