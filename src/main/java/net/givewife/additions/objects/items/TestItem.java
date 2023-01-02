@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,11 +21,14 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestItem extends ModItem {
@@ -49,6 +53,17 @@ public class TestItem extends ModItem {
             if(!nbt.isIntEqual(USE, 0, stack)) return super.use(world, user, hand);
             nbt.setInt(USE, 1, stack);
 
+            Pos p = new Pos(user);
+            List<HostileEntity> list = new ArrayList<HostileEntity>();
+            world.collectEntitiesByType(TypeFilter.instanceOf(HostileEntity.class), new Box(p.x()-20, p.y()-20, p.z()-20, p.x()+20, p.y()+20, p.z()+20), (ent) -> (ent.isAngryAt(user)), list, 20);
+            System.out.println(">? list: " + list.size());
+
+            for(HostileEntity host : list) {
+
+                host.setTarget(null);
+                host.setAttacking(false);
+
+            }
         }
 
         return super.use(world, user, hand);
@@ -57,7 +72,7 @@ public class TestItem extends ModItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if(!world.isClient) {
+        if(!world.isClient && help.isPlayer(entity)) {
 
             if(stack.hasNbt()) {
 
@@ -84,11 +99,25 @@ public class TestItem extends ModItem {
                         BlockState inspectedBlock = world.getBlockState(square[i]);
 
                         //Check if we should replace
-                        if(inspectedBlock.getBlock() == Blocks.AIR ||
+                        /*if(inspectedBlock.getBlock() == Blocks.AIR ||
                                 (inspectedBlock.getBlock() == BlockRegistry.PROJECTOR_1)
                                         && inspectedBlock.getProperties().contains(ProjectorBlock.BRIGHTNESS)
-                                        && inspectedBlock.get(ProjectorBlock.BRIGHTNESS) <= 3)
-                            world.setBlockState(square[i], BlockRegistry.PROJECTOR_1.getDefaultState().with(ProjectorBlock.BRIGHTNESS, 4));
+                                        && inspectedBlock.get(ProjectorBlock.BRIGHTNESS) <= 3)*/
+
+                            //world.setBlockState(square[i], BlockRegistry.PROJECTOR_1.getDefaultState().with(ProjectorBlock.BRIGHTNESS, 4));
+
+                        Pos p = new Pos((PlayerEntity) entity);
+                        List<HostileEntity> list = new ArrayList<HostileEntity>();
+                        world.collectEntitiesByType(TypeFilter.instanceOf(HostileEntity.class), new Box(p.x()-20, p.y()-20, p.z()-20, p.x()+20, p.y()+20, p.z()+20), (ent) -> (ent.isAngryAt((PlayerEntity)entity)), list, 20);
+                        System.out.println(">? list: " + list.size());
+
+                        for(HostileEntity host : list) {
+
+                            host.setTarget(null);
+                            host.setAttacking(false);
+
+                        }
+
                     }
 
                 }

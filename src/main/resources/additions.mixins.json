@@ -4,9 +4,12 @@
   "package": "net.givewife.additions.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "HostileMobMixin"
   ],
   "client": [
     "AdditionsMixin"
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1

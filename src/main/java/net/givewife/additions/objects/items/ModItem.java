@@ -7,8 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 public class ModItem extends Item {
-
-    public NbtHelper nbt = new NbtHelper();
     public GeneralHelper help = new GeneralHelper();
     public final Identifier id;
     private String name;

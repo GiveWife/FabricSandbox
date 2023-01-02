@@ -13,4 +13,5 @@ public class AdditionsMixin {
     private void init(CallbackInfo info) {
         Main.LOGGER.info("This line is printed by an example mod mixin!");
     }
+
 }
