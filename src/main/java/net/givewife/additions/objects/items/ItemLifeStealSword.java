@@ -72,7 +72,7 @@ public class ItemLifeStealSword extends SwordItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if(!stack.hasNbt()) {
-            helper.initNbt(stack);
+            helper.linkNbt(stack);
             helper.setString(ATTACKED_ENTITY, "", stack);
             helper.setInt(AMOUNT_HITS, 0, stack);
         }

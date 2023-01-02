@@ -3,6 +3,7 @@ package net.givewife.additions.objects.blockentity;
 import net.givewife.additions.Main;
 import net.givewife.additions.objects.blocks.ProjectorBlock;
 import net.givewife.additions.registry.BlockRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -20,6 +21,7 @@ public class ProjectorBlockEntity extends BlockEntity {
 
     private final String LIFETIME_KEY = "lifetime";
     private static int current_lifetime;
+    public int public_lifetime;
     private static final int LIFETIME = 40;
 
     public ProjectorBlockEntity(BlockPos pos, BlockState state) {
@@ -54,6 +56,8 @@ public class ProjectorBlockEntity extends BlockEntity {
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         current_lifetime = nbt.getInt(LIFETIME_KEY);
+        public_lifetime = nbt.getInt(LIFETIME_KEY);
+        System.out.println("NBT reading in entity: " + current_lifetime + " ; public: " + public_lifetime);
     }
 
     @Nullable

@@ -36,6 +36,8 @@ public class TestItem extends ModItem {
     private final String USE = "use";
     private final String COUNT = "count";
     private final int USETIME = 200;
+    //Added nbt again because transferring this pre NbtItem template is more painful
+    private NbtHelper nbt = new NbtHelper();
 
     public TestItem(String name) {
         super(name, CustomSettings.getDefaultSettings());
@@ -53,17 +55,6 @@ public class TestItem extends ModItem {
             if(!nbt.isIntEqual(USE, 0, stack)) return super.use(world, user, hand);
             nbt.setInt(USE, 1, stack);
 
-            Pos p = new Pos(user);
-            List<HostileEntity> list = new ArrayList<HostileEntity>();
-            world.collectEntitiesByType(TypeFilter.instanceOf(HostileEntity.class), new Box(p.x()-20, p.y()-20, p.z()-20, p.x()+20, p.y()+20, p.z()+20), (ent) -> (ent.isAngryAt(user)), list, 20);
-            System.out.println(">? list: " + list.size());
-
-            for(HostileEntity host : list) {
-
-                host.setTarget(null);
-                host.setAttacking(false);
-
-            }
         }
 
         return super.use(world, user, hand);
@@ -99,24 +90,13 @@ public class TestItem extends ModItem {
                         BlockState inspectedBlock = world.getBlockState(square[i]);
 
                         //Check if we should replace
-                        /*if(inspectedBlock.getBlock() == Blocks.AIR ||
+                        if(inspectedBlock.getBlock() == Blocks.AIR ||
                                 (inspectedBlock.getBlock() == BlockRegistry.PROJECTOR_1)
                                         && inspectedBlock.getProperties().contains(ProjectorBlock.BRIGHTNESS)
-                                        && inspectedBlock.get(ProjectorBlock.BRIGHTNESS) <= 3)*/
+                                        && inspectedBlock.get(ProjectorBlock.BRIGHTNESS) <= 3)
 
-                            //world.setBlockState(square[i], BlockRegistry.PROJECTOR_1.getDefaultState().with(ProjectorBlock.BRIGHTNESS, 4));
+                            world.setBlockState(square[i], BlockRegistry.PROJECTOR_1.getDefaultState().with(ProjectorBlock.BRIGHTNESS, 4));
 
-                        Pos p = new Pos((PlayerEntity) entity);
-                        List<HostileEntity> list = new ArrayList<HostileEntity>();
-                        world.collectEntitiesByType(TypeFilter.instanceOf(HostileEntity.class), new Box(p.x()-20, p.y()-20, p.z()-20, p.x()+20, p.y()+20, p.z()+20), (ent) -> (ent.isAngryAt((PlayerEntity)entity)), list, 20);
-                        System.out.println(">? list: " + list.size());
-
-                        for(HostileEntity host : list) {
-
-                            host.setTarget(null);
-                            host.setAttacking(false);
-
-                        }
 
                     }
 
@@ -134,7 +114,7 @@ public class TestItem extends ModItem {
 
     private void initNbt(ItemStack stack) {
 
-        nbt.initNbt(stack);
+        nbt.linkNbt(stack);
         nbt.setInt(USE, 0, stack);
         nbt.setInt(COUNT, USETIME, stack);
 

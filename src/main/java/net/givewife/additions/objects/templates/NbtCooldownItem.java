@@ -10,7 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class NbtCooldownItem extends NbtItem {
+public abstract class NbtCooldownItem extends NbtItem {
 
     private final String TAG;
     private final int COOLDOWN;
@@ -23,25 +23,36 @@ public class NbtCooldownItem extends NbtItem {
         this.ACTIVATION = TAG + "activate";
     }
 
+    /**
+     * Sets the values of the nbt compound tag when the item is created
+     */
     private void initNbt(ItemStack stack) {
-        if(nbt.checkNbt(stack)) {
-            NbtCompound nbt = new NbtCompound();
-            nbt.putString(ACTIVATION, "off");
-            nbt.putInt(TAG, COOLDOWN);
-        }
+        NbtCompound nbt = new NbtCompound();
+        nbt.putString(ACTIVATION, "off");
+        nbt.putInt(TAG, COOLDOWN);
+        stack.setNbt(nbt);
     }
 
     /**
-     * Handles the activation string in the NBT
+     * Handles the activation string in the NBT.
      * Will also initiate NBT setup if it wasn't complete, then recursively call this method again
      */
     public void onClicked(ItemStack stack) {
-        if(nbt.checkNbt(stack)) {
+        if(stack.hasNbt()) {
             stack.getNbt().putString(ACTIVATION, "on");
         } else {
             initNbt(stack);
             onClicked(stack);
         }
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+
+        if(!world.isClient && nbt.isStringEqual(ACTIVATION, "off", user.getMainHandStack()))
+            onClicked(user.getMainHandStack());
+
+        return super.use(world, user, hand);
     }
 
     /**
@@ -51,7 +62,7 @@ public class NbtCooldownItem extends NbtItem {
      * This is put into the inventory tick method. If overridden in subclass, simply call superconstructor
      */
     public void handleCooldown(ItemStack stack) {
-        if(nbt.checkNbt(stack)) {
+        if(stack.hasNbt()) {
             nbt.addInt(TAG, -1, stack);
             if(nbt.isIntEqual(TAG, 0, stack)) {
                 nbt.setString(ACTIVATION, "off", stack);
@@ -63,23 +74,23 @@ public class NbtCooldownItem extends NbtItem {
         }
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-
-        if(!world.isClient) {
 
 
-
-        }
-
-        return super.use(world, user, hand);
-    }
+    public abstract void function(ItemStack stack, World world, Entity entity);
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
+        if(!stack.hasNbt()) initNbt(stack);
+
         if(stack.hasNbt() && nbt.isStringEqual(TAG, "on", stack)) {
+
+            //Do stuff
+            function(stack, world, entity);
+
+            //Reduce cooldown
             handleCooldown(stack);
+
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);
