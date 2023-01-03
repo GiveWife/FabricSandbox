@@ -1,4 +1,4 @@
-package net.givewife.additions.objects.blockentity;
+package net.givewife.additions.objects.blockentity.netherreactor;
 
 import net.givewife.additions.Main;
 import net.minecraft.block.BlockState;

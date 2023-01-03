@@ -1,8 +1,8 @@
-package net.givewife.additions.objects.blockentity;
+package net.givewife.additions.objects.blockentity.netherreactor;
 
+import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorEntity;
 import net.givewife.additions.util.GeneralHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

@@ -2,7 +2,7 @@ package net.givewife.additions.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.givewife.additions.Main;
-import net.givewife.additions.objects.blockentity.NetherReactorEntity;
+import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorEntity;
 import net.givewife.additions.objects.blockentity.ProjectorBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;

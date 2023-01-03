@@ -1,17 +1,14 @@
 package net.givewife.additions.objects.blocks;
 
 import net.givewife.additions.Main;
-import net.givewife.additions.objects.blockentity.NetherReactorEntity;
-import net.givewife.additions.objects.blockentity.NetherReactorTicker;
-import net.givewife.additions.objects.blockentity.ProjectorBlockEntity;
+import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorEntity;
+import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorTicker;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.render.DimensionEffects;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
