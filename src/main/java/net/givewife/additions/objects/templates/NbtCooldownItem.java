@@ -26,11 +26,17 @@ public abstract class NbtCooldownItem extends NbtItem {
     /**
      * Sets the values of the nbt compound tag when the item is created
      */
-    private void initNbt(ItemStack stack) {
+    @Override
+    public void initNbt(ItemStack stack) {
+        stack.setNbt(getDefault());
+    }
+
+    @Override
+    public NbtCompound getDefault() {
         NbtCompound nbt = new NbtCompound();
         nbt.putString(ACTIVATION, "off");
         nbt.putInt(TAG, COOLDOWN);
-        stack.setNbt(nbt);
+        return nbt;
     }
 
     /**
@@ -81,7 +87,7 @@ public abstract class NbtCooldownItem extends NbtItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if(!stack.hasNbt()) initNbt(stack);
+        super.inventoryTick(stack, world, entity, slot, selected);
 
         if(stack.hasNbt() && nbt.isStringEqual(TAG, "on", stack)) {
 
@@ -92,8 +98,6 @@ public abstract class NbtCooldownItem extends NbtItem {
             handleCooldown(stack);
 
         }
-
-        super.inventoryTick(stack, world, entity, slot, selected);
 
     }
 

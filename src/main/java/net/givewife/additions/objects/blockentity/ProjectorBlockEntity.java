@@ -2,8 +2,7 @@ package net.givewife.additions.objects.blockentity;
 
 import net.givewife.additions.Main;
 import net.givewife.additions.objects.blocks.ProjectorBlock;
-import net.givewife.additions.registry.BlockRegistry;
-import net.minecraft.block.Block;
+import net.givewife.additions.registry.registries.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,8 +10,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;

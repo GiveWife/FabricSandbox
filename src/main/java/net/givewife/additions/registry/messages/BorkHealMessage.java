@@ -22,7 +22,8 @@ public class BorkHealMessage extends CustomMessage {
 
             client.execute(() -> {
 
-
+                System.out.println("Execute via client");
+                player.heal(20.0F);
 
             });
         });
@@ -38,6 +39,7 @@ public class BorkHealMessage extends CustomMessage {
 
             server.execute(() -> {
 
+                System.out.println("Execute via server");
                 player2.heal(3.0F);
 
             });

@@ -4,7 +4,7 @@ import net.givewife.additions.objects.blocks.ProjectorBlock;
 import net.givewife.additions.objects.templates.CustomSettings;
 import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.particles.effects.EffectTrace;
-import net.givewife.additions.registry.BlockRegistry;
+import net.givewife.additions.registry.registries.BlockRegistry;
 import net.givewife.additions.util.NbtHelper;
 import net.givewife.additions.util.Pos;
 import net.givewife.additions.util.PositionUtilities;
@@ -12,23 +12,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.visitor.NbtTextFormatter;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypeFilter;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestItem extends ModItem {

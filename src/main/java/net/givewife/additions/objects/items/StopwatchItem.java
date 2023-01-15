@@ -36,6 +36,7 @@ public class StopwatchItem extends NbtCooldownItem {
             host.setAttacking(false);
 
         }
+
     }
 
 }

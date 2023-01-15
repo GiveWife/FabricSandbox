@@ -1,4 +1,7 @@
 {
   "item.additions.bork": "Blade Of The Ruined King",
-  "item.additions.test": "Test Item"
+  "item.additions.test": "Test Item",
+
+
+  "enchantment.additions.xp": "xp"
 }

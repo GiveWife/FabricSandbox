@@ -1,10 +1,6 @@
 package net.givewife.additions.util;
 
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.givewife.additions.particles.effects.EffectLine;
-import net.givewife.additions.registry.MessageRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -13,12 +9,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+
+import java.util.Random;
 
 public class GeneralHelper {
 
@@ -136,5 +133,15 @@ public class GeneralHelper {
                         from
                 ));
     }
+
+
+    /**
+     * Returns an integer between the given values.
+     */
+    public static int getRand(int max, int low) {
+        Random rand = new Random();
+        return rand.nextInt(max-low) + low;
+    }
+
 
 }

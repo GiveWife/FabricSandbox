@@ -1,9 +1,7 @@
 package net.givewife.additions.registry.initializers;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.givewife.additions.registry.MessageRegistry;
-import net.minecraft.client.sound.Channel;
+import net.givewife.additions.registry.registries.MessageRegistry;
 
 public class ServerMain implements DedicatedServerModInitializer {
 

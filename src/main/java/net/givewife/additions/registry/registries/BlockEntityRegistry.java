@@ -1,9 +1,10 @@
-package net.givewife.additions.registry;
+package net.givewife.additions.registry.registries;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.givewife.additions.Main;
 import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorEntity;
 import net.givewife.additions.objects.blockentity.ProjectorBlockEntity;
+import net.givewife.additions.registry.registries.BlockRegistry;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

@@ -1,4 +1,4 @@
-package net.givewife.additions.registry;
+package net.givewife.additions.registry.registries;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.givewife.additions.Main;

@@ -1,15 +1,17 @@
-package net.givewife.additions.registry;
+package net.givewife.additions.registry.registries;
 
 import net.givewife.additions.registry.commands.CustomCommand;
+import net.givewife.additions.registry.commands.FeedCommand;
 import net.givewife.additions.registry.commands.HealCommand;
 
 public class CommandRegistry {
 
     private static CustomCommand HEAL_COMMAND = new HealCommand();
+    public static CustomCommand FEED_COMMAND = new FeedCommand();
 
     private static CustomCommand[] commands = new CustomCommand[] {
 
-            HEAL_COMMAND
+            HEAL_COMMAND, FEED_COMMAND
 
     };
 

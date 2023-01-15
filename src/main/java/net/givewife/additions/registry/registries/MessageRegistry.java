@@ -1,4 +1,4 @@
-package net.givewife.additions.registry;
+package net.givewife.additions.registry.registries;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.givewife.additions.Main;

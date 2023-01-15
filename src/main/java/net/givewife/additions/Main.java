@@ -1,8 +1,11 @@
 package net.givewife.additions;
 
 import net.fabricmc.api.ModInitializer;
-import net.givewife.additions.registry.*;
 import net.givewife.additions.registry.initializers.ServerMain;
+import net.givewife.additions.registry.registries.BlockEntityRegistry;
+import net.givewife.additions.registry.registries.BlockRegistry;
+import net.givewife.additions.registry.registries.CommandRegistry;
+import net.givewife.additions.registry.registries.ItemRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

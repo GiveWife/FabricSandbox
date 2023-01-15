@@ -1,17 +1,16 @@
 package net.givewife.additions.objects.templates;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
-public class CustomTool implements ToolMaterial {
+public class CustomMaterial implements ToolMaterial {
 
     private int durability, enchant, mininglevel;
     private float miningspeed, attackdamage;
     private Item repair;
 
-    public CustomTool(int durability, int enchant, int mininglevel, float miningspeed, float attackdamage, Item repair) {
+    public CustomMaterial(int durability, int enchant, int mininglevel, float miningspeed, float attackdamage, Item repair) {
         this.durability = durability;
         this.enchant = enchant;
         this.mininglevel = mininglevel;
@@ -47,6 +46,7 @@ public class CustomTool implements ToolMaterial {
 
     @Override
     public Ingredient getRepairIngredient() {
-        return Ingredient.empty();
+        return Ingredient.ofItems(repair);
     }
+
 }

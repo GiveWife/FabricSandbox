@@ -2,9 +2,9 @@ package net.givewife.additions.registry.initializers;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.givewife.additions.registry.BlockRegistry;
-import net.givewife.additions.registry.KeybindRegistry;
-import net.givewife.additions.registry.MessageRegistry;
+import net.givewife.additions.registry.registries.BlockRegistry;
+import net.givewife.additions.registry.registries.KeybindRegistry;
+import net.givewife.additions.registry.registries.MessageRegistry;
 import net.minecraft.client.render.RenderLayer;
 
 public class ClientMain implements ClientModInitializer {
