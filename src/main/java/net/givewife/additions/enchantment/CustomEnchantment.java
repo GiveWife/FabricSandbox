@@ -1,13 +1,9 @@
-package net.givewife.additions.registry.enchantment;
+package net.givewife.additions.enchantment;
 
 import net.givewife.additions.Main;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 
 public abstract class CustomEnchantment extends Enchantment {

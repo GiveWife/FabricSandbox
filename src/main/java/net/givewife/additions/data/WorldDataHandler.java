@@ -14,7 +14,6 @@ public class WorldDataHandler {
             ServerState serverState = ServerState.getServerState(handler.player.world.getServer());
             PlayerState playerState = ServerState.getPlayerState(handler.player);
 
-            // Sending the packet to the player (look at the networking page for more information)
             PacketByteBuf data = PacketByteBufs.create();
             data.writeUuid(handler.player.getUuid());
             data.writeBoolean(true);

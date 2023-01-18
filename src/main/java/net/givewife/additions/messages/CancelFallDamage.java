@@ -1,13 +1,10 @@
-package net.givewife.additions.registry.messages;
+package net.givewife.additions.messages;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.givewife.additions.data.PlayerState;
-import net.givewife.additions.data.ServerState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class CancelFallDamage extends CustomMessage {

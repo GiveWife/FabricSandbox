@@ -1,8 +1,7 @@
-package net.givewife.additions.registry.commands;
+package net.givewife.additions.commands;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 
 public class HealCommand extends CustomCommand {
 

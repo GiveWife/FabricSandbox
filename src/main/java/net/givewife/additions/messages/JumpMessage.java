@@ -1,10 +1,9 @@
-package net.givewife.additions.registry.messages;
+package net.givewife.additions.messages;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.givewife.additions.data.PlayerState;
 import net.givewife.additions.data.ServerState;
-import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.Map;
 import java.util.UUID;
@@ -25,12 +24,15 @@ public class JumpMessage extends CustomMessage {
             client.execute(() -> {
 
                 ServerState state = ServerState.getServerState(client.getServer());
+                boolean hasFoundPlayer = false;
 
                 for(Map.Entry<UUID, PlayerState> e : state.players.entrySet()) {
                     if(e.getKey() == uuid) {
+                        log("(client) found uuid");
                         PlayerState newState = new PlayerState();
                         newState.hasJumped = true;
                         e.setValue(newState);
+                        hasFoundPlayer = true;
                     }
                 }
 
@@ -55,11 +57,20 @@ public class JumpMessage extends CustomMessage {
 
                 ServerState state = ServerState.getServerState(server);
 
-                for(Map.Entry<UUID, PlayerState> e : state.players.entrySet()) {
-                    if(e.getKey() == uuid) {
-                        PlayerState newState = new PlayerState();
-                        newState.hasJumped = true;
-                        e.setValue(newState);
+                if(!state.players.containsKey(uuid)) {
+                    log("(server) new uuid added to list");
+                    PlayerState newState = new PlayerState();
+                    newState.hasJumped = false;
+                    state.players.put(uuid, newState);
+                } else {
+                    log("(server) uuid already exists, setting it to " + Boolean.toString(jump));
+                    for (Map.Entry<UUID, PlayerState> e : state.players.entrySet()) {
+                        if (e.getKey().equals(uuid)) {
+                            log("(server) found uuid");
+                            PlayerState newState = new PlayerState();
+                            newState.hasJumped = jump;
+                            e.setValue(newState);
+                        }
                     }
                 }
 

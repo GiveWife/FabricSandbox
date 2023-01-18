@@ -1,4 +1,4 @@
-package net.givewife.additions.registry.keybinds;
+package net.givewife.additions.keybinds;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -7,8 +7,6 @@ import net.givewife.additions.util.GeneralHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
-import org.lwjgl.glfw.GLFW;
 
 public abstract class CustomKeybind {
 

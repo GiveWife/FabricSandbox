@@ -1,4 +1,4 @@
-package net.givewife.additions.registry.enchantment;
+package net.givewife.additions.enchantment;
 
 import net.givewife.additions.util.GeneralHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -6,8 +6,6 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-
-import java.util.Random;
 
 public class XpEnchantment extends CustomEnchantment {
 

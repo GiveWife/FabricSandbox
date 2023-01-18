@@ -1,16 +1,9 @@
-package net.givewife.additions.registry.messages;
+package net.givewife.additions.messages;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.givewife.additions.particles.CustomEffect;
-import net.givewife.additions.particles.effects.EffectLine;
-import net.givewife.additions.particles.effects.EffectSingle;
-import net.givewife.additions.util.Pos;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
 
 public class PushMessage extends CustomMessage {
 

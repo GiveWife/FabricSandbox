@@ -1,4 +1,4 @@
-package net.givewife.additions.registry.keybinds;
+package net.givewife.additions.keybinds;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;

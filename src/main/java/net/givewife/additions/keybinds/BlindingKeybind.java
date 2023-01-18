@@ -1,8 +1,7 @@
-package net.givewife.additions.registry.keybinds;
+package net.givewife.additions.keybinds;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.mob.ZombieEntity;
 
 public class BlindingKeybind extends CustomKeybind {
 

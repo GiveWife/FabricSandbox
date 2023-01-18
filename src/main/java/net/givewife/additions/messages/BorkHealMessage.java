@@ -1,11 +1,8 @@
-package net.givewife.additions.registry.messages;
+package net.givewife.additions.messages;
 
-import io.netty.channel.ChannelHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.givewife.additions.Main;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
 
 public class BorkHealMessage extends CustomMessage {
 

@@ -1,7 +1,6 @@
-package net.givewife.additions.registry.messages;
+package net.givewife.additions.messages;
 
 import net.givewife.additions.Main;
-import net.givewife.additions.util.GeneralHelper;
 import net.minecraft.util.Identifier;
 
 public abstract class CustomMessage {
