@@ -16,6 +16,8 @@ public class WorldDataHandler {
 
             // Sending the packet to the player (look at the networking page for more information)
             PacketByteBuf data = PacketByteBufs.create();
+            data.writeUuid(handler.player.getUuid());
+            data.writeBoolean(true);
             ServerPlayNetworking.send(handler.player, MessageRegistry.JUMP.getIdentifier(), data);
         });
     }

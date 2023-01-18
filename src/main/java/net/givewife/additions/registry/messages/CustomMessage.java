@@ -21,4 +21,8 @@ public abstract class CustomMessage {
         return identifier;
     }
 
+    public void log(String message) {
+        System.out.println("[" + name + "] " + message);
+    }
+
 }

@@ -12,9 +12,10 @@ public class MessageRegistry {
     public static CustomMessage PUSH = new PushMessage("push");
     public static CustomMessage POS = new PosMessage("pos");
     public static CustomMessage JUMP = new JumpMessage("jump");
+    public static CustomMessage FALL = new JumpMessage("falldamagecancel");
 
     public static CustomMessage[] getMessages() {
-        return new CustomMessage[] {HEAL_BORK, PUSH, POS, JUMP};
+        return new CustomMessage[] {HEAL_BORK, PUSH, POS, JUMP, FALL};
     }
 
     /**

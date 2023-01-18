@@ -1,6 +1,7 @@
 package net.givewife.additions;
 
 import net.fabricmc.api.ModInitializer;
+import net.givewife.additions.data.WorldDataHandler;
 import net.givewife.additions.registry.initializers.ServerMain;
 import net.givewife.additions.registry.registries.BlockEntityRegistry;
 import net.givewife.additions.registry.registries.BlockRegistry;
@@ -21,6 +22,7 @@ public class Main implements ModInitializer {
         ServerMain.initializeMessages();
         ItemRegistry.register();
         CommandRegistry.registerCommands();
+        WorldDataHandler.register();
         //TILE_ENTITIES = new BlockEntityRegistry();
     }
 
