@@ -1,8 +1,7 @@
 package net.givewife.additions.registry.registries;
 
-import net.givewife.additions.registry.enchantment.CustomEnchantment;
-import net.givewife.additions.registry.enchantment.XpEnchantment;
-import net.minecraft.enchantment.Enchantment;
+import net.givewife.additions.enchantment.CustomEnchantment;
+import net.givewife.additions.enchantment.XpEnchantment;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 

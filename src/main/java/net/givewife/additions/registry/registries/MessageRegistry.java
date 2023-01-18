@@ -1,10 +1,6 @@
 package net.givewife.additions.registry.registries;
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.givewife.additions.Main;
-import net.givewife.additions.registry.messages.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
+import net.givewife.additions.messages.*;
 
 public class MessageRegistry {
 

@@ -1,8 +1,8 @@
 package net.givewife.additions.registry.registries;
 
-import net.givewife.additions.registry.commands.CustomCommand;
-import net.givewife.additions.registry.commands.FeedCommand;
-import net.givewife.additions.registry.commands.HealCommand;
+import net.givewife.additions.commands.CustomCommand;
+import net.givewife.additions.commands.FeedCommand;
+import net.givewife.additions.commands.HealCommand;
 
 public class CommandRegistry {
 

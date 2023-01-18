@@ -1,11 +1,8 @@
 package net.givewife.additions.registry.registries;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.givewife.additions.registry.keybinds.CustomKeybind;
-import net.givewife.additions.registry.keybinds.HealKeybind;
-import net.givewife.additions.registry.keybinds.PushKeybind;
-import net.givewife.additions.registry.keybinds.VelocityKeybind;
-import net.minecraft.client.option.KeyBinding;
+import net.givewife.additions.keybinds.CustomKeybind;
+import net.givewife.additions.keybinds.HealKeybind;
+import net.givewife.additions.keybinds.VelocityKeybind;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 

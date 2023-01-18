@@ -16,7 +16,7 @@ public class WorldDataHandler {
 
             PacketByteBuf data = PacketByteBufs.create();
             data.writeUuid(handler.player.getUuid());
-            data.writeBoolean(true);
+            data.writeBoolean(false);
             ServerPlayNetworking.send(handler.player, MessageRegistry.JUMP.getIdentifier(), data);
         });
     }

@@ -27,17 +27,14 @@ public class JumpMessage extends CustomMessage {
                 boolean hasFoundPlayer = false;
 
                 for(Map.Entry<UUID, PlayerState> e : state.players.entrySet()) {
-                    if(e.getKey() == uuid) {
-                        log("(client) found uuid");
-                        PlayerState newState = new PlayerState();
-                        newState.hasJumped = true;
-                        e.setValue(newState);
-                        hasFoundPlayer = true;
+                    if(e.getKey().equals(uuid)) {
+                        //log("(client) found uuid");
+                        e.getValue().hasJumped = jump;
                     }
                 }
 
                 state.markDirty();
-                log("(client) Registered?");
+                //log("(client) Message sent");
 
             });
         });
@@ -58,25 +55,23 @@ public class JumpMessage extends CustomMessage {
                 ServerState state = ServerState.getServerState(server);
 
                 if(!state.players.containsKey(uuid)) {
-                    log("(server) new uuid added to list");
+                    //log("(server) new uuid added to list");
                     PlayerState newState = new PlayerState();
                     newState.hasJumped = false;
                     state.players.put(uuid, newState);
                 } else {
-                    log("(server) uuid already exists, setting it to " + Boolean.toString(jump));
+                    //log("(server) uuid already exists, setting it to " + Boolean.toString(jump));
                     for (Map.Entry<UUID, PlayerState> e : state.players.entrySet()) {
                         if (e.getKey().equals(uuid)) {
-                            log("(server) found uuid");
-                            PlayerState newState = new PlayerState();
-                            newState.hasJumped = jump;
-                            e.setValue(newState);
+                            //("(server) found uuid");
+                            e.getValue().hasJumped = jump;
                         }
                     }
                 }
 
                 state.markDirty();
 
-                log("(server) registered.");
+                //log("(server) registered.");
 
             });
 

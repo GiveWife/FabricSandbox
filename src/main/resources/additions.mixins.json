@@ -4,7 +4,8 @@
   "package": "net.givewife.additions.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "FallDamageMixin"
+    "FallDamageMixin",
+    "MinecartMixin"
   ],
   "client": [
     "AdditionsMixin"
