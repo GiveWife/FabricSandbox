@@ -9,13 +9,16 @@ import net.minecraft.world.World;
 public class NetherReactorTicker {
 
     private GeneralHelper helper = new GeneralHelper();
+    private int tick;
     public NetherReactorTicker() {
-
+        tick = 0;
     }
 
     public void tick(World world, BlockPos pos, BlockState state, NetherReactorEntity be) {
 
 
+
+        tick++;
 
     }
 

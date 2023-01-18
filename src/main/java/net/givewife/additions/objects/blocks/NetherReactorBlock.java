@@ -17,11 +17,12 @@ import org.jetbrains.annotations.Nullable;
 public class NetherReactorBlock extends BlockWithEntity implements BlockEntityProvider {
 
     public static final BooleanProperty ACTIVATED = BooleanProperty.of("activated");
-    private NetherReactorTicker ticker = new NetherReactorTicker();
+    private NetherReactorTicker ticker;
 
     public NetherReactorBlock(AbstractBlock.Settings s) {
         super(s);
         setDefaultState(getDefaultState().with(ACTIVATED, false));
+        ticker = new NetherReactorTicker();
     }
 
     @Override

@@ -3,6 +3,8 @@
   "item.additions.test": "Test Item",
   "item.additions.supertool": "Super Tool",
 
+  "block.additions.nether_reactor": "Nether Reactor",
+
 
   "enchantment.additions.xp": "xp"
 }
