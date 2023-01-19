@@ -1,7 +1,7 @@
 package net.givewife.additions.particles.effects;
 
 import net.givewife.additions.particles.CustomEffect;
-import net.givewife.additions.util.Pos;
+import net.givewife.additions.util.positions.Pos;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 

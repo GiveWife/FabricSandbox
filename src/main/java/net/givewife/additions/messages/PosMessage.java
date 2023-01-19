@@ -2,7 +2,7 @@ package net.givewife.additions.messages;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.givewife.additions.particles.effects.EffectLine;
-import net.givewife.additions.util.Pos;
+import net.givewife.additions.util.positions.Pos;
 
 public class PosMessage extends CustomMessage {
 

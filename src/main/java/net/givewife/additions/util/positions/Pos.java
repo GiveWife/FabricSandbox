@@ -1,4 +1,4 @@
-package net.givewife.additions.util;
+package net.givewife.additions.util.positions;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;

@@ -6,7 +6,7 @@ import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.particles.effects.EffectTrace;
 import net.givewife.additions.registry.registries.BlockRegistry;
 import net.givewife.additions.util.NbtHelper;
-import net.givewife.additions.util.Pos;
+import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.PositionUtilities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
