@@ -64,7 +64,7 @@ public abstract class FallDamageMixin {
         System.out.println("Amount after: " + amount);
     }
 
-    @ModifyVariable( method = "applyDamage", at = @At("HEAD"), ordinal = 0)
+    //@ModifyVariable( method = "applyDamage", at = @At("HEAD"), ordinal = 0)
     public float applyDamage(float amount, DamageSource source) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
