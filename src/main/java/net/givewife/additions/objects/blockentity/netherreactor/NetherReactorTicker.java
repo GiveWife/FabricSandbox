@@ -1,6 +1,6 @@
 package net.givewife.additions.objects.blockentity.netherreactor;
 
-import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorEntity;
+import net.givewife.additions.objects.blockentity.netherreactor.particle.NetherReactorParticles;
 import net.givewife.additions.util.GeneralHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
