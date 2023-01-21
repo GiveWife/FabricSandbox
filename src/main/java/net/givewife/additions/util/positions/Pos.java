@@ -46,12 +46,4 @@ public class Pos {
         System.out.println("  [Pos]: [" + x + ", " + y + ", " + z + "]");
     }
 
-    public Pos getPos(PlayerEntity e) {
-        return new Pos(e.getX(), e.getY(), e.getZ());
-    }
-
-    public BlockPos getBlockPos() {
-        return new BlockPos((int) x, (int) y, (int) z);
-    }
-
 }

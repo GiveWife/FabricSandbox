@@ -5,8 +5,11 @@ public class VecTrail extends Vec {
     private double xD, yD, zD;
     private double stepX, stepY, stepZ;
     private int steps;
-    public VecTrail(Pos from, Pos to, int steps) {
+    private final String id;
+    public VecTrail(String id, Pos from, Pos to, int steps) {
         super(from, to);
+        this.id = id;
+
         this.xD = Math.abs(from.x() - to.x());
         this.yD = Math.abs(from.y() - to.y());
         this.zD = Math.abs(from.z() - to.z());
@@ -34,4 +37,8 @@ public class VecTrail extends Vec {
         return step > steps;
     }
 
+    @Override
+    public void log(String message) {
+        super.log("[Vectrail: + " + this.id + "] " + message);
+    }
 }

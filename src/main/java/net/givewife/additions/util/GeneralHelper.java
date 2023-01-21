@@ -143,5 +143,15 @@ public class GeneralHelper {
         return rand.nextInt(max-low) + low;
     }
 
+    public String intToString(int[] arr) {
+        String s = "[";
+        for(int i = 0; i < arr.length; i++) {
+            s += Integer.toString(arr[i]);
+            if(i + 1 < arr.length) s += ", ";
+        }
+        s += "]";
+        return s;
+    }
+
 
 }

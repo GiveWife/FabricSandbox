@@ -17,5 +17,9 @@ public class Vec {
         return to;
     }
 
+    public void log(String message) {
+        System.out.println("[Vec] " + message);
+    }
+
 
 }
