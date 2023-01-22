@@ -74,4 +74,8 @@ public class Pos {
         return new Pos(x, y, z + 1);
     }
 
+    public Pos subtract(Pos pos) {
+        return new Pos(x() - pos.x(), y() - pos.y(), z() - pos.z());
+    }
+
 }

@@ -41,4 +41,5 @@ public class VecTrail extends Vec {
     public void log(String message) {
         super.log("[Vectrail: + " + this.id + "] " + message);
     }
+
 }

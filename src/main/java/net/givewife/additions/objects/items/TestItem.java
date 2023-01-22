@@ -8,6 +8,7 @@ import net.givewife.additions.registry.registries.BlockRegistry;
 import net.givewife.additions.util.NbtHelper;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.PositionUtilities;
+import net.givewife.additions.util.positions.VecSurface;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
@@ -42,12 +43,9 @@ public class TestItem extends ModItem {
 
         if(!world.isClient) {
 
-            CustomEffect e = new EffectTrace("test", false);
-            e.run((ServerWorld) world, new Pos(user));
+            VecSurface sur = new VecSurface(new Pos(user), new Pos(user).north().east().up().up(), 100, 500);
 
-            ItemStack stack = user.getStackInHand(hand);
-            if(!nbt.isIntEqual(USE, 0, stack)) return super.use(world, user, hand);
-            nbt.setInt(USE, 1, stack);
+            sur.print((ServerWorld) world);
 
         }
 
