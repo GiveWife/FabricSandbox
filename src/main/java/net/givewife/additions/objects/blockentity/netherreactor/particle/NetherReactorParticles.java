@@ -15,6 +15,7 @@ public class NetherReactorParticles {
     private final int[] stageLengths;
     private final boolean debug = true;
 
+    //TODO Every tick this class gets created, we must circumvent this! Keep everything in tile entity?
     public NetherReactorParticles(BlockPos origin) {
         stageLengths = new int[]{
             1000

@@ -64,6 +64,6 @@ public class NetherReactorBlock extends BlockWithEntity implements BlockEntityPr
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, Main.TILE_ENTITIES.NETHER_REACTOR_ENTITY, (world1, pos, state1, be) -> (new NetherReactorTicker(pos, be.getTicks())).tick(world1, pos, state1, be));
+        return checkType(type, Main.TILE_ENTITIES.NETHER_REACTOR_ENTITY, (world1, pos, state1, be) -> be.tick(world1, pos, state1, be));
     }
 }

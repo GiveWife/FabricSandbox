@@ -1,5 +1,7 @@
 package net.givewife.additions.objects.blockentity.netherreactor.particle;
 
+import net.givewife.additions.particles.CustomEffect;
+import net.givewife.additions.particles.effects.EffectSingle;
 import net.givewife.additions.util.positions.BlockSidePos;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
@@ -22,6 +24,7 @@ public class ParticleStages {
                 new ParticleStage("stage_03", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getEast(origin).up()),
                 new ParticleStage("stage_04", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getSouth(origin).up())
         };
+
     }
 
     public static class ParticleStage {
@@ -39,6 +42,7 @@ public class ParticleStages {
             this.stage = stage;
             this.ticks = ticks;
             this.steps = steps;
+            System.out.println(id + ": from: " + from.getPrint() + ", to " + to.getPrint());
             this.to = new VecTrail(id, from, to, steps);
         }
 

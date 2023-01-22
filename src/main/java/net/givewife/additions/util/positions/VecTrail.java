@@ -10,15 +10,15 @@ public class VecTrail extends Vec {
         super(from, to);
         this.id = id;
 
-        this.xD = Math.abs(from.x() - to.x());
-        this.yD = Math.abs(from.y() - to.y());
-        this.zD = Math.abs(from.z() - to.z());
+        this.xD = from.x() - to.x();
+        this.yD = from.y() - to.y();
+        this.zD = from.z() - to.z();
 
         this.steps = steps;
 
-        this.stepX = xD / steps;
-        this.stepY = yD / steps;
-        this.stepZ = zD / steps;
+        this.stepX = -xD / steps;
+        this.stepY = -yD / steps;
+        this.stepZ = -zD / steps;
     }
 
     /**

@@ -46,6 +46,10 @@ public class Pos {
         System.out.println("  [Pos]: [" + x + ", " + y + ", " + z + "]");
     }
 
+    public String getPrint() {
+        return "  [Pos]: [" + x + ", " + y + ", " + z + "]";
+    }
+
     public Pos up() {
         return new Pos(x, y + 1, z);
     }
