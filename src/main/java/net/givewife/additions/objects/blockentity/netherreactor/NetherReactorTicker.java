@@ -14,7 +14,7 @@ public class NetherReactorTicker {
     private boolean debug = true;
 
     public NetherReactorTicker(BlockPos origin, int ticks) {
-        tick = 0;
+        tick = ticks;
         this.PARTICLE_HANDLER = new NetherReactorParticles(origin);
     }
 

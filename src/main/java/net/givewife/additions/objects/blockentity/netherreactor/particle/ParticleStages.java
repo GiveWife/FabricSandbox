@@ -18,16 +18,15 @@ public class ParticleStages {
     public ParticleStage[] registerStages(int[] stageLengths) {
         return new ParticleStage[] {
                 new ParticleStage("stage_01", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin), BlockSidePos.getEast(origin).up()),
-                new ParticleStage("stage_11", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin), BlockSidePos.getSouth(origin).up()),
-                new ParticleStage("stage_01", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin.east().south()), BlockSidePos.getEast(origin.east().south()).up()),
-                new ParticleStage("stage_11", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin.east().south()), BlockSidePos.getSouth(origin.east().south()).up()),
+                new ParticleStage("stage_02", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin), BlockSidePos.getSouth(origin).up()),
+                new ParticleStage("stage_03", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getEast(origin).up()),
+                new ParticleStage("stage_04", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getSouth(origin).up())
         };
     }
 
     public static class ParticleStage {
 
         private final int stage, ticks, steps;
-        private int progress = 0;
         private VecTrail to;
         //private final Pos step;
 
@@ -47,8 +46,8 @@ public class ParticleStages {
             return this.stage;
         }
 
-        public Pos next() {
-            return this.to.getOffset(this.progress++);
+        public Pos next(int tick) {
+            return this.to.getOffset(tick);
         }
 
     }

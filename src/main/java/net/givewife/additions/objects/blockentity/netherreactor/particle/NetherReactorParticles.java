@@ -30,7 +30,7 @@ public class NetherReactorParticles {
         int allTicks = 0;
         for(int i = 0; i < stageLengths.length; i++) {
             allTicks += stageLengths[i];
-            if(tick <= allTicks) return stageLengths[i];
+            if(tick <= allTicks) return i;
         }
         if(debug) System.out.println("[Nether Reactor Particles] Stage is -1. Tick was: " + tick + " compared to most ticks: " + allTicks + ". Array: " + helper.intToString(this.stageLengths));
         return -1;
@@ -39,9 +39,11 @@ public class NetherReactorParticles {
     public void runParticles(World world, int tick) {
 
         for(int i = 0; i < STAGE_HOLDER.stages.length; i++) {
+            //System.out.println("Ticks: " + tick + ", stage: " + getStage(tick) + ", stages [" + i + "] stage: " + STAGE_HOLDER.stages[i].getStage());
             if(STAGE_HOLDER.stages[i].getStage() == getStage(tick)
                 && !world.isClient) {
-                Pos p = STAGE_HOLDER.stages[i].next();
+                //System.out.println("Ticking: " + tick);
+                Pos p = STAGE_HOLDER.stages[i].next(tick);
                 ((ServerWorld) world).spawnParticles(ParticleTypes.END_ROD, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
             }
         }
