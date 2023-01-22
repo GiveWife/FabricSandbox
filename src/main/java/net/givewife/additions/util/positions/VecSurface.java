@@ -20,11 +20,11 @@ public class VecSurface {
         this.lineStart = computeLine(to, 1);
         this.lineEnd = computeLine(from, -1);
 
-        System.out.println("From: " + from.getPrint() + " ; To: " + to.getPrint() + " ; diff: " + diff.getPrint());
+        //System.out.println("From: " + from.getPrint() + " ; To: " + to.getPrint() + " ; diff: " + diff.getPrint());
 
         trails = new VecTrail[lines];
         for(int i = 0; i < lines; i++) {
-            trails[i] = new VecTrail("trail:" + Integer.toString(i), lineStart[i], lineEnd[i], 100);
+            trails[i] = new VecTrail("trail:" + Integer.toString(i), lineStart[i], lineEnd[lines-1-i], 100);
         }
     }
 
@@ -39,18 +39,18 @@ public class VecSurface {
 
         Pos[] starts = new Pos[lines];
 
-        if(mod == 1) System.out.println("\n\nSTARTS\n\n");
-        else System.out.println("\n\nENDS\n\n");
+        //if(mod == 1) System.out.println("\n\nSTARTS\n\n");
+        //else System.out.println("\n\nENDS\n\n");
 
         for(int i = 0; i < lines; i++) {
 
             starts[i] = new Pos(
                     start.x() + (i*mod*diff.x()/lines),
-                    start.y() + (i*mod*diff.y()/lines),
+                    start.y() + (mod*diff.y()/lines),
                     start.z() + (i*mod*diff.z()/lines)
             );
 
-            System.out.println("(" + i + "): " + starts[i].getPrint());
+            //System.out.println("(" + i + "): " + starts[i].getPrint());
 
         }
 

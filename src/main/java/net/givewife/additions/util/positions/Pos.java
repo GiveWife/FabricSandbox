@@ -54,24 +54,48 @@ public class Pos {
         return new Pos(x, y + 1, z);
     }
 
+    public Pos up(double i) {
+        return new Pos(x, y + i, z);
+    }
+
     public Pos down() {
         return new Pos(x, y - 1, z);
+    }
+
+    public Pos down(double i) {
+        return new Pos(x, y - i, z);
     }
 
     public Pos north() {
         return new Pos(x, y, z - 1);
     }
 
+    public Pos north(double i) {
+        return new Pos(x, y, z - i);
+    }
+
     public Pos east() {
         return new Pos(x+1, y, z);
+    }
+
+    public Pos east(double i) {
+        return new Pos(x+i, y, z);
     }
 
     public Pos west() {
         return new Pos(x - 1, y, z);
     }
 
+    public Pos west(double i) {
+        return new Pos(x - i, y, z);
+    }
+
     public Pos south() {
         return new Pos(x, y, z + 1);
+    }
+
+    public Pos south(double i) {
+        return new Pos(x, y, z + i);
     }
 
     public Pos subtract(Pos pos) {

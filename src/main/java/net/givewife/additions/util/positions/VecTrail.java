@@ -1,5 +1,7 @@
 package net.givewife.additions.util.positions;
 
+import net.minecraft.util.math.Vec3d;
+
 public class VecTrail extends Vec {
 
     private double xD, yD, zD;

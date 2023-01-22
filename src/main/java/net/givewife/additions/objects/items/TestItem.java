@@ -43,7 +43,7 @@ public class TestItem extends ModItem {
 
         if(!world.isClient) {
 
-            VecSurface sur = new VecSurface(new Pos(user), new Pos(user).north().east().up().up(), 100, 500);
+            VecSurface sur = new VecSurface(new Pos(user), new Pos(user).north(50).east().up().up(), 100, 500);
 
             sur.print((ServerWorld) world);
 
