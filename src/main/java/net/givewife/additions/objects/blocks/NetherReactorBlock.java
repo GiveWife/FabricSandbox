@@ -7,8 +7,13 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.DimensionEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -22,7 +27,17 @@ public class NetherReactorBlock extends BlockWithEntity implements BlockEntityPr
     public NetherReactorBlock(AbstractBlock.Settings s) {
         super(s);
         setDefaultState(getDefaultState().with(ACTIVATED, false));
-        ticker = new NetherReactorTicker();
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if(world.getBlockEntity(pos) instanceof NetherReactorEntity && !world.isClient) {
+            NetherReactorEntity e = (NetherReactorEntity) world.getBlockEntity(pos);
+            if(!e.isActive()) {
+                e.activate();
+            }
+        }
+        return super.onUse(state, world, pos, player, hand, hit);
     }
 
     @Override
@@ -49,6 +64,6 @@ public class NetherReactorBlock extends BlockWithEntity implements BlockEntityPr
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, Main.TILE_ENTITIES.NETHER_REACTOR_ENTITY, (world1, pos, state1, be) -> ticker.tick(world1, pos, state1, be));
+        return checkType(type, Main.TILE_ENTITIES.NETHER_REACTOR_ENTITY, (world1, pos, state1, be) -> (new NetherReactorTicker(pos, be.getTicks())).tick(world1, pos, state1, be));
     }
 }

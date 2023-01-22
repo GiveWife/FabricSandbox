@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public class Pos {
 
-    private double x, y, z;
+    private final double x, y, z;
 
     public Pos(BlockPos pos) {
         this.x = pos.getX();
@@ -44,6 +44,30 @@ public class Pos {
 
     public void print() {
         System.out.println("  [Pos]: [" + x + ", " + y + ", " + z + "]");
+    }
+
+    public Pos up() {
+        return new Pos(x, y + 1, z);
+    }
+
+    public Pos down() {
+        return new Pos(x, y - 1, z);
+    }
+
+    public Pos north() {
+        return new Pos(x, y, z - 1);
+    }
+
+    public Pos east() {
+        return new Pos(x+1, y, z);
+    }
+
+    public Pos west() {
+        return new Pos(x - 1, y, z);
+    }
+
+    public Pos south() {
+        return new Pos(x, y, z + 1);
     }
 
 }

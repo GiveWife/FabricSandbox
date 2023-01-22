@@ -3,14 +3,17 @@ package net.givewife.additions.objects.blockentity.netherreactor.particle;
 import net.givewife.additions.util.GeneralHelper;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class NetherReactorParticles {
 
     private final ParticleStages STAGE_HOLDER;
     private GeneralHelper helper = new GeneralHelper();
     private final int[] stageLengths;
-    private final boolean debug = false;
+    private final boolean debug = true;
 
     public NetherReactorParticles(BlockPos origin) {
         stageLengths = new int[]{
@@ -27,16 +30,20 @@ public class NetherReactorParticles {
         int allTicks = 0;
         for(int i = 0; i < stageLengths.length; i++) {
             allTicks += stageLengths[i];
-            if(allTicks <= tick) return stageLengths[i];
+            if(tick <= allTicks) return stageLengths[i];
         }
         if(debug) System.out.println("[Nether Reactor Particles] Stage is -1. Tick was: " + tick + " compared to most ticks: " + allTicks + ". Array: " + helper.intToString(this.stageLengths));
         return -1;
     }
 
-    public void runParticles(int tick) {
+    public void runParticles(World world, int tick) {
 
         for(int i = 0; i < STAGE_HOLDER.stages.length; i++) {
-            STAGE_HOLDER.stages[i].next();
+            if(STAGE_HOLDER.stages[i].getStage() == getStage(tick)
+                && !world.isClient) {
+                Pos p = STAGE_HOLDER.stages[i].next();
+                ((ServerWorld) world).spawnParticles(ParticleTypes.END_ROD, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
+            }
         }
 
     }

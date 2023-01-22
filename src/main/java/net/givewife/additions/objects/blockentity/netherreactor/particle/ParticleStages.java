@@ -1,5 +1,6 @@
 package net.givewife.additions.objects.blockentity.netherreactor.particle;
 
+import net.givewife.additions.util.positions.BlockSidePos;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
 import net.minecraft.util.math.BlockPos;
@@ -15,10 +16,15 @@ public class ParticleStages {
     }
 
     public ParticleStage[] registerStages(int[] stageLengths) {
-        return new ParticleStage[] {};
+        return new ParticleStage[] {
+                new ParticleStage("stage_01", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin), BlockSidePos.getEast(origin).up()),
+                new ParticleStage("stage_11", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin), BlockSidePos.getSouth(origin).up()),
+                new ParticleStage("stage_01", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin.east().south()), BlockSidePos.getEast(origin.east().south()).up()),
+                new ParticleStage("stage_11", 0, stageLengths[0], 100, BlockSidePos.getNorth(origin.east().south()), BlockSidePos.getSouth(origin.east().south()).up()),
+        };
     }
 
-    public static abstract class ParticleStage {
+    public static class ParticleStage {
 
         private final int stage, ticks, steps;
         private int progress = 0;

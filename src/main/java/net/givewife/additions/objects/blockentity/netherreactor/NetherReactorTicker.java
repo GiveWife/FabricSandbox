@@ -11,17 +11,21 @@ public class NetherReactorTicker {
     private GeneralHelper helper = new GeneralHelper();
     private final NetherReactorParticles PARTICLE_HANDLER;
     private int tick;
-    public NetherReactorTicker() {
+    private boolean debug = true;
+
+    public NetherReactorTicker(BlockPos origin, int ticks) {
         tick = 0;
-        this.PARTICLE_HANDLER = new NetherReactorParticles();
+        this.PARTICLE_HANDLER = new NetherReactorParticles(origin);
     }
 
     public void tick(World world, BlockPos pos, BlockState state, NetherReactorEntity be) {
 
+        if(debug && tick % 100 == 0) System.out.println("Ticks: " + tick);
+        if(!be.isActive()) return;
 
-        this.PARTICLE_HANDLER.runParticles(tick);
+        this.PARTICLE_HANDLER.runParticles(world, be.getTicks());
 
-        tick++;
+        be.increment();
 
     }
 
