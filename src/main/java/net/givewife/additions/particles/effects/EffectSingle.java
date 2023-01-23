@@ -7,12 +7,14 @@ import net.minecraft.server.world.ServerWorld;
 
 public class EffectSingle extends CustomEffect {
 
-    public EffectSingle() {
+    private final Pos pos;
 
+    public EffectSingle(Pos pos) {
+        this.pos = pos;
     }
 
     @Override
-    public void run(ServerWorld world, Pos pos) {
+    public void run(ServerWorld world) {
 
         world.spawnParticles(ParticleTypes.END_ROD, pos.x(), pos.y(), pos.z(), 1, 0, 0, 0, 0);
 

@@ -7,9 +7,15 @@ import net.minecraft.server.world.ServerWorld;
 
 public class EffectTrace extends CustomEffect {
 
-    public EffectTrace(String name, boolean debug) { super(name, debug); }
+    private final Pos pos;
 
-    public void run(ServerWorld world, Pos pos) {
+    public EffectTrace(String name, boolean debug, Pos pos) {
+        super(name, debug);
+        this.pos = pos;
+    }
+
+    @Override
+    public void run(ServerWorld world) {
 
         double t = 0d;
 

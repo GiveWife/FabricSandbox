@@ -51,4 +51,8 @@ public class NetherReactorParticles {
 
     }
 
+    public void printInvalidArea(World world) {
+
+    }
+
 }

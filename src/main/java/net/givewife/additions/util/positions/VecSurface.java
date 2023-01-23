@@ -9,6 +9,7 @@ public class VecSurface {
     private final int steps, lines;
     private final Pos[] lineStart, lineEnd;
     private final VecTrail[] trails;
+
     public VecSurface(Pos from, Pos to, int lines, int steps) {
         this.from = from;
         this.to = to;

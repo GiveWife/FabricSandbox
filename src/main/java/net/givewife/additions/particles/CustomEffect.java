@@ -33,6 +33,6 @@ public abstract class CustomEffect {
         return Math.cos(d);
     }
 
-    public abstract void run(ServerWorld world, Pos pos);
+    public abstract void run(ServerWorld world);
 
 }

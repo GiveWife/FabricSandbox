@@ -4,8 +4,8 @@ import net.minecraft.util.math.Vec3d;
 
 public class VecTrail extends Vec {
 
-    private double xD, yD, zD;
-    private double stepX, stepY, stepZ;
+    private float xD, yD, zD;
+    private float stepX, stepY, stepZ;
     private int steps;
     private final String id;
     public VecTrail(String id, Pos from, Pos to, int steps) {
@@ -42,6 +42,10 @@ public class VecTrail extends Vec {
     @Override
     public void log(String message) {
         super.log("[Vectrail: + " + this.id + "] " + message);
+    }
+
+    public int getSteps() {
+        return this.steps;
     }
 
 }

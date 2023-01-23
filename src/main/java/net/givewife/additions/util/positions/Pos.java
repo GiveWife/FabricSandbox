@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public class Pos {
 
-    private final double x, y, z;
+    private final float x, y, z;
 
     public Pos(BlockPos pos) {
         this.x = pos.getX();
@@ -16,25 +16,25 @@ public class Pos {
         this.z = pos.getZ();
     }
     public Pos(PlayerEntity e) {
-        this.x = e.getX();
-        this.y = e.getY();
-        this.z = e.getZ();
+        this.x = (float) e.getX();
+        this.y = (float) e.getY();
+        this.z = (float) e.getZ();
     }
-    public Pos(double x, double y, double z) {
+    public Pos(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public double x() {
+    public float x() {
         return x;
     }
 
-    public double y() {
+    public float y() {
         return y;
     }
 
-    public double z() {
+    public float z() {
         return z;
     }
 
@@ -54,7 +54,7 @@ public class Pos {
         return new Pos(x, y + 1, z);
     }
 
-    public Pos up(double i) {
+    public Pos up(float i) {
         return new Pos(x, y + i, z);
     }
 
@@ -62,7 +62,7 @@ public class Pos {
         return new Pos(x, y - 1, z);
     }
 
-    public Pos down(double i) {
+    public Pos down(float i) {
         return new Pos(x, y - i, z);
     }
 
@@ -70,7 +70,7 @@ public class Pos {
         return new Pos(x, y, z - 1);
     }
 
-    public Pos north(double i) {
+    public Pos north(float i) {
         return new Pos(x, y, z - i);
     }
 
@@ -78,7 +78,7 @@ public class Pos {
         return new Pos(x+1, y, z);
     }
 
-    public Pos east(double i) {
+    public Pos east(float i) {
         return new Pos(x+i, y, z);
     }
 
@@ -86,7 +86,7 @@ public class Pos {
         return new Pos(x - 1, y, z);
     }
 
-    public Pos west(double i) {
+    public Pos west(float i) {
         return new Pos(x - i, y, z);
     }
 
@@ -94,7 +94,7 @@ public class Pos {
         return new Pos(x, y, z + 1);
     }
 
-    public Pos south(double i) {
+    public Pos south(float i) {
         return new Pos(x, y, z + i);
     }
 

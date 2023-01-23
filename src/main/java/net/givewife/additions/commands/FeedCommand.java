@@ -17,7 +17,6 @@ public class FeedCommand extends CustomCommand {
 
                         PlayerEntity entity = (PlayerEntity) context.getSource().getEntity();
                         entity.getHungerManager().setFoodLevel(20);
-                        entity.getHungerManager().setSaturationLevel(50f);
 
                     }
 

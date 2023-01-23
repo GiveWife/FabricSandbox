@@ -43,7 +43,7 @@ public class EffectLine extends CustomEffect {
     }
 
     @Override
-    public void run(ServerWorld world, Pos pos) {
+    public void run(ServerWorld world) {
 
 
 

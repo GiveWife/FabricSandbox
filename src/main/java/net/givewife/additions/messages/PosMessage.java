@@ -17,12 +17,12 @@ public class PosMessage extends CustomMessage {
     public void registerServer() {
         ServerPlayNetworking.registerGlobalReceiver(getIdentifier(), (server, player, handler, buf, responseSender) -> {
 
-            double x1 = buf.readDouble();
-            double y1 = buf.readDouble();
-            double z1 = buf.readDouble();
-            double x2 = buf.readDouble();
-            double y2 = buf.readDouble();
-            double z2 = buf.readDouble();
+            float x1 = buf.readFloat();
+            float y1 = buf.readFloat();
+            float z1 = buf.readFloat();
+            float x2 = buf.readFloat();
+            float y2 = buf.readFloat();
+            float z2 = buf.readFloat();
 
             Pos pos1 = new Pos(x1,y1,z1);
             Pos pos2 = new Pos(x2,y2,z2);

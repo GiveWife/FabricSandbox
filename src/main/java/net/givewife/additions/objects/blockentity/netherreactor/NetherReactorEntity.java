@@ -2,6 +2,7 @@ package net.givewife.additions.objects.blockentity.netherreactor;
 
 import net.givewife.additions.Main;
 import net.givewife.additions.objects.blockentity.netherreactor.particle.NetherReactorParticles;
+import net.givewife.additions.objects.blockentity.netherreactor.structure.NetherReactorStructure;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -14,6 +15,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This class holds all handlers to make the entity do its thing.
+ *
+ * In the block class, a ticker gets passed every tick itself. If we keep the data the ticker uses in this class,
+ * the ticker will only use the already existing classes. By creating the ticker, structure handler, particle handler
+ * over and over again will stress the memory usage too much.
+ */
 public class NetherReactorEntity extends BlockEntity {
 
     private String ACTIVATED = "nether_reactor_active";
@@ -22,11 +30,14 @@ public class NetherReactorEntity extends BlockEntity {
     private int ticks;
     private final NetherReactorTicker ticker;
     private final NetherReactorParticles particles;
+    private final NetherReactorStructure structure;
 
     public NetherReactorEntity(BlockPos pos, BlockState state) {
         super(Main.TILE_ENTITIES.NETHER_REACTOR_ENTITY, pos, state);
         particles = new NetherReactorParticles(pos);
-        ticker = new NetherReactorTicker(pos, ticks, particles);
+        structure = new NetherReactorStructure(pos);
+        ticker = new NetherReactorTicker(pos, ticks, particles, structure);
+        System.out.println("[TileEntityNetherReactor] This entity has been initialized!");
     }
 
     @Override
@@ -91,5 +102,8 @@ public class NetherReactorEntity extends BlockEntity {
         world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.NOTIFY_LISTENERS);
     }
 
+    public NetherReactorStructure getStructureHandler() {
+        return this.structure;
+    }
 
 }
