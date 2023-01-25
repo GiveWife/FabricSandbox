@@ -4,6 +4,7 @@ import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 public class EffectTrace extends CustomEffect {
 
@@ -37,4 +38,8 @@ public class EffectTrace extends CustomEffect {
         //world.addImportantParticle();
     }
 
+    @Override
+    public void run(World world) {
+
+    }
 }

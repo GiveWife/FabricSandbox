@@ -14,7 +14,7 @@ public class Main implements ModInitializer {
 
     public static final Logger LOGGER = LogManager.getLogger("additions");
     public static final String MODID = "additions";
-    public static BlockEntityRegistry TILE_ENTITIES = new BlockEntityRegistry();
+    public static BlockEntityRegistry TILE_ENTITIES;
 
     @Override
     public void onInitialize() {
@@ -23,7 +23,7 @@ public class Main implements ModInitializer {
         ItemRegistry.register();
         CommandRegistry.registerCommands();
         WorldDataHandler.register();
-        //TILE_ENTITIES = new BlockEntityRegistry();
+        TILE_ENTITIES = new BlockEntityRegistry();
     }
 
 }

@@ -2,6 +2,7 @@ package net.givewife.additions.particles;
 
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 public abstract class CustomEffect {
 
@@ -34,5 +35,7 @@ public abstract class CustomEffect {
     }
 
     public abstract void run(ServerWorld world);
+
+    public abstract void run(World world);
 
 }

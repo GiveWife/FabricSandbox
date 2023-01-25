@@ -17,7 +17,7 @@ import java.util.List;
 public class StopwatchItem extends NbtCooldownItem {
 
     public StopwatchItem(String tag, int cooldown, String name, Item.Settings settings) {
-        super(tag, cooldown, name, settings);
+        super(tag, cooldown, true, name, settings);
     }
 
     @Override

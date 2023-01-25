@@ -5,6 +5,7 @@ import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 public class EffectBox extends CustomEffect {
 
@@ -22,9 +23,9 @@ public class EffectBox extends CustomEffect {
 
         // Sets the pos coord of the blockpos to the outer end.
         Pos pos2 = this.pos2.east().south();
-        float dX = Math.abs(pos2.x() - pos1.x());
-        float dY = Math.abs(pos2.y() - pos1.y());
-        float dZ = Math.abs(pos2.z() - pos1.z());
+        double dX = Math.abs(pos2.x() - pos1.x());
+        double dY = Math.abs(pos2.y() - pos1.y());
+        double dZ = Math.abs(pos2.z() - pos1.z());
 
         int stepsX = steps(dX);
         int stepsY = steps(dY);
@@ -71,8 +72,12 @@ public class EffectBox extends CustomEffect {
 
     }
 
-    private int steps(float distance) {
+    private int steps(double distance) {
         return (int) distance * stepsPerBlock;
     }
 
+    @Override
+    public void run(World world) {
+
+    }
 }

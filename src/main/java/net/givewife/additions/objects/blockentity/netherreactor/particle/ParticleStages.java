@@ -29,9 +29,8 @@ public class ParticleStages {
 
     public static class ParticleStage {
 
-        private final int stage, ticks, steps;
+        private final int stage, interval;
         private VecTrail to;
-        //private final Pos step;
 
         /**
          * Stage: when in the continuity is should start executing
@@ -40,14 +39,17 @@ public class ParticleStages {
          */
         public ParticleStage(String id, int stage, int ticks, int steps, Pos from, Pos to) {
             this.stage = stage;
-            this.ticks = ticks;
-            this.steps = steps;
-            System.out.println(id + ": from: " + from.getPrint() + ", to " + to.getPrint());
+            this.interval = ticks / steps;
+            //System.out.println(id + ": from: " + from.getPrint() + ", to " + to.getPrint());
             this.to = new VecTrail(id, from, to, steps);
         }
 
         public int getStage() {
             return this.stage;
+        }
+
+        public boolean canPrint(int tick) {
+            return tick % interval == 0;
         }
 
         public Pos next(int tick) {

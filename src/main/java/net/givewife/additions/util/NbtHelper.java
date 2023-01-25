@@ -18,14 +18,24 @@ public class NbtHelper {
         return nbt;
     }
 
+    public void updateNbt(ItemStack stack, NbtCompound nbt) {
+        stack.setNbt(nbt);
+    }
+
     /**
      * Sets a string on the given tag. Incase of no Nbt Compound it will be created first.
      */
     public void setString(String tag, String value, ItemStack stack) {
         NbtCompound nbt = stack.hasNbt() ? stack.getNbt() : linkNbt(stack);
         nbt.putString(tag, value);
+        stack.setNbt(nbt);
     }
 
+    public void setBoolean(String tag, boolean value, ItemStack stack) {
+        NbtCompound nbt = stack.hasNbt() ? stack.getNbt() : linkNbt(stack);
+        nbt.putBoolean(tag, value);
+        stack.setNbt(nbt);
+    }
 
     /**
      * Sets an integer on the given tag. Incase of no Nbt Compound it will be created first.
@@ -33,6 +43,7 @@ public class NbtHelper {
     public void setInt(String tag, int value, ItemStack stack) {
         NbtCompound nbt = stack.hasNbt() ? stack.getNbt() : linkNbt(stack);
         nbt.putInt(tag, value);
+        stack.setNbt(nbt);
     }
 
     /**
@@ -41,6 +52,7 @@ public class NbtHelper {
     public void setIntArray(String tag, int[] value, ItemStack stack) {
         NbtCompound nbt = stack.hasNbt() ? stack.getNbt() : linkNbt(stack);
         nbt.putIntArray(tag, value);
+        stack.setNbt(nbt);
     }
 
     /**
@@ -56,6 +68,18 @@ public class NbtHelper {
             if(nbt.contains(tag)) return nbt.getInt(tag);
             setInt(tag, 0, stack);
             return 0;
+        }
+    }
+
+    public boolean getBoolean(String tag, ItemStack stack) {
+        if(!stack.hasNbt()) {
+            setBoolean(tag, false, stack);
+            return false;
+        } else {
+            NbtCompound nbt = stack.getNbt();
+            if(nbt.contains(tag)) return nbt.getBoolean(tag);
+            setBoolean(tag, false, stack);
+            return false;
         }
     }
 

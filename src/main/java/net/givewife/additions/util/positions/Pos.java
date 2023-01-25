@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public class Pos {
 
-    private final float x, y, z;
+    private final double x, y, z;
 
     public Pos(BlockPos pos) {
         this.x = pos.getX();
@@ -16,25 +16,25 @@ public class Pos {
         this.z = pos.getZ();
     }
     public Pos(PlayerEntity e) {
-        this.x = (float) e.getX();
-        this.y = (float) e.getY();
-        this.z = (float) e.getZ();
+        this.x = (double) e.getX();
+        this.y = (double) e.getY();
+        this.z = (double) e.getZ();
     }
-    public Pos(float x, float y, float z) {
+    public Pos(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public float x() {
+    public double x() {
         return x;
     }
 
-    public float y() {
+    public double y() {
         return y;
     }
 
-    public float z() {
+    public double z() {
         return z;
     }
 
@@ -54,7 +54,7 @@ public class Pos {
         return new Pos(x, y + 1, z);
     }
 
-    public Pos up(float i) {
+    public Pos up(double i) {
         return new Pos(x, y + i, z);
     }
 
@@ -62,7 +62,7 @@ public class Pos {
         return new Pos(x, y - 1, z);
     }
 
-    public Pos down(float i) {
+    public Pos down(double i) {
         return new Pos(x, y - i, z);
     }
 
@@ -70,7 +70,7 @@ public class Pos {
         return new Pos(x, y, z - 1);
     }
 
-    public Pos north(float i) {
+    public Pos north(double i) {
         return new Pos(x, y, z - i);
     }
 
@@ -78,7 +78,7 @@ public class Pos {
         return new Pos(x+1, y, z);
     }
 
-    public Pos east(float i) {
+    public Pos east(double i) {
         return new Pos(x+i, y, z);
     }
 
@@ -86,7 +86,7 @@ public class Pos {
         return new Pos(x - 1, y, z);
     }
 
-    public Pos west(float i) {
+    public Pos west(double i) {
         return new Pos(x - i, y, z);
     }
 
@@ -94,7 +94,7 @@ public class Pos {
         return new Pos(x, y, z + 1);
     }
 
-    public Pos south(float i) {
+    public Pos south(double i) {
         return new Pos(x, y, z + i);
     }
 

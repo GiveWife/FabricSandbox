@@ -4,6 +4,7 @@ import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 public class EffectLine extends CustomEffect {
 
@@ -49,4 +50,8 @@ public class EffectLine extends CustomEffect {
 
     }
 
+    @Override
+    public void run(World world) {
+
+    }
 }

@@ -54,7 +54,6 @@ public class ProjectorBlockEntity extends BlockEntity {
         super.readNbt(nbt);
         current_lifetime = nbt.getInt(LIFETIME_KEY);
         public_lifetime = nbt.getInt(LIFETIME_KEY);
-        System.out.println("NBT reading in entity: " + current_lifetime + " ; public: " + public_lifetime);
     }
 
     @Nullable

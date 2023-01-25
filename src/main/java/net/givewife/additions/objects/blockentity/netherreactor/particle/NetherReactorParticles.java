@@ -15,7 +15,6 @@ public class NetherReactorParticles {
     private final int[] stageLengths;
     private final boolean debug = true;
 
-    //TODO Every tick this class gets created, we must circumvent this! Keep everything in tile entity?
     public NetherReactorParticles(BlockPos origin) {
         stageLengths = new int[]{
             1000
@@ -42,10 +41,13 @@ public class NetherReactorParticles {
         for(int i = 0; i < STAGE_HOLDER.stages.length; i++) {
             //System.out.println("Ticks: " + tick + ", stage: " + getStage(tick) + ", stages [" + i + "] stage: " + STAGE_HOLDER.stages[i].getStage());
             if(STAGE_HOLDER.stages[i].getStage() == getStage(tick)
-                && !world.isClient) {
+                && !world.isClient
+                && STAGE_HOLDER.stages[i].canPrint(tick)) {
                 //System.out.println("Ticking: " + tick);
                 Pos p = STAGE_HOLDER.stages[i].next(tick);
                 ((ServerWorld) world).spawnParticles(ParticleTypes.END_ROD, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
+                //(ServerPlayerEntity viewer, T particle, boolean force, double x, double y, double z, int count, double deltaX, double deltaY, double deltaZ, double speed) {
+                //((ServerWorld) world).spawnParticles(world.getPlayers(), ParticleTypes.END_ROD, true, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
             }
         }
 

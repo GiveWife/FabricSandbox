@@ -4,14 +4,11 @@
   "package": "net.givewife.additions.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "FallDamageMixin",
-    "MinecartMixin",
-    "PlayerCheats"
   ],
   "client": [
-    "AdditionsMixin"
   ],
   "server": [
+
   ],
   "injectors": {
     "defaultRequire": 1

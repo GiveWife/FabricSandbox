@@ -15,12 +15,26 @@ public abstract class NbtCooldownItem extends NbtItem {
     private final String TAG;
     private final int COOLDOWN;
     private final String ACTIVATION;
+    private final boolean SWITCH;
 
-    public NbtCooldownItem(String tag, int cooldown, String name, Item.Settings settings) {
+    public NbtCooldownItem(String tag, int cooldown, boolean switchAble, String name, Item.Settings settings) {
         super(name, settings);
         this.TAG = tag;
+        this.SWITCH = switchAble;
         this.COOLDOWN = cooldown;
         this.ACTIVATION = TAG + "activate";
+    }
+
+    public String getActivateKey() {
+        return this.ACTIVATION;
+    }
+
+    public String getCooldownKey() {
+        return this.TAG;
+    }
+
+    public boolean canSwitch() {
+        return SWITCH;
     }
 
     /**
@@ -34,7 +48,7 @@ public abstract class NbtCooldownItem extends NbtItem {
     @Override
     public NbtCompound getDefault() {
         NbtCompound nbt = new NbtCompound();
-        nbt.putString(ACTIVATION, "off");
+        nbt.putBoolean(ACTIVATION, false);
         nbt.putInt(TAG, COOLDOWN);
         return nbt;
     }
@@ -43,20 +57,24 @@ public abstract class NbtCooldownItem extends NbtItem {
      * Handles the activation string in the NBT.
      * Will also initiate NBT setup if it wasn't complete, then recursively call this method again
      */
-    public void onClicked(ItemStack stack) {
+    public void onClicked(ItemStack stack, boolean type) {
         if(stack.hasNbt()) {
-            stack.getNbt().putString(ACTIVATION, "on");
+            System.out.println("Setting to type: " + Boolean.toString(type));
+            stack.getNbt().putBoolean(ACTIVATION, type);
         } else {
             initNbt(stack);
-            onClicked(stack);
+            onClicked(stack, type);
         }
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        if(!world.isClient && nbt.isStringEqual(ACTIVATION, "off", user.getMainHandStack()))
-            onClicked(user.getMainHandStack());
+        if(!world.isClient && !nbt.getBoolean(ACTIVATION, user.getMainHandStack()))
+            onClicked(user.getMainHandStack(), true);
+
+        else if(!world.isClient && nbt.getBoolean(ACTIVATION, user.getMainHandStack()) && SWITCH)
+            onClicked(user.getMainHandStack(), false);
 
         return super.use(world, user, hand);
     }
@@ -71,7 +89,7 @@ public abstract class NbtCooldownItem extends NbtItem {
         if(stack.hasNbt()) {
             nbt.addInt(TAG, -1, stack);
             if(nbt.isIntEqual(TAG, 0, stack)) {
-                nbt.setString(ACTIVATION, "off", stack);
+                nbt.setBoolean(ACTIVATION, false, stack);
                 nbt.setInt(TAG, COOLDOWN, stack);
             }
         } else {
@@ -87,9 +105,7 @@ public abstract class NbtCooldownItem extends NbtItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        super.inventoryTick(stack, world, entity, slot, selected);
-
-        if(stack.hasNbt() && nbt.isStringEqual(TAG, "on", stack)) {
+        if(stack.hasNbt() && nbt.getBoolean(ACTIVATION, stack)) {
 
             //Do stuff
             function(stack, world, entity);
