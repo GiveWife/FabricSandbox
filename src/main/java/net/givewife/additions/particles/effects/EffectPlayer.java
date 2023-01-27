@@ -52,7 +52,7 @@ public class EffectPlayer extends CustomEffect {
         double bodyLength = 0.8d;
         double hypotenus = Math.sqrt( Math.pow(bodyWidth/2, 2) + Math.pow(bodyLength/2, 2)); // 0.471d
         double ang = 0.558599315;
-        System.out.println("Ang: " + ang + ", computation: " + Math.atan(bodyWidth/bodyLength));
+        //System.out.println("Ang: " + ang + ", computation: " + Math.atan(bodyWidth/bodyLength));
         ang = -Math.atan(bodyWidth/bodyLength);
 
         float bodyYaw = (float) Math.toRadians(player.bodyYaw);
@@ -64,7 +64,7 @@ public class EffectPlayer extends CustomEffect {
         Pos center = new Pos(player.getX(), player.getY() + 1.2, player.getZ());
         Pos left = new Pos(player.getX()+addX, player.getY() + 1.2, player.getZ()+addZ);
 
-        System.out.println("AATrying to print at: " + left.getPrint() + "; knowing that hypotenus: " + hypotenus + ", bodyYaw: " + bodyYaw + ", diff: " + diff + ", and addZ: " + addZ + ", addX: " + addX);
+        //System.out.println("AATrying to print at: " + left.getPrint() + "; knowing that hypotenus: " + hypotenus + ", bodyYaw: " + bodyYaw + ", diff: " + diff + ", and addZ: " + addZ + ", addX: " + addX);
 
         world.addParticle(ParticleTypes.END_ROD, left.x(), left.y(), left.z(), 0, 0, 0);
 
