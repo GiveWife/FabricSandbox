@@ -43,8 +43,8 @@ public class TestItem extends ModItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-
-
+        if(world.isClient)
+        print(world, player);
         return super.use(world, player, hand);
     }
 
@@ -52,12 +52,15 @@ public class TestItem extends ModItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if(world.isClient && entity instanceof PlayerEntity && selected) {
 
-            PlayerEntity player = (PlayerEntity) entity;
-            //VecSurface sur = new VecSurface(new Pos(user), new Pos(user).north(50).east().up().up(), 100, 500);
-            CustomEffect effect = new EffectPlayer(player);
-            effect.run(world);
-            //player.sendMessage(Text.literal(String.valueOf("Body Yaw: " + Double.toString(player.bodyYaw) + " ; Radians: " + Double.toString(Math.toRadians(player.bodyYaw)))), true);
 
         }
+    }
+
+    private void print(World world, PlayerEntity player) {
+        //VecSurface sur = new VecSurface(new Pos(user), new Pos(user).north(50).east().up().up(), 100, 500);
+        CustomEffect effect = new EffectPlayer(player);
+        effect.run(world);
+        //player.sendMessage(Text.literal(String.valueOf("Body Yaw: " + Double.toString(player.bodyYaw) + " ; Radians: " + Double.toString(Math.toRadians(player.bodyYaw)))), true);
+
     }
 }

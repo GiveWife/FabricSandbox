@@ -1,6 +1,9 @@
 package net.givewife.additions.util.positions;
 
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public class VecTrail extends Vec {
 
@@ -21,6 +24,30 @@ public class VecTrail extends Vec {
         this.stepX = -xD / steps;
         this.stepY = -yD / steps;
         this.stepZ = -zD / steps;
+    }
+
+    /**
+     * Initializes the steps via 10 per block
+     */
+    public VecTrail(String id, Pos from, Pos to) {
+        super(from, to);
+        this.id = id;
+
+        this.xD = from.x() - to.x();
+        this.yD = from.y() - to.y();
+        this.zD = from.z() - to.z();
+
+        this.steps = (int) getBiggest(xD, yD, zD) * 10;
+
+        this.stepX = -xD / this.steps;
+        this.stepY = -yD / this.steps;
+        this.stepZ = -zD / this.steps;
+    }
+
+    private double getBiggest(double x, double y, double z) {
+        if(x >= y && x >= z) return x;
+        if(y >= x && y >= z) return y;
+        else return z;
     }
 
     /**
@@ -46,6 +73,20 @@ public class VecTrail extends Vec {
 
     public int getSteps() {
         return this.steps;
+    }
+
+    public void print(World world) {
+        for(int i = 0; i < this.steps; i++) {
+            Pos print = getOffset(i);
+            world.addParticle(ParticleTypes.END_ROD, print.x(), print.y(), print.z(), 0, 0, 0);
+        }
+    }
+
+    public void print(ServerWorld world) {
+        for(int i = 0; i < this.steps; i++) {
+            Pos print = getOffset(i);
+            world.spawnParticles(ParticleTypes.END_ROD, print.x(), print.y(), print.z(), 1, 0, 0, 0, 0);
+        }
     }
 
 }
