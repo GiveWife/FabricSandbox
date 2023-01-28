@@ -24,6 +24,7 @@ public class VecTrail extends Vec {
         this.stepX = -xD / steps;
         this.stepY = -yD / steps;
         this.stepZ = -zD / steps;
+        if(id.equals("bottomx1")) System.out.println("from: " + from.getPrint() + ", to: " + to.getPrint());
     }
 
     /**
@@ -93,6 +94,10 @@ public class VecTrail extends Vec {
 
         return "[VecTrail] from: " + from().getPrint() + " --> to: " + to().getPrint();
 
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     //public static VecTrail[] getBox(Pos p1) {

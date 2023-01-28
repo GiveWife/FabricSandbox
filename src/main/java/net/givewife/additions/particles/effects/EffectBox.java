@@ -11,16 +11,20 @@ public class EffectBox extends CustomEffect {
 
     private final Pos pos1, pos2;
     private final int stepsPerBlock;
+    private final VecTrail[] trails;
 
     public EffectBox(Pos pos1, Pos pos2, int stepsPerBlock) {
+
+        System.out.println("Pos1/ " + pos1.getPrint() + ", Pos2: " + pos2.getPrint());
 
         final Pos[] fixed = calculate(pos1, pos2);
         assert fixed.length == 2;
 
         this.pos1 = fixed[0];
         this.pos2 = fixed[1];
-
         this.stepsPerBlock = stepsPerBlock;
+        this.trails = init();
+
     }
 
     /**
@@ -44,6 +48,7 @@ public class EffectBox extends CustomEffect {
          *  T
          */
         if(from.x() >= to.x() && from.z() >= to.z()) {
+            System.out.println("Case: > > ");
             if(from.y() >= to.y()) return new Pos[]{ from.south().east().up(), to };
             else return new Pos[] { from.south().east(), to.up() };
         }
@@ -53,6 +58,7 @@ public class EffectBox extends CustomEffect {
          *          T
          */
         if(from.x() <= to.x() && from.z() >= to.z()) {
+            System.out.println("Case < >");
             if(from.y() >= to.y()) return new Pos[]{ from.east().up(), to.south()};
             else return new Pos[]{ from.east(), to.south().up()};
         }
@@ -72,6 +78,7 @@ public class EffectBox extends CustomEffect {
          *  F
          */
         if(from.x() <= to.x() && from.z() <= to.z()) {
+            System.out.println("Case < <");
             if(from.y() >= to.y()) return new Pos[]{ from.up(), to.north().east()};
             else return new Pos[]{ from, to.north().east().up()};
         }
@@ -81,8 +88,11 @@ public class EffectBox extends CustomEffect {
 
     }
 
-    @Override
-    public void run(ServerWorld world) {
+    /**
+     * Calculates all necessary parts to run this effect.
+     * @return
+     */
+    private VecTrail[] init() {
 
         double dX = pos2.x() - pos1.x();
         double dY = pos2.y() - pos1.y();
@@ -92,7 +102,9 @@ public class EffectBox extends CustomEffect {
         int stepsY = (int) Math.abs(dY * stepsPerBlock);
         int stepsZ = (int) Math.abs(dZ * stepsPerBlock);
 
-        VecTrail[] trails = new VecTrail[]{
+        if(stepsX == 0 || stepsY == 0 || stepsZ == 0) System.out.println("[EffectBox] stepX: " + stepsX + ", stepY: " + stepsY + ", stepsZ: " + stepsZ);
+
+        return new VecTrail[]{
 
                 // We can start from pos1, and go EAST (X++) -> dX will be negative if from.x() > to.x() -->  east(-x) == - east(x) == west(x)
                 //                                SOUTH (Z++)-> dZ will be negative if from.z() > to.z() --> south(-z) == - south(z) == north(z)
@@ -115,19 +127,20 @@ public class EffectBox extends CustomEffect {
 
         };
 
-        print(world, trails);
-
     }
 
-    private void print(ServerWorld world, VecTrail[] trails) {
+    @Override
+    public void run(ServerWorld world) {
 
         for(int i = 0; i < trails.length; i++) {
 
             VecTrail trail = trails[i];
+            //System.out.println("[Server] Steps: " + trail.getSteps());
 
             for(int j = 0; j < trail.getSteps(); j++) {
 
                 Pos p = trail.getOffset(j);
+                //System.out.println("[Server] Spawning at: " + p.getPrint());
 
                 world.spawnParticles(ParticleTypes.END_ROD, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
 
@@ -140,5 +153,22 @@ public class EffectBox extends CustomEffect {
     @Override
     public void run(World world) {
 
+        for(int i = 0; i < trails.length; i++) {
+
+            VecTrail trail = trails[i];
+            //System.out.println("[Client] Steps: " + trail.getSteps());
+
+            for(int j = 0; j < trail.getSteps(); j++) {
+
+                Pos p = trail.getOffset(j);
+                //System.out.println("[Client] Spawning at: " + p.getPrint());
+
+                world.addParticle(ParticleTypes.END_ROD, true, p.x(), p.y(), p.z(), 0, 0, 0);
+
+            }
+
+        }
+
     }
+
 }
