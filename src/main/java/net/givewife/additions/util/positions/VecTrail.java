@@ -89,6 +89,12 @@ public class VecTrail extends Vec {
         }
     }
 
+    public String getPrint() {
+
+        return "[VecTrail] from: " + from().getPrint() + " --> to: " + to().getPrint();
+
+    }
+
     //public static VecTrail[] getBox(Pos p1) {
 
 

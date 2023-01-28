@@ -10,51 +10,116 @@ import net.minecraft.world.World;
 public class EffectBox extends CustomEffect {
 
     private final Pos pos1, pos2;
-    private final int stepsPerBlock = 2;
+    private final int stepsPerBlock;
 
-    public EffectBox(Pos pos1, Pos pos2) {
-        System.out.println("Pos 1: " + pos1.getPrint() + ", Pos 2: " + pos2.getPrint());
-        this.pos1 = pos1;
-        this.pos2 = pos2;
+    public EffectBox(Pos pos1, Pos pos2, int stepsPerBlock) {
+
+        final Pos[] fixed = calculate(pos1, pos2);
+        assert fixed.length == 2;
+
+        this.pos1 = fixed[0];
+        this.pos2 = fixed[1];
+
+        this.stepsPerBlock = stepsPerBlock;
+    }
+
+    /**
+     * This method makes sure that the conversion from BlockPos to pos goes correctly.
+     * BlockPos will always contain the north-west point of the block.
+     *
+     * To make sure the particles surround all the blocks, sometimes the north-west position
+     * should be corrected to some direction.
+     */
+    private Pos[] calculate(Pos from, Pos to) {
+
+        // We use equal signs because IF the coordinates are the same, < and > would not select one of the coords.
+        // If one of the two is higher and the other is equal, or both are equal, the algorithm will always choose
+        // one coord to take the upper / changed position
+
+        // Take east up the page, south right to the page
+        // Know that coordinates are always north-west of the block.
+
+        /*           F
+         *
+         *  T
+         */
+        if(from.x() >= to.x() && from.z() >= to.z()) {
+            if(from.y() >= to.y()) return new Pos[]{ from.south().east().up(), to };
+            else return new Pos[] { from.south().east(), to.up() };
+        }
+
+        /*  F
+         *
+         *          T
+         */
+        if(from.x() <= to.x() && from.z() >= to.z()) {
+            if(from.y() >= to.y()) return new Pos[]{ from.east().up(), to.south()};
+            else return new Pos[]{ from.east(), to.south().up()};
+        }
+
+        /*  T
+         *
+         *           F
+         */
+        if(from.x() >= to.x() && from.z() <= to.z()) {
+            System.out.println("Case > <");
+            if(from.y() >= to.y()) return new Pos[]{ from.south().up(), to.east()};
+            else return new Pos[]{ from.south(), to.east().up()};
+        }
+
+        /*           T
+         *
+         *  F
+         */
+        if(from.x() <= to.x() && from.z() <= to.z()) {
+            if(from.y() >= to.y()) return new Pos[]{ from.up(), to.north().east()};
+            else return new Pos[]{ from, to.north().east().up()};
+        }
+
+        return new Pos[] {from, to};
+
+
     }
 
     @Override
     public void run(ServerWorld world) {
 
-        // Sets the pos coord of the blockpos to the outer end.
-        Pos pos2 = this.pos2.east().south();
-        double dX = Math.abs(pos2.x() - pos1.x());
-        double dY = Math.abs(pos2.y() - pos1.y());
-        double dZ = Math.abs(pos2.z() - pos1.z());
+        double dX = pos2.x() - pos1.x();
+        double dY = pos2.y() - pos1.y();
+        double dZ = pos2.z() - pos1.z();
 
-        int stepsX = steps(dX);
-        int stepsY = steps(dY);
-        int stepsZ = steps(dZ);
+        int stepsX = (int) Math.abs(dX * stepsPerBlock);
+        int stepsY = (int) Math.abs(dY * stepsPerBlock);
+        int stepsZ = (int) Math.abs(dZ * stepsPerBlock);
 
         VecTrail[] trails = new VecTrail[]{
 
-                new VecTrail("bottomx1", pos1, pos1.east(dX), steps(dX)),
-                new VecTrail("bottomx2", pos1, pos1.south(dZ), steps(dZ)),
-                new VecTrail("bottomx3", pos1.east(dX), pos2.down(dY), steps(dX)),
-                new VecTrail("bottomx4", pos1.south(dZ), pos2.down(dY), steps(dZ)),
+                // We can start from pos1, and go EAST (X++) -> dX will be negative if from.x() > to.x() -->  east(-x) == - east(x) == west(x)
+                //                                SOUTH (Z++)-> dZ will be negative if from.z() > to.z() --> south(-z) == - south(z) == north(z)
+                // Operations can all be done on POS1!
+                // dY will be negative if pos1.y() > pos2.y() -> so pos1.up(dY) == down!
+                new VecTrail("bottomx1", pos1, pos1.east(dX), stepsX),
+                new VecTrail("bottomx2", pos1, pos1.south(dZ), stepsZ),
+                new VecTrail("bottomx3", pos1.east(dX), pos1.south(dZ).east(dX), stepsZ),
+                new VecTrail("bottomx4", pos1.south(dZ), pos1.south(dZ).east(dX), stepsX),
 
-                new VecTrail("topx1", pos1.up(dY), pos1.east(dX).up(dY), steps(dX)),
-                new VecTrail("topx2", pos1.up(dY), pos1.south(dZ).up(dY), steps(dZ)),
-                new VecTrail("topx3", pos1.east(dX).up(dY), pos2, steps(dX)),
-                new VecTrail("topx4", pos1.south(dZ).up(dY), pos2, steps(dZ)),
+                new VecTrail("topx1", pos1.up(dY), pos1.east(dX).up(dY), stepsX),
+                new VecTrail("topx2", pos1.up(dY), pos1.south(dZ).up(dY), stepsZ),
+                new VecTrail("topx3", pos1.east(dX).up(dY), pos2, stepsZ),
+                new VecTrail("topx4", pos1.south(dZ).up(dY), pos2, stepsX),
 
-                new VecTrail("side1", pos1, pos1.up(dY), steps(dY)),
-                new VecTrail("side2", pos1.east(dX), pos1.east(dX).up(dY), steps(dY)),
-                new VecTrail("side3", pos1.east(dX).south(dZ), pos1.east(dX).south(dZ).up(dY), steps(dY)),
-                new VecTrail("side4", pos1.south(dZ), pos1.south(dZ).up(dY), steps(dY))
+                new VecTrail("side1", pos1, pos1.up(dY), stepsY),
+                new VecTrail("side2", pos1.east(dX), pos1.east(dX).up(dY), stepsY),
+                new VecTrail("side3", pos2.down(dY), pos2, stepsY),
+                new VecTrail("side4", pos1.south(dZ), pos1.south(dZ).up(dY), stepsY)
 
         };
 
-        print(world, trails, stepsX, stepsY, stepsZ);
+        print(world, trails);
 
     }
 
-    private void print(ServerWorld world, VecTrail[] trails, int stepsX, int stepsY, int stepsZ) {
+    private void print(ServerWorld world, VecTrail[] trails) {
 
         for(int i = 0; i < trails.length; i++) {
 
@@ -70,10 +135,6 @@ public class EffectBox extends CustomEffect {
 
         }
 
-    }
-
-    private int steps(double distance) {
-        return (int) distance * stepsPerBlock;
     }
 
     @Override

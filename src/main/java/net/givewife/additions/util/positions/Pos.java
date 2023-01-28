@@ -15,6 +15,7 @@ public class Pos {
         this.y = pos.getY();
         this.z = pos.getZ();
     }
+
     public Pos(PlayerEntity e) {
         this.x = (double) e.getX();
         this.y = (double) e.getY();
