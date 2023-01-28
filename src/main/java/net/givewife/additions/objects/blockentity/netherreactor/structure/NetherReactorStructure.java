@@ -8,6 +8,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NetherReactorStructure {
 
     private final BlockPos pos;
@@ -47,7 +50,7 @@ public class NetherReactorStructure {
     public boolean isSurroundingCorrect(World world) {
 
         //Local variable for reference
-        BlockPos pos = this.pos.down().down();
+        BlockPos pos = this.pos.down();
         int radius = 20;
         int height = 10;
         BlockPos[][] ground = new BlockPos[height][(radius*2)*(radius*2)];
@@ -63,9 +66,7 @@ public class NetherReactorStructure {
                 //z-axis
                 for(int z = -radius; z < radius; z++) {
 
-                    //System.out.println("Index: " + (((x+radius)*radius) + (z+radius)));
                     layer[((x+radius)*radius*2) + (z+radius)] = pos.north(x).east(z).up(i);
-
 
                 }
 
@@ -76,22 +77,30 @@ public class NetherReactorStructure {
         }
 
         // Check the generated blocks per level i
-        for(int i = 0; i < ground.length; i++) {
+        int outerLen = ground.length;
+        List<BlockPos> invalids = new ArrayList<BlockPos>();
+        for(int i = 0; i < outerLen; i++) {
 
-            for(int j = 0; j < ground[i].length; j++) {
+            int innerLen = ground[i].length;
+            for(int j = 0; j < innerLen; j++) {
 
                 // If an air block is found, we return false and print the effect
                 if(world.getBlockState(ground[i][j]).getBlock() != Blocks.AIR && !world.isClient) {
 
-                    // Initialise the effect
-                    EffectBox effect = new EffectBox(getFurthest(true, ground), getFurthest(false, ground));
-                    effect.run((ServerWorld) world);
-                    return false;
+                    System.out.println("block: " + world.getBlockState(ground[i][j]).getBlock());
+                    invalids.add(ground[i][j]);
 
                 }
 
             }
 
+        }
+
+        if(invalids.size() >= 1) {
+            // Initialise the effect
+            EffectBox effect = new EffectBox(getFurthest(true, invalids), getFurthest(false, invalids));
+            effect.run((ServerWorld) world);
+            return false;
         }
 
         return true;
@@ -102,27 +111,26 @@ public class NetherReactorStructure {
      * Gets the furthest position from the given set of blockposes
      * @pre | make sure the poses list at least contains 1 element array with also 1 element
      */
-    private Pos getFurthest(boolean northEast, BlockPos[][] poses) {
+    private Pos getFurthest(boolean northEast, List<BlockPos> poses) {
 
-        int furthestX = poses[0][0].getX();
-        int furthestY = poses[0][0].getY();
-        int furthestZ = poses[0][0].getZ();
+        int furthestX = poses.get(0).getX();
+        int furthestY = poses.get(0).getY();
+        int furthestZ = poses.get(0).getZ();
 
-        for(int i = 0; i < poses.length; i++) {
+        int size = poses.size();
+        for(int i = 0; i < size; i++) {
 
-            for(int j = 0; j < poses[i].length; j++) {
 
-                if(northEast) {
-                    if(poses[i][j].getX() <= furthestX) furthestX = poses[i][j].getX();
-                    if(poses[i][j].getY() <= furthestY) furthestY = poses[i][j].getY();
-                    if(poses[i][j].getZ() <= furthestZ) furthestZ = poses[i][j].getZ();
-                } else {
-                    if(poses[i][j].getX() >= furthestX) furthestX = poses[i][j].getX();
-                    if(poses[i][j].getY() >= furthestY) furthestY = poses[i][j].getY();
-                    if(poses[i][j].getZ() >= furthestZ) furthestZ = poses[i][j].getZ();
-                }
-
+            if(northEast) {
+                if(poses.get(i).getX() <= furthestX) furthestX = poses.get(i).getX();
+                if(poses.get(i).getY() <= furthestY) furthestY = poses.get(i).getY();
+                if(poses.get(i).getZ() <= furthestZ) furthestZ = poses.get(i).getZ();
+            } else {
+                if(poses.get(i).getX() >= furthestX) furthestX = poses.get(i).getX();
+                if(poses.get(i).getY() >= furthestY) furthestY = poses.get(i).getY();
+                if(poses.get(i).getZ() >= furthestZ) furthestZ = poses.get(i).getZ();
             }
+
 
         }
 

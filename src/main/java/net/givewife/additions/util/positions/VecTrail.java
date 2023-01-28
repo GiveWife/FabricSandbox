@@ -89,4 +89,10 @@ public class VecTrail extends Vec {
         }
     }
 
+    //public static VecTrail[] getBox(Pos p1) {
+
+
+
+    //}
+
 }

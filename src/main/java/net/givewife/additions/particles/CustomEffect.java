@@ -1,6 +1,5 @@
 package net.givewife.additions.particles;
 
-import net.givewife.additions.util.positions.Pos;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
