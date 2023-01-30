@@ -21,12 +21,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+//TODO sometimes, the projector blocks won't decay
 public class ProjectorItem extends NbtCooldownItem {
 
     public ProjectorItem(String name) {
         super(name + "_function", 800, true, name, CustomSettings.getDefaultSettings());
     }
-
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
@@ -43,6 +43,7 @@ public class ProjectorItem extends NbtCooldownItem {
         BlockPos pos = entity.getBlockPos().down();
 
         BlockPos[] square = PositionUtilities.getSquareAround(pos, 3);
+        ((PlayerEntity)entity).sendMessage(Text.literal(String.valueOf("Cooldown: " + Integer.toString(nbt.getInt(getCooldownKey(), stack)))), true);
 
         //Set blocks
         for (int i = 0; i < square.length; i++) {
@@ -52,10 +53,15 @@ public class ProjectorItem extends NbtCooldownItem {
 
             //Check if we should replace
             if (inspectedBlock.getBlock() == Blocks.AIR ||
-                    (inspectedBlock.getBlock() == BlockRegistry.PROJECTOR_1)
+                    (inspectedBlock.getBlock() == BlockRegistry.PROJECTOR_1
                             && inspectedBlock.getProperties().contains(ProjectorBlock.BRIGHTNESS)
-                            && inspectedBlock.get(ProjectorBlock.BRIGHTNESS) <= 3)
+                            && inspectedBlock.get(ProjectorBlock.BRIGHTNESS) <= 3))
                 world.setBlockState(square[i], BlockRegistry.PROJECTOR_1.getDefaultState().with(ProjectorBlock.BRIGHTNESS, 4));
         }
+    }
+
+    @Override
+    public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
     }
 }
