@@ -17,6 +17,8 @@ import net.minecraft.world.RaycastContext;
 
 import java.util.Random;
 
+import static java.text.ChoiceFormat.nextDouble;
+
 public class GeneralHelper {
 
     private String name;
@@ -141,6 +143,11 @@ public class GeneralHelper {
     public static int getRand(int max, int low) {
         Random rand = new Random();
         return rand.nextInt(max-low) + low;
+    }
+
+    public static double getRadial(double low, double max) {
+        Random rand = new Random();
+        return rand.nextDouble(max-low) + low;
     }
 
     public String intToString(int[] arr) {

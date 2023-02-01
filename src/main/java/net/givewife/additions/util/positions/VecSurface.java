@@ -62,7 +62,7 @@ public class VecSurface {
     public void print(ServerWorld server) {
         for(int i = 0; i < lines; i++) {
             for(int j = 0; j < 100; j++) {
-                Pos next = trails[i].getOffset(j);
+                Pos next = trails[i].offset(j);
                 server.spawnParticles(ParticleTypes.END_ROD, next.x(), next.y(), next.z(), 1, 0, 0, 0, 0);
             }
         }

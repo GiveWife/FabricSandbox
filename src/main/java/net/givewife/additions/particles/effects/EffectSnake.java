@@ -1,16 +1,29 @@
 package net.givewife.additions.particles.effects;
 
 import net.givewife.additions.particles.CustomEffect;
+import net.givewife.additions.util.EffectSnakeHelper;
+import net.givewife.additions.util.GeneralHelper;
+import net.givewife.additions.util.positions.Parabola;
 import net.givewife.additions.util.positions.Pos;
+import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EffectSnake extends CustomEffect {
 
+    private final Parabola[] jumps;
 
+    /**
+     * @pre | bounces >= 2
+     */
+    public EffectSnake(Pos start, float radius, int heightlimit, World world, int bounces) {
+        EffectSnakeHelper helper = new EffectSnakeHelper(start, radius, heightlimit, world, bounces);
+        this.jumps = helper.getJumps();
+    }
 
-    public EffectSnake(Pos start) {
-
+    public Parabola[] getJumps() {
+        return this.jumps;
     }
 
     @Override

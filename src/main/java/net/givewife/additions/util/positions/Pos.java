@@ -39,6 +39,25 @@ public class Pos {
         return z;
     }
 
+    /**
+     * Calculates the distance between this and given pos
+     */
+    public double distance(Pos pos) {
+
+        double y = Math.abs(this.y - pos.y);
+        double distanceXZ = distancexz(pos);
+
+        return Math.sqrt((distanceXZ*distanceXZ) + (y*y));
+
+    }
+
+    public double distancexz(Pos pos) {
+        double dx = Math.abs(this.x - pos.x);
+        double dz = Math.abs(this.z - pos.z);
+
+        return Math.sqrt((dx*dx) + (dz*dz));
+    }
+
     public void print(String source) {
         System.out.println(source + " -> [Pos]: [" + x + ", " + y + ", " + z + "]");
     }
@@ -101,6 +120,10 @@ public class Pos {
 
     public Pos subtract(Pos pos) {
         return new Pos(x() - pos.x(), y() - pos.y(), z() - pos.z());
+    }
+
+    public BlockPos getBlockPos() {
+        return new BlockPos(Math.floor(x()), Math.floor(y()), Math.floor(z()));
     }
 
 }

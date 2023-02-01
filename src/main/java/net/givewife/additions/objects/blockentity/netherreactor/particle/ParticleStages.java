@@ -53,7 +53,7 @@ public class ParticleStages {
         }
 
         public Pos next(int tick) {
-            return this.to.getOffset(tick);
+            return this.to.offset(tick);
         }
 
     }

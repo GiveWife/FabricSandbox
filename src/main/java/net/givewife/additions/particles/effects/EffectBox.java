@@ -139,7 +139,7 @@ public class EffectBox extends CustomEffect {
 
             for(int j = 0; j < trail.getSteps(); j++) {
 
-                Pos p = trail.getOffset(j);
+                Pos p = trail.offset(j);
                 //System.out.println("[Server] Spawning at: " + p.getPrint());
 
                 world.spawnParticles(ParticleTypes.END_ROD, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
@@ -160,7 +160,7 @@ public class EffectBox extends CustomEffect {
 
             for(int j = 0; j < trail.getSteps(); j++) {
 
-                Pos p = trail.getOffset(j);
+                Pos p = trail.offset(j);
                 //System.out.println("[Client] Spawning at: " + p.getPrint());
 
                 world.addParticle(ParticleTypes.END_ROD, true, p.x(), p.y(), p.z(), 0, 0, 0);

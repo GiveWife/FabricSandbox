@@ -91,7 +91,7 @@ public class EffectSimpleBox extends CustomEffect {
 
             for(int j = 0; j < trail.getSteps(); j++) {
 
-                Pos p = trail.getOffset(j);
+                Pos p = trail.offset(j);
                 //System.out.println("[Server] Spawning at: " + p.getPrint());
 
                 world.spawnParticles(this.type, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
@@ -112,7 +112,7 @@ public class EffectSimpleBox extends CustomEffect {
 
             for(int j = 0; j < trail.getSteps(); j++) {
 
-                Pos p = trail.getOffset(j);
+                Pos p = trail.offset(j);
                 System.out.println("Type: " + trail.getId());
                 //System.out.println("[Client] Spawning at: " + p.getPrint());
 
