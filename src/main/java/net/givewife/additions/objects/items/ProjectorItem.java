@@ -24,8 +24,9 @@ import java.util.List;
 //TODO sometimes, the projector blocks won't decay
 public class ProjectorItem extends NbtCooldownItem {
 
+    //String tag, int cooldown, int duration, boolean switchAble, int interruptedCooldown, String name, Item.Settings settings
     public ProjectorItem(String name) {
-        super(name + "_function", 800, true, name, CustomSettings.getDefaultSettings());
+        super(name + "_function", 100, 800, true, 0, name, CustomSettings.getDefaultSettings());
     }
 
     @Override

@@ -51,7 +51,7 @@ public class ProjectorBlock extends BlockWithEntity implements BlockEntityProvid
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, Main.TILE_ENTITIES.PROJECTOR_BLOCK_ENTITY, (world1, pos, state1, be) -> ProjectorBlockEntity.tick(world1, pos, state1, be));
+        return checkType(type, Main.TILE_ENTITIES.PROJECTOR_BLOCK_ENTITY, (world1, pos, state1, be) -> be.tick(world1, pos, state1, be));
     }
 
 }

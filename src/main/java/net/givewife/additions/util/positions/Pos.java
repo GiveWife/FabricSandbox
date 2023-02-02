@@ -39,6 +39,18 @@ public class Pos {
         return z;
     }
 
+    public int intx() {
+        return (int) Math.floor(x);
+    }
+
+    public int inty() {
+        return (int) Math.floor(y);
+    }
+
+    public int intz() {
+        return (int) Math.floor(z);
+    }
+
     /**
      * Calculates the distance between this and given pos
      */

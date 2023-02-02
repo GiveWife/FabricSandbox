@@ -4,7 +4,12 @@ import net.minecraft.util.math.BlockPos;
 
 public class PositionUtilities {
 
-    public PositionUtilities() {}
+    public PositionUtilities() {
+
+        double a = 4;
+        int d = 2;
+
+    }
 
     /**
      * Size must be odd and at least 3.

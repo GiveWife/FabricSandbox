@@ -4,8 +4,12 @@ import net.givewife.additions.util.positions.Parabola;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 
+/**
+ * Helper class that generates all parabola's for a snake effect.
+ */
 public class EffectSnakeHelper {
 
     private final Parabola[] jumps;
@@ -23,8 +27,26 @@ public class EffectSnakeHelper {
         this.jumps = this.allocateJumps();
     }
 
+    public EffectSnakeHelper(Pos start, float radius, int heightlimit, World world) {
+        this.radius = radius;
+        this.bounces = 1;
+        this.heightLimit = heightlimit;
+        this.world = world;
+        this.start = start;
+        this.jumps = this.allocateJumps();
+    }
+
     public Parabola[] getJumps() {
         return this.jumps;
+    }
+
+    /**
+     * Generates a parabola starting from the end of the other.
+     */
+    public Parabola getNextJump(Parabola start) {
+
+        return start;
+
     }
 
     private Parabola[] allocateJumps() {
@@ -34,44 +56,73 @@ public class EffectSnakeHelper {
         int counter = jumps.length;
 
         // We will generate the first block, so we know which direction not to look for again.
+        // Our first radial.
         double radial = GeneralHelper.getRadial(0, 2*Math.PI);
-        Pos next = checkBlock(calculateBlock(this.start, radial), radial);
 
         // We will add the rest.
         for(int i = 1; i < counter; i++) {
-            radial = GeneralHelper.getRadial(0, 2*Math.PI);
-            jumps[i] = checkBlock(calculateBlock(jumps[i-1], radial), radial);
-            System.out.println("Calculated: " + jumps[i].getPrint());
+            Tuple<Double, Pos> values = checkBlock(calculateBlock(jumps[i-1], radial), radial);
+            jumps[i] = values.getSecond();
+            radial = values.getFirst();
         }
 
+        // We make an array that holds all our parabola objects
         Parabola[] paras = new Parabola[bounces-1];
 
+        // We fill the array
         for(int i = 0;  i < paras.length; i++) {
 
             paras[i] = new Parabola(jumps[i], jumps[i+1], 4, 100);
+            System.out.println("After filling array: " + paras[i].getPrint());
 
         }
 
         return paras;
     }
 
-    private Pos checkBlock(Pos pos, double radial) {
+    private Tuple<Double, Pos> checkBlock(Pos pos, double radial) {
 
+        // Start variables: randomly generated radial in the same direction as the previous
         double PI = Math.PI;
         double genRadial = GeneralHelper.getRadial(radial-(PI/4), radial+(PI/4));
-        Pos check = calculateBlock(pos, genRadial);
 
-        while(isValid(pos) == null) {
-            genRadial = GeneralHelper.getRadial(radial-(PI/4), radial+(PI/4));
+        // Get block
+        Pos check = calculateBlock(pos, genRadial);
+        Pos adjustedHeight = isValid(pos, check);
+
+        // When the blocks in that direction are not valid, we will have to check another direction
+        int failAttempts = 0;
+
+        // we check if the adjustedHeight block, is a valid spawn location.
+        while(adjustedHeight == null && failAttempts < 6) {
+
+            // If we failed at least 3 times, the fourth time we generate a radial in another direction
+            genRadial = failAttempts <= 3 ?
+                    GeneralHelper.getRadial(radial-(PI/4), radial+(PI/4))
+                    : GeneralHelper.getRadial(radial+(PI/4), radial-(PI/4) + (2*PI));
+
+            // Get new block with new radial
             check = calculateBlock(pos, genRadial);
+
+            // Check the block's surroundings
+            adjustedHeight = isValid(pos, check);
+
+            // We increase our failed attempts
+            failAttempts++;
         }
 
-        return check;
+        // If it keeps failing, we return the start pos.
+        if(failAttempts == 6 && isValid(pos, check) == null) {
+            System.out.println("6 failed attempts");
+            return new Tuple<Double, Pos>(genRadial, pos);
+        }
+
+        return new Tuple<Double, Pos>(genRadial, adjustedHeight);
 
     }
 
     /**
-     * Returns a blockpos with same height but offset x,z
+     * Returns a block offset in the xz direction, but same height
      */
     private Pos calculateBlock(Pos start, double radial) {
         double posX = (Math.cos(radial)*radius) + start.x();
@@ -83,20 +134,37 @@ public class EffectSnakeHelper {
     /**
      * The calculated position could be an airblock. This function will offset the Y coordinate
      */
-    private BlockPos isValid(Pos calculated) {
+    private Pos isValid(Pos from, Pos to) {
 
-        BlockPos topBlock = calculated.getBlockPos();
-
-        // We will check if we may jump to a certain higher location.
-        int up = -(heightLimit-1);
-        int counter = up;
-
-        // Loop from calculated.y()-3 to calculated.y()+3 and see which y coord survives.
-        for(int i = up; i <= -up; i++) {
-            if(world.getBlockState(topBlock.up(i)).getBlock() == Blocks.AIR && counter >= i) counter = i;
+        // In case we don't need to check for heightlimit
+        if(heightLimit == -1) {
+            int topY = world.getTopY(Heightmap.Type.WORLD_SURFACE, (int) from.x(), (int) from.z());
+            return new Pos(to.x(), topY, to.z());
         }
 
-        return calculated.getBlockPos().up(counter);
+        // We will check if we may jump to a certain higher location.
+        int previousY = from.inty();
+        int jumpTo = previousY - heightLimit;
+
+        for(int i = -heightLimit; i <= heightLimit; i++) {
+
+            // The highest airblock that has a solid block underneath will be jumped to
+            if(world.getBlockState(to.up(i).getBlockPos()).getBlock() == Blocks.AIR
+            && world.getBlockState(to.up(i-1).getBlockPos()).getBlock() != Blocks.AIR) {
+                jumpTo = i + previousY;
+            }
+
+        }
+
+        for(int i = 1; i < heightLimit; i++) {
+
+            if(world.getBlockState(to.up(jumpTo).up(i).getBlockPos()).getBlock() != Blocks.AIR) {
+                return null;
+            }
+
+        }
+
+        return new Pos(to.x(), jumpTo, to.z());
 
     }
 

@@ -147,7 +147,8 @@ public class GeneralHelper {
 
     public static double getRadial(double low, double max) {
         Random rand = new Random();
-        return rand.nextDouble(max-low) + low;
+        double gen = rand.nextDouble(max-low) + low;
+        return gen;
     }
 
     public String intToString(int[] arr) {

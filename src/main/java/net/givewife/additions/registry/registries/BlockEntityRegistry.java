@@ -2,6 +2,7 @@ package net.givewife.additions.registry.registries;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.givewife.additions.Main;
+import net.givewife.additions.objects.blockentity.ParticleBlockEntity;
 import net.givewife.additions.objects.blockentity.netherreactor.NetherReactorEntity;
 import net.givewife.additions.objects.blockentity.ProjectorBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -13,6 +14,7 @@ public class BlockEntityRegistry {
 
     public final BlockEntityType<ProjectorBlockEntity> PROJECTOR_BLOCK_ENTITY;
     public final BlockEntityType<NetherReactorEntity> NETHER_REACTOR_ENTITY;
+    public final BlockEntityType<ParticleBlockEntity> PARTICLE_ENTITY;
 
     public BlockEntityRegistry() {
 
@@ -28,6 +30,12 @@ public class BlockEntityRegistry {
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(Main.MODID, "nether_reactor_entity"),
                 FabricBlockEntityTypeBuilder.create(NetherReactorEntity::new, BlockRegistry.NETHER_REACTOR).build()
+        );
+
+        PARTICLE_ENTITY = Registry.register(
+                Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(Main.MODID, "particle_block_entity"),
+                FabricBlockEntityTypeBuilder.create(ParticleBlockEntity::new, BlockRegistry.PARTICLE_BLOCK).build()
         );
 
     }

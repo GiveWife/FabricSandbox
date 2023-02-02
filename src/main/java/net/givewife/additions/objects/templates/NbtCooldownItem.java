@@ -13,16 +13,28 @@ import net.minecraft.world.World;
 public abstract class NbtCooldownItem extends NbtItem {
 
     private final String TAG;
-    private final int COOLDOWN;
-    private final String ACTIVATION;
+    private final int COOLDOWN, DURATION, INTERRUPTCOOLDOWN;
+    private final String ACTIVATION, ACTIVE_TIME;
     private final boolean SWITCH;
 
-    public NbtCooldownItem(String tag, int cooldown, boolean switchAble, String name, Item.Settings settings) {
+    /**
+     * Tag: unique identifier to setup NBT tags
+     * Cooldown: the amount of time the player should wait when the usage time has gone by
+     * Duration: the amount of time the item is active after clicking
+     * Switchable: Being able to turn off the item when active
+     * Interruptcooldown: When switched off before usage time runs, out, how long should the player wait?
+     */
+    public NbtCooldownItem(String tag, int cooldown, int duration, boolean switchAble, int interruptedCooldown, String name, Item.Settings settings) {
         super(name, settings);
         this.TAG = tag;
+
         this.SWITCH = switchAble;
         this.COOLDOWN = cooldown;
+        this.DURATION = duration;
+        this.INTERRUPTCOOLDOWN = interruptedCooldown;
+
         this.ACTIVATION = TAG + "activate";
+        this.ACTIVE_TIME = TAG + "timeactive";
     }
 
     public String getActivateKey() {
@@ -48,8 +60,12 @@ public abstract class NbtCooldownItem extends NbtItem {
     @Override
     public NbtCompound getDefault() {
         NbtCompound nbt = new NbtCompound();
+
+        // Determines if the item is active
         nbt.putBoolean(ACTIVATION, false);
-        nbt.putInt(TAG, COOLDOWN);
+
+        //Determines the amount of time the item will be active for
+        nbt.putInt(ACTIVE_TIME, DURATION);
         return nbt;
     }
 
@@ -57,44 +73,73 @@ public abstract class NbtCooldownItem extends NbtItem {
      * Handles the activation string in the NBT.
      * Will also initiate NBT setup if it wasn't complete, then recursively call this method again
      */
-    public void onClicked(ItemStack stack, boolean type) {
+    public void onClicked(ItemStack stack, PlayerEntity user) {
         if(stack.hasNbt()) {
-            System.out.println("Setting to type: " + Boolean.toString(type));
-            stack.getNbt().putBoolean(ACTIVATION, type);
+
+            // If item was inactive we activate
+            if(!stack.getNbt().getBoolean(ACTIVATION))
+                stack.getNbt().putBoolean(ACTIVATION, true);
+            else {
+                stack.getNbt().putBoolean(ACTIVATION, false);
+                stack.getNbt().putInt(ACTIVE_TIME, DURATION);
+                user.getItemCooldownManager().set(stack.getItem(), COOLDOWN);
+            }
+
         } else {
             initNbt(stack);
-            onClicked(stack, type);
+            onClicked(stack, user);
         }
+    }
+
+    /**
+     * Determines if the item may be activated:
+     *    WAIT_TIME == 0
+     *    ACTIVATION == false
+     */
+    private boolean canActivate(ItemStack stack) {
+
+        if(stack.hasNbt() && !nbt.getBoolean(ACTIVATION, stack)) {
+            return true;
+        }
+        // Switching the item off
+        // We must put the cooldown!
+        else if(stack.hasNbt() && nbt.getBoolean(ACTIVATION, stack) && SWITCH) {
+            return true;
+        }
+
+        return false;
+
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        if(!world.isClient && !nbt.getBoolean(ACTIVATION, user.getMainHandStack()))
-            onClicked(user.getMainHandStack(), true);
+        ItemStack held = user.getMainHandStack();
 
-        else if(!world.isClient && nbt.getBoolean(ACTIVATION, user.getMainHandStack()) && SWITCH)
-            onClicked(user.getMainHandStack(), false);
+        // Activation must be off to be able to turn it on.
+        if(!world.isClient && canActivate(held))
+            onClicked(held, user);
 
         return super.use(world, user, hand);
     }
 
     /**
-     * Handles the cooldown for this item. When the cooldown reached 0, the item nbt will be reset
+     * Handles the duration for this item. When the duration reached 0, the item nbt will be reset
      * Will also initiate NBT setup if it wasn't complete, then recursively call this method again
      *
      * This is put into the inventory tick method. If overridden in subclass, simply call superconstructor
      */
-    public void handleCooldown(ItemStack stack) {
+    public void handleCooldown(ItemStack stack, PlayerEntity user) {
         if(stack.hasNbt()) {
-            nbt.addInt(TAG, -1, stack);
-            if(nbt.isIntEqual(TAG, 0, stack)) {
+            nbt.addInt(ACTIVE_TIME, -1, stack);
+            if(nbt.isIntEqual(ACTIVE_TIME, 0, stack)) {
                 nbt.setBoolean(ACTIVATION, false, stack);
-                nbt.setInt(TAG, COOLDOWN, stack);
+                nbt.setInt(ACTIVE_TIME, DURATION, stack);
+                user.getItemCooldownManager().set(stack.getItem(), COOLDOWN);
             }
         } else {
             initNbt(stack);
-            handleCooldown(stack);
+            handleCooldown(stack, user);
         }
     }
 
@@ -105,13 +150,13 @@ public abstract class NbtCooldownItem extends NbtItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if(stack.hasNbt() && nbt.getBoolean(ACTIVATION, stack)) {
+        if(stack.hasNbt() && nbt.getBoolean(ACTIVATION, stack) && entity instanceof PlayerEntity) {
 
             //Do stuff
             function(stack, world, entity);
 
             //Reduce cooldown
-            handleCooldown(stack);
+            handleCooldown(stack, (PlayerEntity) entity);
 
         }
 
