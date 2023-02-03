@@ -161,5 +161,15 @@ public class GeneralHelper {
         return s;
     }
 
+    public String doubleToString(double[] arr) {
+        String s = "[";
+        for(int i = 0; i < arr.length; i++) {
+            s += Double.toString(arr[i]);
+            if(i + 1 < arr.length) s += ", ";
+        }
+        s += "]";
+        return s;
+    }
+
 
 }

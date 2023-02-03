@@ -1,5 +1,6 @@
 package net.givewife.additions.util.positions;
 
+import net.givewife.additions.util.GeneralHelper;
 import net.givewife.additions.util.MathHelper;
 import org.joml.Math;
 
@@ -51,10 +52,12 @@ public class Parabola extends Trail{
         double[] row1 = new double[] { distance*distance, distance, endY };
         double[] row2 = new double[] { distance*distance*0.25, distance*0.5, interY };
         MathHelper helper = new MathHelper();
+        GeneralHelper gh = new GeneralHelper();
 
         row1 = helper.rowOp(row1, row2, -row1[0]/row2[0]);
         double b = row1[2] / row1[1];
         double a = (row2[2] - (row2[1]*b)) * (1/row2[0]);
+        //System.out.println("A: " + a + ", B: " + b + ", endY: " + endY + ", interY: " + interY + ", row1: " + gh.doubleToString(row1));
 
         return new double[]{a, b};
 
@@ -73,7 +76,8 @@ public class Parabola extends Trail{
 
         // This is our xz value currently
         double distance = offset*distanceStep;
-        double yPos = trailPoint.y() + (distance*distance*coef[0]) + (distance*coef[1]);
+        //double yPos = trailPoint.y() + (distance*distance*coef[0]) + (distance*coef[1]);
+        double yPos = start.y() + (distance*distance*coef[0]) + (distance*coef[1]);
 
         return new Pos(trailPoint.x(), yPos, trailPoint.z());
     }

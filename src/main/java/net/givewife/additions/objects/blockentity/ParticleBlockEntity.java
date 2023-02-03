@@ -42,7 +42,7 @@ public class ParticleBlockEntity extends BlockEntity {
             this.size = jumps.length;
             for(int i = 0; i < jumps.length; i++) {
                 if(i+1 < jumps.length) {
-                    System.out.println("For entry (" + i + "): end i: " + jumps[i].offset(100).y() + " - start i+1: " + jumps[i+1].offset(0).y());
+                    System.out.println("For entry (" + i + "): end i: " + jumps[i].offset(100).y() + " - start i+1: " + jumps[i+1].offset(0).y() + " and i: " + jumps[i].getPrint());
                 }
             }
             isActive = true;
