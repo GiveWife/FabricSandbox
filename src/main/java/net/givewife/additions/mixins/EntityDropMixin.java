@@ -26,8 +26,8 @@ public class EntityDropMixin {
 
         if(e instanceof IronGolemEntity) {
 
-
             System.out.println("Golem detected");
+            ci.cancel();
 
         }
 

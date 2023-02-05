@@ -14,21 +14,20 @@ public class ParticleStages {
 
     public ParticleStages(BlockPos origin, int[] stageLengths) {
         this.origin = origin;
-        stages = registerStages(stageLengths);
+        stages = registerStages();
     }
 
     public ParticleStage[] getStages() {
         return this.stages;
     }
 
-    public ParticleStage[] registerStages(int[] stageLengths) {
+    public ParticleStage[] registerStages() {
         return new ParticleStage[] {
-                new ParticleStage("stage_01", BlockSidePos.getNorth(origin), BlockSidePos.getEast(origin).up()),
-                new ParticleStage("stage_02", BlockSidePos.getNorth(origin), BlockSidePos.getSouth(origin).up()),
-                new ParticleStage("stage_03", BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getEast(origin).up()),
-                new ParticleStage("stage_04", BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getSouth(origin).up())
+                new ParticleStage("stage_01", BlockSidePos.getNorth(origin), BlockSidePos.getEast(origin).up(), 0, 100, 100),
+                new ParticleStage("stage_02", BlockSidePos.getNorth(origin), BlockSidePos.getSouth(origin).up(), 0, 100, 100),
+                new ParticleStage("stage_03", BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getEast(origin).up(), 0, 100, 100),
+                new ParticleStage("stage_04", BlockSidePos.getNorth(origin).east().south(), BlockSidePos.getSouth(origin).up(), 0, 100, 100)
         };
-
     }
 
 
@@ -38,7 +37,7 @@ public class ParticleStages {
          * interval | determines per how many ticks we try to spawn a particle
          * begintick | reference to when this particle effect started
          */
-        private final int stage, interval;
+        private final int start, interval;
         private VecTrail to;
 
         /**
@@ -46,15 +45,14 @@ public class ParticleStages {
          * Ticks: amount of ticks for this full effect
          * Steps: how much particles are shown
          */
-        public ParticleStage(String id, Pos from, Pos to, int stage, int duration, int steps) {
-            this.stage = stage;
+        public ParticleStage(String id, Pos from, Pos to, int start, int duration, int steps) {
+            this.start = start;
             this.interval = steps > duration ? 1 : duration / steps;
-            //System.out.println(id + ": from: " + from.getPrint() + ", to " + to.getPrint());
             this.to = new VecTrail(id, from, to, steps);
         }
 
-        public int getStage() {
-            return this.stage;
+        public int getStart() {
+            return this.start;
         }
 
         /**

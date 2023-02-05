@@ -48,7 +48,7 @@ public class NetherReactorParticles {
 
         for(int i = 0; i < stages.length; i++) {
             //System.out.println("Ticks: " + tick + ", stage: " + getStage(tick) + ", stages [" + i + "] stage: " + STAGE_HOLDER.stages[i].getStage());
-            if(stages[i].getStage() == getStage(tick)
+            if(stages[i].getStart() >= tick
                 && !world.isClient
                 && stages[i].canPrint(tick)) {
                 //System.out.println("Ticking: " + tick);
