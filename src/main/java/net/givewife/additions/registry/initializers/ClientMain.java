@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.givewife.additions.registry.registries.BlockRegistry;
 import net.givewife.additions.registry.registries.KeybindRegistry;
 import net.givewife.additions.registry.registries.MessageRegistry;
+import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.minecraft.client.render.RenderLayer;
 
 public class ClientMain implements ClientModInitializer {
@@ -15,6 +16,8 @@ public class ClientMain implements ClientModInitializer {
         KeybindRegistry keybindRegistry = new KeybindRegistry();
         initializeMessages();
         initializeRenders();
+        ParticleRegistry.registerClient();
+
 
     }
 

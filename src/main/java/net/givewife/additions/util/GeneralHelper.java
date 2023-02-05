@@ -23,26 +23,13 @@ public class GeneralHelper {
 
     private String name;
 
-    public GeneralHelper() {}
+    public GeneralHelper() {
+    }
 
     public GeneralHelper(String source) {
         this.name = name;
     }
 
-    public void print(String message) {
-        System.out.println("[GH: " + name + "] " + message);
-    }
-
-    /**
-     * Get held item from entity
-     * returns 0 if the entity is not a PlayerEntity
-     */
-    public ItemStack heldstack(Entity entity) {
-        if(entity instanceof PlayerEntity) {
-            return ((PlayerEntity)entity).getMainHandStack();
-        }
-        return null;
-    }
 
     /**
      * Determines whether the given entity is a player
@@ -149,26 +136,6 @@ public class GeneralHelper {
         Random rand = new Random();
         double gen = rand.nextDouble(max-low) + low;
         return gen;
-    }
-
-    public String intToString(int[] arr) {
-        String s = "[";
-        for(int i = 0; i < arr.length; i++) {
-            s += Integer.toString(arr[i]);
-            if(i + 1 < arr.length) s += ", ";
-        }
-        s += "]";
-        return s;
-    }
-
-    public String doubleToString(double[] arr) {
-        String s = "[";
-        for(int i = 0; i < arr.length; i++) {
-            s += Double.toString(arr[i]);
-            if(i + 1 < arr.length) s += ", ";
-        }
-        s += "]";
-        return s;
     }
 
 

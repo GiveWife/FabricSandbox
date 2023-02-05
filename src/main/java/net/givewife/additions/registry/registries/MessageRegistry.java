@@ -14,6 +14,14 @@ public class MessageRegistry {
         return new CustomMessage[] {HEAL_BORK, PUSH, POS, JUMP, FALL};
     }
 
+    public static void registerServer() {
+
+        for(int i = 0; i < getMessages().length; i++) {
+            getMessages()[i].registerServer();
+        }
+
+    }
+
     /**
      * Send messages by:
      *                PacketByteBuf buf = PacketByteBufs.create();

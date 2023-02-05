@@ -94,7 +94,10 @@ public class NetherReactorEntity extends BlockEntity {
         if(!isActive)
             return;
         this.ticks++;
-        update();
+
+        // Update every 2 seconds?
+        if(this.ticks % 40 == 0)
+            update();
     }
 
     public void update() {

@@ -93,6 +93,8 @@ public class NetherReactorStructure {
             // Initialise the effect
             Pos ne = getFurthest(true, invalids);
             Pos sw = getFurthest(false, invalids);
+
+            //Spawn effect
             EffectBox effect = new EffectBox(ne, sw, 10);
             effect.run((ServerWorld) world);
             return false;

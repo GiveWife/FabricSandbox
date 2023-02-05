@@ -25,7 +25,7 @@ import java.util.UUID;
 @Mixin(PlayerEntity.class)
 public abstract class FallDamageMixin {
 
-    //@Inject(method = "damage", at = @At("HEAD"))
+    @Inject(method = "damage", at = @At("HEAD"))
     public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
 
         PlayerEntity player = (PlayerEntity) (Object) this;
