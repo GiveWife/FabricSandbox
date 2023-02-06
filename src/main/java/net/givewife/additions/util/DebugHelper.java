@@ -12,7 +12,7 @@ public class DebugHelper {
      * Logs your message
      */
     public void log(String message) {
-
+        System.out.println("[" + DEBUG_CLASS + "] " + message);
     }
 
     public String intToString(int[] arr) {

@@ -1,9 +1,7 @@
 package net.givewife.additions.util.positions;
 
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 public class VecTrail extends Trail {
 
@@ -11,6 +9,7 @@ public class VecTrail extends Trail {
     private double stepX, stepY, stepZ;
     private int steps;
     private final String id;
+
     public VecTrail(String id, Pos from, Pos to, int steps) {
         super("VecTrail", from, to, steps);
         this.id = id;
@@ -43,6 +42,7 @@ public class VecTrail extends Trail {
         this.stepX = -xD / this.steps;
         this.stepY = -yD / this.steps;
         this.stepZ = -zD / this.steps;
+
     }
 
     /**

@@ -23,7 +23,6 @@ public class NetherReactorTicker {
 
     public void tick(World world, BlockPos pos, BlockState state, NetherReactorEntity be) {
 
-        if(debug && tick % 100 == 0 && be.isActive()) System.out.println("Ticks: " + tick);
         if(!be.isActive()) return;
 
         this.PARTICLE_HANDLER.runParticles(world, be.getTicks());

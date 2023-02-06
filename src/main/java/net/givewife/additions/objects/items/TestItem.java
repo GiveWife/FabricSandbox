@@ -1,6 +1,8 @@
 package net.givewife.additions.objects.items;
 
 import net.givewife.additions.objects.templates.CustomSettings;
+import net.givewife.additions.particles.CustomEffect;
+import net.givewife.additions.particles.effects.EffectSimpleCircle;
 import net.givewife.additions.particles.effects.EffectSnake;
 import net.givewife.additions.util.positions.Parabola;
 import net.givewife.additions.util.positions.Pos;
@@ -26,25 +28,10 @@ public class TestItem extends ModItem {
 
         if(!world.isClient) return super.use(world, user, hand);
         Pos pos = new Pos(user);
-        Parabola par = new Parabola(pos, pos.north(4).west(4).down(), 2,100);
 
-        EffectSnake snake = new EffectSnake(pos, 5, 10, world, 10);
-        Parabola[] paras = snake.getJumps();
+        CustomEffect circle = new EffectSimpleCircle(pos);
 
-        for(int i = 0; i < paras.length; i++) {
-            System.out.println("Paras reach: " + paras[i].getPrint());
-            for(int j = 0; j < paras[i].getSteps(); j++) {
-                Pos off = paras[i].offset(j);
-                world.addParticle(ParticleTypes.END_ROD, true, off.x(), off.y(), off.z(), 0, 0, 0);
-            }
-        }
-        user.getItemCooldownManager().set(this, 20);
-
-        for(int j = 0; j < 100; j++) {
-            Pos off = par.offset(j);
-            //world.addParticle(ParticleTypes.END_ROD, off.x(), off.y(), off.z(), 0, 0, 0);
-        }
-
+        circle.run(world);
 
 
         return super.use(world, user, hand);
