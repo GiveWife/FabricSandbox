@@ -2,8 +2,21 @@ package net.givewife.additions.util.positions;
 
 import net.givewife.additions.util.GeneralHelper;
 import net.givewife.additions.util.MathHelper;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Math;
 
+
+/**
+ * Trail instance that generates a parabola function between {@link Vec#from} and {@link Vec#to}
+ *
+ * The {@link Parabola#offset(int)} is implemented as follows:
+ *
+ *  1) We generate a y position. We take the difference between {@link Vec#from} and {@link Vec#to}, and add it to the highest of the two
+ *  2) We think about an imaginary trail in the xz plane between {@link Vec#from} and {@link Vec#to}: the offset of the xz coords will increase in this plane
+ *  3) In the {@link Trail#offset(int)}, we calculate the y coordinate starting from {@link Vec#from}, add
+ *
+ */
 public class Parabola extends Trail{
 
     private final Pos start, end;
@@ -41,7 +54,7 @@ public class Parabola extends Trail{
      *
      * We can simply add an Y coordinate to that: (distxz(start,end), y)
      */
-    private double[] calculate() {
+    private double @NotNull [] calculate() {
 
         // Get distance between points
         double distance = start.distancexz(end);

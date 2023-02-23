@@ -15,6 +15,7 @@ public class PosMessage extends CustomMessage {
 
     @Override
     public void registerServer() {
+
         ServerPlayNetworking.registerGlobalReceiver(getIdentifier(), (server, player, handler, buf, responseSender) -> {
 
             float x1 = buf.readFloat();
@@ -29,12 +30,11 @@ public class PosMessage extends CustomMessage {
 
             server.execute(() -> {
 
-                EffectLine line = new EffectLine();
-
-                line.run(server.getOverworld(),pos1, pos2);
+                EffectLine line = new EffectLine(pos1, pos2, 100);
 
             });
 
         });
+
     }
 }

@@ -6,9 +6,6 @@ public class PositionUtilities {
 
     public PositionUtilities() {
 
-        double a = 4;
-        int d = 2;
-
     }
 
     /**

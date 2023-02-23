@@ -2,13 +2,24 @@ package net.givewife.additions.particles.effects;
 
 import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.util.positions.Pos;
+import net.givewife.additions.util.positions.Trail;
+import net.givewife.additions.util.positions.VecTrail;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
+/**
+ * This particle effect is a quick implementation for a VecTrail.
+ */
 public class EffectLine extends CustomEffect {
 
-    public EffectLine() {
+    private final Trail trail;
+    private final int amount;
+
+    public EffectLine(Pos from, Pos to, int amount) {
+
+        trail = new VecTrail("effectLine", from, to, amount);
+        this.amount = amount;
 
     }
 
@@ -39,19 +50,16 @@ public class EffectLine extends CustomEffect {
 
         }
 
-
-
     }
 
     @Override
     public void run(ServerWorld world) {
-
-
-
+        this.trail.printParticles(world);
     }
 
     @Override
     public void run(World world) {
-
+        this.trail.printParticles(world);
     }
+
 }

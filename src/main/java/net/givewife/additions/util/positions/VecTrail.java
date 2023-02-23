@@ -2,7 +2,17 @@ package net.givewife.additions.util.positions;
 
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.world.World;
 
+/**
+ * This class is used to represent a trail between the {@link Vec#from} and {@link Vec#to}
+ *
+ * We create a subclass implementation with extra functions in superclass {@link Trail}:
+ *
+ *      {@link Trail#offset(int)} : determine a {@link Pos} on the {@link Vec} object.
+ *      {@link Trail#steps} : determine how many steps we should take between start and stop position from {@link Vec} object
+ *      {@link Trail#printParticles(World)} : print the trail in the world
+ */
 public class VecTrail extends Trail {
 
     private double xD, yD, zD;
