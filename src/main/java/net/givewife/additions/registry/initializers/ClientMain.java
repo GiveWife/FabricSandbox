@@ -31,6 +31,7 @@ public class ClientMain implements ClientModInitializer {
     private void initializeRenders() {
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.PROJECTOR_1, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.MOD_AIR, RenderLayer.getTranslucent());
 
     }
 

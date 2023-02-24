@@ -6,6 +6,7 @@ import net.givewife.additions.particles.effects.EffectSingle;
 import net.givewife.additions.util.DebugHelper;
 import net.givewife.additions.util.positions.BlockSidePos;
 import net.givewife.additions.util.positions.Pos;
+import net.givewife.additions.util.positions.Trail;
 import net.givewife.additions.util.positions.VecTrail;
 import net.minecraft.block.BlockState;
 import net.minecraft.particle.DefaultParticleType;
@@ -17,18 +18,31 @@ public class ParticleStages {
 
     private final BlockPos origin;
     private final ParticleStage[] stages;
-    private int[] stageLengths;
 
+    /**
+     * Initializes this object and calls {@link ParticleStages#registerStages()}
+     */
     public ParticleStages(BlockPos origin) {
         this.origin = origin;
         this.stages = registerStages();
     }
 
+    /**
+     * Returns all registered stages from {@link ParticleStages#registerStages()}
+     */
     public ParticleStage[] getStages() {
         return this.stages;
     }
 
-    public ParticleStage[] registerStages() {
+    /**
+     * Returns all registered {@link ParticleStage} objects.
+     *
+     * These objects have all information to print particles:
+     *
+     *      {@link ParticleStage#canPrint(int)} : checks if the particle may be printed at integer tick
+     *      {@link ParticleStage#next(int)} : generates a {@link Pos} object via the {@link Trail} object
+     */
+    private ParticleStage[] registerStages() {
         return new ParticleStage[] {
                 new ParticleStage("stage_01", BlockSidePos.getNorth(origin), BlockSidePos.getEast(origin).up(), 0, 100, 50),
                 new ParticleStage("stage_011", ParticleTypes.FLAME, BlockSidePos.getNorth(origin), BlockSidePos.getEast(origin).up(), 0, 100, 100),
@@ -43,7 +57,7 @@ public class ParticleStages {
 
         private final int start, interval, duration;
         private final String id;
-        private VecTrail to;
+        private Trail to;
         private DebugHelper helper;
         private final DefaultParticleType type;
 
@@ -77,7 +91,9 @@ public class ParticleStages {
 
         /**
          * The particle stage has a start tick, we check if the block entity tick has not exceeded that.
-         * Further, we will check if the interval allows a particle.
+         * Further, we will check if the interval value, which says per how many ticks we can print one particle.
+         *
+         * We check for interval because some particle stages may require less ticks & steps.
          */
         public boolean canPrint(int tick) {
             helper.log("tick - start: " + (tick-start) + " <= " + (duration));
@@ -101,7 +117,7 @@ public class ParticleStages {
         }
 
         /**
-         * The NetherReactorTicker will only call the {@link net.givewife.additions.objects.blockentity.netherreactor.particle.ParticleStages.ParticleStage#next(int)} function,
+         * The NetherReactorTicker will only call the {@link ParticleStage#next(int)} function,
          * where the tick represents the time from activation. We will scale down this tick to a tick that matches the VecTrail object progress.
          *
          * Example: tick = 1021 ; step = 50 ; duration = 100 ; start = 1000
@@ -109,7 +125,7 @@ public class ParticleStages {
          * tick - start = 21
          * interval = duration / step = 2
          *
-         * 21 % 2 == 0 ? -> this is checked by canPrint()
+         * 21 % 2 == 0 ? -> this is checked by {@link ParticleStage#canPrint(int)}
          *
          * 20 / 2 = 10
          */
@@ -118,15 +134,11 @@ public class ParticleStages {
         }
 
         /**
-         * Returns an offset on for the particle trail
+         * Returns an offset on the particle trail
          */
         public Pos next(int tick) {
             return this.to.offset(getIntervalTick(tick));
         }
-
-    }
-
-    public static class ParticleStageBase {
 
     }
 

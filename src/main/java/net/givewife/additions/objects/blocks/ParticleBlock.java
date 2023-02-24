@@ -18,6 +18,7 @@ public class ParticleBlock extends BlockWithEntity implements BlockEntityProvide
 
     public ParticleBlock(AbstractBlock.Settings s) {
         super(s);
+        setDefaultState(this.getDefaultState());
     }
 
     @Nullable

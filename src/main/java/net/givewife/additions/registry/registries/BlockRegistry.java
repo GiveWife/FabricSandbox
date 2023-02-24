@@ -2,6 +2,7 @@ package net.givewife.additions.registry.registries;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.givewife.additions.Main;
+import net.givewife.additions.objects.blocks.CustomAir;
 import net.givewife.additions.objects.blocks.NetherReactorBlock;
 import net.givewife.additions.objects.blocks.ParticleBlock;
 import net.givewife.additions.objects.blocks.ProjectorBlock;
@@ -19,6 +20,8 @@ public class BlockRegistry {
     public static final Block NETHER_REACTOR = new NetherReactorBlock(AbstractBlock.Settings.copy(Blocks.COBBLED_DEEPSLATE));
     public static final Block PARTICLE_BLOCK = new ParticleBlock(AbstractBlock.Settings.copy(Blocks.COBBLED_DEEPSLATE));
 
+    public static final Block MOD_AIR = new CustomAir();
+
 
     public static void register() {
 
@@ -30,6 +33,10 @@ public class BlockRegistry {
 
         Registry.register(Registries.BLOCK, new Identifier(Main.MODID, "particle_block"), PARTICLE_BLOCK);
         Registry.register(Registries.ITEM, new Identifier(Main.MODID, "particle_block"), new BlockItem(PARTICLE_BLOCK, new FabricItemSettings()));
+
+        Registry.register(Registries.BLOCK, new Identifier(Main.MODID, "mod_air"), (Block) MOD_AIR);
+        Registry.register(Registries.ITEM, new Identifier(Main.MODID, "mod_air"), new BlockItem((Block) MOD_AIR, new FabricItemSettings()));
+
 
     }
 
