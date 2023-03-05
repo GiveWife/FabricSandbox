@@ -11,11 +11,11 @@ import net.minecraft.world.World;
 
 public class NetherReactorParticles {
 
-    private final ParticleStages STAGE_HOLDER;
+    private final ParticleStageRegistrator STAGE_HOLDER;
     private GeneralHelper helper = new GeneralHelper();
     private DebugHelper debughelp = new DebugHelper("NetherReactorParticles");
     private final boolean debug = true;
-    private final ParticleStages.ParticleStage[] stages;
+    private final ParticleStageRegistrator.ParticleStage[] stages;
 
     /**
      * Upon creating this object, all particle stages will be initialized in another class.
@@ -23,7 +23,7 @@ public class NetherReactorParticles {
      */
     public NetherReactorParticles(BlockPos origin) {
         // ParticleStages will calculate & hold all ParticleStage objects
-        STAGE_HOLDER = new ParticleStages(origin);
+        STAGE_HOLDER = new ParticleStageRegistrator(origin);
         this.stages = STAGE_HOLDER.getStages();
     }
 
