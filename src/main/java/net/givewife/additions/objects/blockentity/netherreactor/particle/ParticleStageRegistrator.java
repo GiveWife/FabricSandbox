@@ -231,6 +231,9 @@ public class ParticleStageRegistrator {
 
     }
 
+    /**
+     * Helper class to create consecutive particle stages without too much code duplication for the programmer
+     */
     public static class ParticleThread {
 
         private final Pos start;
