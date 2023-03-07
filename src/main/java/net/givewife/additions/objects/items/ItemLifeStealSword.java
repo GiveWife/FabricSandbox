@@ -19,6 +19,7 @@ public class ItemLifeStealSword extends SwordItem {
     private final String AMOUNT_HITS = "hits";
     private boolean TARGET_ONE = true;
 
+
     public ItemLifeStealSword() {
         super(ToolMaterials.IRON, 2, 4.0F, new Item.Settings().maxCount(1).maxDamage(1200));
     }
@@ -34,17 +35,13 @@ public class ItemLifeStealSword extends SwordItem {
         if(attacker.world.isClient) return super.postHit(stack, target, attacker);
 
         String UUID = target.getUuidAsString();
-        System.out.println("Here1");
 
         //Helper function checks if tag exists and if values are the same. Assigns NBT if necessary
         if(helper.isStringEqual(ATTACKED_ENTITY, UUID, stack) || TARGET_ONE) {
-            System.out.println("Here2");
 
             if(helper.isIntEqual(AMOUNT_HITS, 1, stack)) {
-                System.out.println("Here3");
 
                 helper.setInt(AMOUNT_HITS, 0, stack);
-                System.out.println("Before? amount: " + 3.0F + ", uuid: " + attacker.getUuidAsString());
 
 
             } else {

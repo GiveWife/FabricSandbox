@@ -2,6 +2,7 @@ package net.givewife.additions.objects.items;
 
 import net.givewife.additions.objects.templates.NbtCooldownItem;
 import net.givewife.additions.util.positions.Pos;
+import net.minecraft.client.particle.FireworksSparkParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;

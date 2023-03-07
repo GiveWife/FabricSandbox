@@ -49,7 +49,6 @@ public class EffectBox extends CustomEffect {
          *  T
          */
         if(from.x() >= to.x() && from.z() >= to.z()) {
-            System.out.println("Case: > > ");
             if(from.y() >= to.y()) return new Pos[]{ from.south().east().up(), to };
             else return new Pos[] { from.south().east(), to.up() };
         }
@@ -59,7 +58,6 @@ public class EffectBox extends CustomEffect {
          *          T
          */
         if(from.x() <= to.x() && from.z() >= to.z()) {
-            System.out.println("Case < >");
             if(from.y() >= to.y()) return new Pos[]{ from.east().up(), to.south()};
             else return new Pos[]{ from.east(), to.south().up()};
         }
@@ -69,7 +67,6 @@ public class EffectBox extends CustomEffect {
          *           F
          */
         if(from.x() >= to.x() && from.z() <= to.z()) {
-            System.out.println("Case > <");
             if(from.y() >= to.y()) return new Pos[]{ from.south().up(), to.east()};
             else return new Pos[]{ from.south(), to.east().up()};
         }
@@ -79,7 +76,6 @@ public class EffectBox extends CustomEffect {
          *  F
          */
         if(from.x() <= to.x() && from.z() <= to.z()) {
-            System.out.println("Case < <");
             if(from.y() >= to.y()) return new Pos[]{ from.up(), to.north().east()};
             else return new Pos[]{ from, to.north().east().up()};
         }

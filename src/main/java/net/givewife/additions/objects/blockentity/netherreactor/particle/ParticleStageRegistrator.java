@@ -41,49 +41,41 @@ public class ParticleStageRegistrator {
      */
     private void register() {
 
-        ParticleThread northThread = new ParticleThread(BlockSidePos.getNorth(origin, 1).up(3));
-        ParticleThread southThread = new ParticleThread(BlockSidePos.getSouth(origin, 1).up(3));
-        ParticleThread westThread = new ParticleThread(BlockSidePos.getEast(origin, 1).up(3));
-        ParticleThread southEastThread = new ParticleThread(BlockSidePos.getSouthEast(origin, 1).up(3));
+        ParticleThread northThread = new ParticleThread(BlockSidePos.getNorth(origin, 1).up(3), 0);
+        ParticleThread southThread = new ParticleThread(BlockSidePos.getSouth(origin, 1).up(3), 0);
+        ParticleThread westThread = new ParticleThread(BlockSidePos.getEast(origin, 1).up(3), 0);
+        ParticleThread southEastThread = new ParticleThread(BlockSidePos.getSouthEast(origin, 1).up(3), 0);
 
         // NORTH - Particle going down & to middle
-        ParticleThread northBranch = northThread.fork();
+        ParticleThread northBranch = northThread.fork(0);
         northThread.link(northThread.getStart().down(3), 100);
         northBranch.link(northThread.getStart().south(0.5d), 100);
 
         // SOUTH - Particle going down & to middle
-        ParticleThread southBranch = southThread.fork();
+        ParticleThread southBranch = southThread.fork(0);
         southThread.link(southThread.getStart().down(3), 100);
         southBranch.link(southThread.getStart().south(0.5d), 100);
 
         // EAST - Particle going down & to middle
-        ParticleThread eastBranch = southEastThread.fork();
+        ParticleThread eastBranch = southEastThread.fork(0);
         southEastThread.link(southEastThread.getStart().down(3), 100);
         eastBranch.link(southEastThread.getStart().south(0.5d), 100);
 
         // WEST - Particle going down & to middle
-        ParticleThread westBranch = westThread.fork();
+        ParticleThread westBranch = westThread.fork(0);
         westThread.link(westThread.getStart().down(3), 100);
         westBranch.link(westThread.getStart().south(0.5d), 100);
 
 
+        // Put all stages from the threads in the particlestage list.
+        memorize(northThread, southThread, westThread, southEastThread, northBranch, southBranch, eastBranch, westBranch);
 
     }
 
-    private ParticleStage create(Pos from, Pos to, int start, int duration) {
-        return new ParticleStage(from, to, start, duration);
-    }
+    private void memorize(ParticleThread... threads) {
+        for(ParticleThread t : threads)
+            stageRegistry.addAll(t.thread);
 
-    /**
-     * Helper method that allows simple linking of particle stages;
-     */
-    private ParticleStage after(ParticleStage stage, Pos from, Pos to, int duration) {
-        return new ParticleStage(from, to, stage.start, duration);
-    }
-
-    private void add(ParticleStage... stage) {
-        for(ParticleStage s : stage)
-            stageRegistry.add(s);
     }
 
     /**
@@ -98,7 +90,7 @@ public class ParticleStageRegistrator {
     }
 
     /**
-     * Helper class to coordinate particles
+     * Helper class to coordinate particles: start, end, duration, ticks, interval... --> via Trail object
      */
     public static class ParticleStage {
 
@@ -109,25 +101,10 @@ public class ParticleStageRegistrator {
         private final DefaultParticleType type;
 
         /**
-         * start | at which tick should this effect start?
-         * duration | how many ticks should this effect take?
-         * steps | in how many steps will the effect be drawn
-         */
-        public ParticleStage(String id, DefaultParticleType type, Pos from, Pos to, int start, int duration, int steps) {
-            this.id = id;
-            this.start = start;
-            this.type = type;
-            this.duration = duration;
-            this.interval = steps > duration ? 1 : duration / steps;
-            this.to = new VecTrail(id, from, to, steps);
-            this.helper = new DebugHelper(id);
-        }
-
-        /**
          * Copy of other constructor, without particle type registration
          */
-        public ParticleStage(String id, Pos from, Pos to, int start, int duration, int steps) {
-            this.id = id;
+        public ParticleStage(Pos from, Pos to, int start, int duration, int steps) {
+            this.id = builder(from, to);
             this.start = start;
             this.type = ParticleTypes.END_ROD;
             this.duration = duration;
@@ -154,6 +131,7 @@ public class ParticleStageRegistrator {
          * Calculates a fitting step for the distance
          */
         private int getSteps(Pos from, Pos to) {
+            if(from.distance(to) == 0) System.out.println("Distance is zero!");
             return (int) from.distance(to) * 10;
         }
 
@@ -171,17 +149,10 @@ public class ParticleStageRegistrator {
          * We check for interval because some particle stages may require less ticks & steps.
          */
         public boolean canPrint(int tick) {
-            helper.log("tick - start: " + (tick-start) + " <= " + (duration));
-            helper.log("interval: " + interval + ", % : " + ((tick-start)%interval == 0));
+            //helper.log("tick - start: " + (tick-start) + " <= " + (duration));
+            //helper.log("interval: " + interval + ", % : " + ((tick-start)%interval == 0));
             return tick - start <= duration // Make sure tick does not exceed the duration.
                     && (tick-start) % interval == 0; // Make sure we print correctly.
-        }
-
-        /**
-         * Returns the name of this particle stage. For debugging purposes.
-         */
-        public String getId() {
-            return this.id;
         }
 
         /**
@@ -216,13 +187,6 @@ public class ParticleStageRegistrator {
         }
 
         /**
-         * Returns the start of this particle
-         */
-        public int getStart() {
-            return this.start;
-        }
-
-        /**
          * Returns the ending position for this particle stage
          */
         public Pos getEnd() {
@@ -233,42 +197,48 @@ public class ParticleStageRegistrator {
 
     /**
      * Helper class to create consecutive particle stages without too much code duplication for the programmer
+     *
+     * Link: (next Position, duration)
+     *      --> gets ending position of last particle trail and connects those
      */
     public static class ParticleThread {
 
         private final Pos start;
+        private final int beginTick;
         private List<ParticleStage> thread;
 
-        public ParticleThread(Pos start) {
+        public ParticleThread(Pos start, int tick) {
             this.start = start;
-        }
-
-        /**
-         * Expands the thread
-         */
-        public void expand(ParticleStage s) {
-            thread.add(s);
+            this.beginTick = tick;
+            this.thread = new ArrayList<ParticleStage>();
         }
 
         /**
          * Directly links a new {@link ParticleStage} to this thread by putting the end position of the latest stage as the starting position of the new stage
          */
         public void link(Pos to, int duration) {
-            thread.add(new ParticleStage(thread.get(thread.size()-1).getEnd(), to, thread.get(thread.size()-1).getStart(), duration));
+            if(thread.size() == 0) {
+                thread.add(new ParticleStage(start, to, this.beginTick, duration));
+            } else {
+                ParticleStage latestStage = thread.get(thread.size() - 1);
+                thread.add(new ParticleStage(latestStage.getEnd(), to, latestStage.start + latestStage.duration, duration));
+            }
         }
 
         /**
          * Returns a new thread that begins with the latest position in the thread.
          */
-        public ParticleThread fork() {
-            return new ParticleThread(getStart());
+        public ParticleThread fork(int start) {
+            if(thread.size() == 0) return new ParticleThread(this.start, start);
+            else return new ParticleThread(thread.get(thread.size() - 1).getEnd(), start);
         }
 
         /**
          * Returns the position where last particle stage ends
          */
         public Pos getStart() {
-            return thread.get(thread.size()-1).getEnd();
+            if(thread.size() > 0) return thread.get(thread.size() - 1).getEnd();
+            else return start;
         }
 
     }

@@ -3,8 +3,12 @@ package net.givewife.additions.objects.blockentity.netherreactor.structure;
 import net.givewife.additions.particles.effects.EffectBox;
 import net.givewife.additions.registry.registries.BlockRegistry;
 import net.givewife.additions.util.positions.Pos;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -46,6 +50,10 @@ public class NetherReactorStructure {
                 pos.north().east().up(2), pos.north().up(2), pos.north().west().up(2), pos.east().up(2), pos.west().up(2), pos.south().east().up(2), pos.south().up(2), pos.south().west().up(2));
     }
 
+    /**
+     * Checks all blocks in the vicinity and determines if the structure can activate 
+     * Called from {@link net.givewife.additions.objects.blocks.NetherReactorBlock#onUse(BlockState, World, BlockPos, PlayerEntity, Hand, BlockHitResult)}
+     */
     public boolean isSurroundingCorrect(World world) {
 
         //Local variable for reference
