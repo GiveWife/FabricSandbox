@@ -15,11 +15,20 @@ public class EffectLine extends CustomEffect {
 
     private final Trail trail;
     private final int amount;
+    private float[] colors;
 
     public EffectLine(Pos from, Pos to, int amount) {
 
         trail = new VecTrail("effectLine", from, to, amount);
         this.amount = amount;
+
+    }
+
+    public EffectLine(Pos from, Pos to, int amount, float[] colors) {
+
+        trail = new VecTrail("effectLine", from, to, amount);
+        this.amount = amount;
+        this.colors = colors;
 
     }
 
@@ -59,7 +68,10 @@ public class EffectLine extends CustomEffect {
 
     @Override
     public void run(World world) {
-        this.trail.printParticles(world);
+        if(colors != null)
+            this.trail.printParticles(world);
+        else
+            this.trail.printColored(world, colors);
     }
 
 }

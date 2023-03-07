@@ -1,5 +1,6 @@
 package net.givewife.additions.util.positions;
 
+import net.givewife.additions.particles.customparticles.ParticlePrinter;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -24,6 +25,7 @@ public abstract class Trail extends Vec {
     private final int steps;
     private final String type;
     private final DefaultParticleType particle;
+    private ParticlePrinter printer = new ParticlePrinter();
 
     /**
      * Initializes this object
@@ -64,7 +66,7 @@ public abstract class Trail extends Vec {
             Pos print = offset(i);
 
             // Print particle at that offset
-            world.addParticle(ParticleTypes.END_ROD, print.x(), print.y(), print.z(), 0, 0, 0);
+            printer.display(ParticleTypes.END_ROD, print, world);
         }
     }
 
@@ -80,7 +82,21 @@ public abstract class Trail extends Vec {
             Pos print = offset(i);
 
             // Print particle at that offset
-            world.spawnParticles(ParticleTypes.END_ROD, print.x(), print.y(), print.z(), 1, 0, 0, 0, 0);
+            printer.display(ParticleTypes.END_ROD, print, world);
+        }
+    }
+
+    /**
+     * Print the particles in another color on the client
+     */
+    public void printColored(World world, float[] colors) {
+        for(int i = 0; i < this.steps; i++) {
+
+            // Get our next offset given current step
+            Pos print = offset(i);
+
+            // Print particle at that offset
+            printer.displayColored(ParticleTypes.END_ROD, print, world, colors);
         }
     }
 
