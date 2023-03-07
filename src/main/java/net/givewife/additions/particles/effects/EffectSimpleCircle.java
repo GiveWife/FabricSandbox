@@ -7,6 +7,7 @@ import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.DebugHelper;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteContents;
 import net.minecraft.client.world.ClientWorld;
@@ -45,14 +46,18 @@ public class EffectSimpleCircle extends CustomEffect {
         for(int i = 0; i < 360; i++) {
 
             //world.addParticle(ParticleTypes.END_ROD, pos.x() + sin(i), pos.y(), pos.z() + cos(i), 0, 0, 0);
-
-            if(Main.p != null) {
+            boolean firstMethod = false;
+            if(Main.p != null && firstMethod) {
                 StarParticle p = new StarParticle((ClientWorld) world, pos.x(), pos.y(), pos.z(), Main.p, 0, 0, 0);
                 p.setColor(0, 1, 0);
                 if (Main.p != null)
                     p.spawn();
+            }
+            if(!firstMethod) {
 
-                identify();
+                Particle p = MinecraftClient.getInstance().particleManager.addParticle(ParticleRegistry.WHITE_STAR, pos.x() + sin(i), pos.y(), pos.z() + cos(i), 0, 0, 0);
+                p.setColor(0, i, 360-i);
+
             }
 
             add += radianToDegree;
@@ -60,7 +65,7 @@ public class EffectSimpleCircle extends CustomEffect {
 
         }
 
-        help.log("Degrees Found: " + help.intToString(degreesFound));
+        //help.log("Degrees Found: " + help.intToString(degreesFound));
 
     }
 
