@@ -12,6 +12,7 @@ public class NetherPortalAssem {
 
     private void print(Pos origin, World world) {
 
+        /*
         // we starten uiterst links
         ParticleDrawer[] obs = new ParticleDrawer[] {
 
@@ -54,7 +55,7 @@ public class NetherPortalAssem {
             p.print(world);
 
         for(ParticleDrawer p : portal)
-            p.print(world);
+            p.print(world);*/
 
     }
 

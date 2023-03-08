@@ -39,11 +39,11 @@ public abstract class ParticleDrawer {
      * When the object is called for draw, we first check which sides must be printed using the
      * {@link ParticleDrawer#sides} variable
      */
-    private final Tuple<Pos, float[]>[] getDrawPositions() {
+    /*private final Tuple<Pos, float[]>[] getDrawPositions() {
 
 
 
-    }
+    }*/
 
     /**
      * Returns all colored maps for this object
@@ -56,15 +56,16 @@ public abstract class ParticleDrawer {
     public final void print(World world) {
 
         // First initialize the FigureMaps:
-        this.maps =
+        this.maps = getMaps();
 
+        /*
         Tuple<Pos, float[]>[] tuples = getDrawPositions();
 
         for(Tuple<Pos, float[]> tuple : tuples) {
 
             particlePrinter.displayColored(ParticleRegistry.WHITE_STAR, tuple.getFirst(), world, tuple.getSecond());
 
-        }
+        }*/
 
     }
 
@@ -101,11 +102,12 @@ public abstract class ParticleDrawer {
     /**
      * This will return the
      */
+    /**
     protected Tuple<Pos, float[]> assembler(Side side) {
 
 
 
-    }
+    }*/
 
 
 
