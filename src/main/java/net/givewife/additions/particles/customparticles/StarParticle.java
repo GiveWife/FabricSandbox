@@ -35,7 +35,7 @@ public class StarParticle extends SpriteBillboardParticle {
         this.velocityY = 0;
         this.velocityZ = 0;
         this.scale *= 0.75F;
-        this.maxAge = 60;
+        this.maxAge = 1000;
         this.setSpriteForAge(spriteSet);
 
         this.red = 1f;
