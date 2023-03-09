@@ -1,13 +1,9 @@
 package net.givewife.additions.particles.effects;
 
-import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.util.EffectSnakeHelper;
-import net.givewife.additions.util.GeneralHelper;
 import net.givewife.additions.util.positions.Parabola;
 import net.givewife.additions.util.positions.Pos;
-import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EffectSnake extends CustomEffect {

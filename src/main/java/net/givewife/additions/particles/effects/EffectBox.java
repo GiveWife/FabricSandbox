@@ -1,10 +1,8 @@
 package net.givewife.additions.particles.effects;
 
-import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 

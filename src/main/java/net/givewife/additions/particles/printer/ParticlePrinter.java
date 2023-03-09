@@ -1,4 +1,4 @@
-package net.givewife.additions.particles.customparticles;
+package net.givewife.additions.particles.printer;
 
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.client.MinecraftClient;

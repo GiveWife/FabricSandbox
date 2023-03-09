@@ -1,6 +1,5 @@
-package net.givewife.additions.particles.customparticles.figures;
+package net.givewife.additions.particles.printer.figures;
 
-import net.givewife.additions.particles.customparticles.ParticleDrawer;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.world.World;
 

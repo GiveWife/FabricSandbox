@@ -5,12 +5,12 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 
 /**
- * This class is used to represent a trail between the {@link Vec#from} and {@link Vec#to}
+ * This class is used to represent a trail between the {@link Vec#from()} and {@link Vec#to()}
  *
  * We create a subclass implementation with extra functions in superclass {@link Trail}:
  *
  *      {@link Trail#offset(int)} : determine a {@link Pos} on the {@link Vec} object.
- *      {@link Trail#steps} : determine how many steps we should take between start and stop position from {@link Vec} object
+ *      {@link Trail#getSteps()} : determine how many steps we should take between start and stop position from {@link Vec} object
  *      {@link Trail#printParticles(World)} : print the trail in the world
  */
 public class VecTrail extends Trail {
@@ -36,11 +36,43 @@ public class VecTrail extends Trail {
 
     }
 
+    public VecTrail(String id, Pos from, Pos to, DefaultParticleType type) {
+        super("VecTrail", from, to, (int) (from.distance(to) * 10), type);
+        this.id = id;
+
+        this.xD = from.x() - to.x();
+        this.yD = from.y() - to.y();
+        this.zD = from.z() - to.z();
+
+        this.steps = (int) (from.distance(to) * 10);
+
+        this.stepX = -xD / steps;
+        this.stepY = -yD / steps;
+        this.stepZ = -zD / steps;
+
+    }
+
+    public VecTrail(String id, Pos from, Pos to, DefaultParticleType type, int steps) {
+        super("VecTrail", from, to, steps, type);
+        this.id = id;
+
+        this.xD = from.x() - to.x();
+        this.yD = from.y() - to.y();
+        this.zD = from.z() - to.z();
+
+        this.steps = steps;
+
+        this.stepX = -xD / steps;
+        this.stepY = -yD / steps;
+        this.stepZ = -zD / steps;
+
+    }
+
     /**
      * Initializes the steps via 10 per block
      */
     public VecTrail(String id, Pos from, Pos to) {
-        super("VecTrail", from, to, (int) from.distance(to) * 10);
+        super("VecTrail", from, to, (int) (from.distance(to) * 10));
         this.id = id;
 
         this.xD = from.x() - to.x();

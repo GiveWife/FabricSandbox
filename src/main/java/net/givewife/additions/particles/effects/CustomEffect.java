@@ -1,4 +1,4 @@
-package net.givewife.additions.particles;
+package net.givewife.additions.particles.effects;
 
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;

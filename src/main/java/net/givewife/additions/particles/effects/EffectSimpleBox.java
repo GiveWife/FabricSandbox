@@ -1,6 +1,5 @@
 package net.givewife.additions.particles.effects;
 
-import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
 import net.givewife.additions.util.positions.player.BodyLocations;

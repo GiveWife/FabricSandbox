@@ -1,6 +1,6 @@
 package net.givewife.additions.util.positions;
 
-import net.givewife.additions.particles.customparticles.ParticlePrinter;
+import net.givewife.additions.particles.printer.ParticlePrinter;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -58,7 +58,6 @@ public abstract class Trail extends Vec {
      * Prints this trail object on the client
      */
     public void printParticles(World world) {
-
         // Iterate through our steps
         for(int i = 0; i < this.steps; i++) {
 
@@ -66,7 +65,7 @@ public abstract class Trail extends Vec {
             Pos print = offset(i);
 
             // Print particle at that offset
-            printer.display(ParticleTypes.END_ROD, print, world);
+            printer.display(this.particle, print, world);
         }
     }
 
@@ -82,7 +81,7 @@ public abstract class Trail extends Vec {
             Pos print = offset(i);
 
             // Print particle at that offset
-            printer.display(ParticleTypes.END_ROD, print, world);
+            printer.display(this.particle, print, world);
         }
     }
 
@@ -96,7 +95,7 @@ public abstract class Trail extends Vec {
             Pos print = offset(i);
 
             // Print particle at that offset
-            printer.displayColored(ParticleTypes.END_ROD, print, world, colors);
+            printer.displayColored(this.particle, print, world, colors);
         }
     }
 

@@ -1,19 +1,15 @@
-package net.givewife.additions.particles.customparticles;
+package net.givewife.additions.particles.printer;
 
 import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.Tuple;
 import net.givewife.additions.util.positions.Pos;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.datafixer.fix.ChunkPalettedStorageFix;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 /**
  * Clean interface for spawning particles
  */
-public abstract class ParticleDrawer {
+public abstract class ParticleFigure {
 
     private ParticlePrinter particlePrinter = new ParticlePrinter();
     private final Pos origin;
@@ -24,7 +20,7 @@ public abstract class ParticleDrawer {
     /**
      * For faced figures
      */
-    public ParticleDrawer(Pos origin, Direction facing, boolean isFacedFigure, boolean renderTop, boolean renderBot) {
+    public ParticleFigure(Pos origin, Direction facing, boolean isFacedFigure, boolean renderTop, boolean renderBot) {
         this.origin = origin;
         this.facing = facing;
         this.isFacedFigure = isFacedFigure;
@@ -35,7 +31,7 @@ public abstract class ParticleDrawer {
     /**
      * For non faced textures
      */
-    public ParticleDrawer(Pos origin, boolean renderTop, boolean renderBot) {
+    public ParticleFigure(Pos origin, boolean renderTop, boolean renderBot) {
         this.origin = origin;
         this.facing = Direction.UP;
         this.isFacedFigure = false;
@@ -76,7 +72,7 @@ public abstract class ParticleDrawer {
 
         // Return Side.ALL if an object has that value
         if(maps[0].side == Side.ALL) {
-            sides[0] = Side.ALL;
+            sides = new Side[] {Side.SIDE_E, Side.SIDE_ES, Side.SIDE_S, Side.SIDE_SE, Side.BOT, Side.TOP};
             return sides;
         }
 
@@ -142,7 +138,7 @@ public abstract class ParticleDrawer {
 
     /**
      * Returns the sides that should be printed for this object.
-     * We use {@link ParticleDrawer#renderBot} and {@link ParticleDrawer#renderTop} booleans for this.
+     * We use {@link ParticleFigure#renderBot} and {@link ParticleFigure#renderTop} booleans for this.
      *
      * On the other hand, we must think about what kind of figure maps this object has initialized.
      * The FigureMap objects are initialized on object creation, from there we can see which sides are textures
@@ -203,6 +199,7 @@ public abstract class ParticleDrawer {
         // We first gather all sides that should be printed -> this length should be equal to FigureMap length!
         Side[] printSides = getSides();
 
+
         PrintInformation[] information = new PrintInformation[printSides.length];
 
         // We loop over all sides, since every sides -> figuremap needs a print information
@@ -224,7 +221,9 @@ public abstract class ParticleDrawer {
 
                 for(int up = 0; up < FigureMap.PRECISION; up++) {
 
-                    positions[count] = new Tuple<Pos, float[]>(function.offset(origin, row, up), figureMaps[i].getMap()[count]);
+                    // If we have Side.ALL, we only use the first map in the array
+                    float[] rgbForPos = figureMaps.length <= 1 ? figureMaps[0].getMap()[count] : figureMaps[i].getMap()[count];
+                    positions[count] = new Tuple<Pos, float[]>(function.offset(origin, row, up), rgbForPos);
 
                     count++;
 
@@ -282,7 +281,7 @@ public abstract class ParticleDrawer {
 
     /**
      * Helper class that holds the color map for a specific side.
-     * Gets setup in {@link ParticleDrawer#getMaps()} method, which is obligatory in every instance of {@link ParticleDrawer}
+     * Gets setup in {@link ParticleFigure#getMaps()} method, which is obligatory in every instance of {@link ParticleFigure}
      */
     public static abstract class FigureMap {
 
@@ -303,7 +302,7 @@ public abstract class ParticleDrawer {
 
     /**
      * Helper class that holds positions + color information for a specific side.
-     * Gets setup in the {@link ParticleDrawer#getPrintInformation(FigureMap[])} method.
+     * Gets setup in the {@link ParticleFigure#getPrintInformation(FigureMap[])} method.
      */
     public static class PrintInformation {
 

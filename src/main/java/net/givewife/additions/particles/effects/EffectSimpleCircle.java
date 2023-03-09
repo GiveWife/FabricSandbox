@@ -1,25 +1,10 @@
 package net.givewife.additions.particles.effects;
 
-import net.givewife.additions.Main;
-import net.givewife.additions.particles.CustomEffect;
-import net.givewife.additions.particles.customparticles.ColoredParticle;
-import net.givewife.additions.particles.customparticles.StarParticle;
-import net.givewife.additions.registry.registries.ParticleRegistry;
+import net.givewife.additions.particles.printer.ColoredParticle;
 import net.givewife.additions.util.DebugHelper;
 import net.givewife.additions.util.positions.Pos;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteContents;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-
-import java.awt.*;
-import java.lang.reflect.Method;
 
 public class EffectSimpleCircle extends CustomEffect {
 

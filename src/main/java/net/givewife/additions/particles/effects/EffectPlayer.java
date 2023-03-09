@@ -1,12 +1,10 @@
 package net.givewife.additions.particles.effects;
 
-import net.givewife.additions.particles.CustomEffect;
 import net.givewife.additions.util.positions.VecTrail;
 import net.givewife.additions.util.positions.player.BodyLocations;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
