@@ -37,7 +37,7 @@ public class TestItem extends ModItem {
         obsidianFigure.print(world);
 
         try {
-            ImageConverter conv = new ImageConverter("obsidian");
+            ImageConverter conv = new ImageConverter();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

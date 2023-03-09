@@ -1,54 +1,48 @@
 package net.givewife.additions.particles.printer;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
+import com.mojang.blaze3d.platform.TextureUtil;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.StonecutterBlock;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.AbstractTexture;
+import net.minecraft.client.texture.ResourceTexture;
 import net.minecraft.client.texture.TextureManager;
+import net.minecraft.registry.Registries;
+import net.minecraft.resource.Resource;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import org.spongepowered.include.com.google.common.io.Resources;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 public class ImageConverter {
     
-    public ImageConverter(String path) throws IOException {
+    public ImageConverter() throws IOException {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         TextureManager manager = minecraftClient.getTextureManager();
 
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        File testPath = new File(System.getProperty("user.dir"), "mods");
 
-        File runDir;
+        getPng(testPath);
 
-        String[] args = FabricLoader.getInstance().getLaunchArguments(false);
-        for(int i = 0; i < args.length; i++) {
-            if(args[i].equals("--assetsDir"))
-                run(args[i+1]);
-        }
 
-        /*
-        String[] directories = file.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
-            }
-        });
-        //System.out.println(Arrays.toString(directories));
-            */
     }
 
     private void run(String path) throws IOException {
 
-        Path dir = Paths.get(path);
+        File base = new File(path, "versions");
+        base = new File(base, "1.19.3");
+
+        Path dir = base.toPath();
 
         FileWriter writer = new FileWriter(dir.toFile());
         //Reading the image
@@ -74,5 +68,25 @@ public class ImageConverter {
         writer.close();
 
     }
-    
+
+    private void getPng(File path) throws IOException {
+
+        ResourceManager manager = MinecraftClient.getInstance().getResourceManager();
+        TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
+
+        Identifier id = Registries.BLOCK.getId(Blocks.OBSIDIAN);
+        Registries.BLOCK.getEntry(Blocks.OBSIDIAN).getKey().get().getRegistry().getPath();
+        System.out.println("id: " + id.toString());
+        System.out.println("path:"  + Registries.BLOCK.getId(Blocks.OBSIDIAN).getPath() + "; ");
+        AbstractTexture t = textureManager.getTexture(id);
+
+        //, int textureId, int scales, int width, int height
+        //Path path = Paths.get(Registries.BLOCK.getId(Blocks.OBSIDIAN).getPath());
+        TextureUtil.writeAsPNG(path.toPath(), "texture_test", t.getGlId(), 1, 16, 16);
+
+        //TextureUtil.readResource(manager.open(id));
+
+
+    }
+
 }
