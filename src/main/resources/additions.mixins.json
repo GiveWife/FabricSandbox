@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EntityDropMixin",
-    "FallDamageMixin"
+    "FallDamageMixin",
+    "ResourceMixin"
   ],
   "injectors": {
     "defaultRequire": 1
