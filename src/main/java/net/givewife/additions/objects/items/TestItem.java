@@ -2,11 +2,12 @@ package net.givewife.additions.objects.items;
 
 import net.givewife.additions.objects.templates.CustomSettings;
 import net.givewife.additions.particles.effects.EffectSingle;
-import net.givewife.additions.particles.printer.ImageConverter;
+import net.givewife.additions.particles.printer.ParticleFigure;
+import net.givewife.additions.particles.printer.figures.GlowstoneFigure;
+import net.givewife.additions.particles.printer.figures.GravelFigure;
 import net.givewife.additions.particles.printer.figures.ObsidianFigure;
 import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.positions.Pos;
-import net.givewife.additions.util.positions.VecTrail;
 import net.givewife.additions.util.positions.player.BodyLocations;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,8 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-
-import java.io.IOException;
 
 public class TestItem extends ModItem {
 
@@ -33,15 +32,22 @@ public class TestItem extends ModItem {
         if(!world.isClient) return super.use(world, user, hand);
         Pos pos = new Pos(user);
 
-        ObsidianFigure obsidianFigure = new ObsidianFigure(pos.north(2), true, true);
-        obsidianFigure.print(world);
+        //ObsidianFigure obsidianFigure = new ObsidianFigure(pos.north(2), true, true);
+        //obsidianFigure.print(world);
 
-        try {
-            ImageConverter conv = new ImageConverter();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        ParticleFigure[] figures = new ParticleFigure[] {
+                new ObsidianFigure(pos.north(2).west(2)),
+                new GravelFigure(pos.north(2)),
+                new GlowstoneFigure(pos.north(2).east(2))
+        };
 
+        for(ParticleFigure i : figures)
+            i.print(world);
+
+
+
+
+        user.getItemCooldownManager().set(this, 20);
 
         return super.use(world, user, hand);
     }

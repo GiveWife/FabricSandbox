@@ -50,7 +50,7 @@ public abstract class ParticleFigure {
      * Returns all colored maps for this object. This is obligatory for every instance, since we need this
      * to give the particles colors.
      */
-    protected abstract FigureMap[] getMaps();
+    public abstract FigureMap[] getMaps();
 
     /**
      * When the figure maps are initialized, we can then derive which sides have unique textures:
@@ -271,7 +271,7 @@ public abstract class ParticleFigure {
 
 
         else {
-            System.out.println("Returned a default lambda that doesn't change the origin");
+            System.out.println("Returned a default lambda that doesn't change the origin: " + side);
             return (p, row, up) -> p;
         }
 
@@ -283,20 +283,25 @@ public abstract class ParticleFigure {
      * Helper class that holds the color map for a specific side.
      * Gets setup in {@link ParticleFigure#getMaps()} method, which is obligatory in every instance of {@link ParticleFigure}
      */
-    public static abstract class FigureMap {
+    public static class FigureMap {
 
         private final Side side;
         /**
          * The precision of the rgb maps: every texture is lowered to 10x10 from 16x16
          */
         public static final int PRECISION = 10;
+        private final float[][] map;
 
-        public FigureMap(Side side) {
+        public FigureMap(Side side, String modelName) {
             this.side = side;
+            TextureGrabber grabber = new TextureGrabber(modelName);
+            this.map = grabber.getRgb();
         }
 
         // This should be a double array since we have 10x10 pixels!
-        public abstract float[][] getMap();
+        public final float[][] getMap() {
+            return this.map;
+        }
 
     }
 

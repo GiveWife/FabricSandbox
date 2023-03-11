@@ -6,7 +6,7 @@
   "mixins": [
     "EntityDropMixin",
     "FallDamageMixin",
-    "ResourceMixin"
+    "NativeImageAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
