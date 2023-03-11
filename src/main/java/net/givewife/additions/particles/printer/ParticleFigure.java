@@ -330,6 +330,12 @@ public abstract class ParticleFigure {
     }
 
 
+    public static String formatMinecraft(String model) {
+        return "minecraft:block/" + model;
+    }
 
+    public static String formatMod(String model) {
+        return "additions:block/" + model;
+    }
 
 }

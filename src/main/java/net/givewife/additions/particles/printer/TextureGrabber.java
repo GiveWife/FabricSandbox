@@ -26,7 +26,7 @@ public class TextureGrabber {
     private boolean debug;
 
     public TextureGrabber(String modelName) {
-        this.id = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("minecraft:block/" + modelName));
+        this.id = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(modelName));
     }
 
     public float[][] getRgb() {

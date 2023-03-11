@@ -2,10 +2,8 @@ package net.givewife.additions.objects.items;
 
 import net.givewife.additions.objects.templates.CustomSettings;
 import net.givewife.additions.particles.effects.EffectSingle;
-import net.givewife.additions.particles.printer.ParticleFigure;
-import net.givewife.additions.particles.printer.figures.GlowstoneFigure;
-import net.givewife.additions.particles.printer.figures.GravelFigure;
-import net.givewife.additions.particles.printer.figures.ObsidianFigure;
+import net.givewife.additions.particles.printer.figures.NetherPortalAssem;
+import net.givewife.additions.particles.printer.figures.NetherReactorAssem;
 import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.player.BodyLocations;
@@ -35,16 +33,7 @@ public class TestItem extends ModItem {
         //ObsidianFigure obsidianFigure = new ObsidianFigure(pos.north(2), true, true);
         //obsidianFigure.print(world);
 
-        ParticleFigure[] figures = new ParticleFigure[] {
-                new ObsidianFigure(pos.north(2).west(2)),
-                new GravelFigure(pos.north(2)),
-                new GlowstoneFigure(pos.north(2).east(2))
-        };
-
-        for(ParticleFigure i : figures)
-            i.print(world);
-
-
+        NetherReactorAssem portal = new NetherReactorAssem(pos.north(4), world);
 
 
         user.getItemCooldownManager().set(this, 20);
