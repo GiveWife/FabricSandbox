@@ -12,7 +12,6 @@ public class Main implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger("additions");
     public static final String MODID = "additions";
     public static BlockEntityRegistry TILE_ENTITIES;
-    public static SpriteProvider p;
 
     @Override
     public void onInitialize() {

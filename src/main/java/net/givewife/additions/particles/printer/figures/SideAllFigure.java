@@ -24,4 +24,5 @@ public class SideAllFigure extends ParticleFigure {
                 new FigureMap(Side.ALL, modelName)
         };
     }
+
 }
