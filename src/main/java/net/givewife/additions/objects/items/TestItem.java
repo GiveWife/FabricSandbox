@@ -30,7 +30,7 @@ public class TestItem extends ModItem {
         if(!world.isClient) return super.use(world, user, hand);
         Pos pos = new Pos(user);
 
-        //ObsidianFigure obsidianFigure = new ObsidianFigure(pos.north(2), true, true);
+        //ObsidianFigure = new ObsidianFigure(pos.north(2), true, true);
         //obsidianFigure.print(world);
 
         NetherReactorAssem portal = new NetherReactorAssem(pos.north(4), world);
