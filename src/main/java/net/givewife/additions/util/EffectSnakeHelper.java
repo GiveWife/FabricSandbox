@@ -73,7 +73,7 @@ public class EffectSnakeHelper {
         for(int i = 0;  i < paras.length; i++) {
 
             paras[i] = new Parabola(jumps[i], jumps[i+1], 4, 100);
-            System.out.println("After filling array: " + paras[i].getPrint());
+            //System.out.println("After filling array: " + paras[i].getPrint());
 
         }
 
@@ -113,7 +113,7 @@ public class EffectSnakeHelper {
 
         // If it keeps failing, we return the start pos.
         if(failAttempts == 6 && isValid(pos, check) == null) {
-            System.out.println("6 failed attempts");
+            //System.out.println("6 failed attempts");
             return new Tuple<Double, Pos>(genRadial, pos);
         }
 

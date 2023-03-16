@@ -42,7 +42,7 @@ public class ParticleBlockEntity extends BlockEntity {
             this.size = jumps.length;
             for(int i = 0; i < jumps.length; i++) {
                 if(i+1 < jumps.length) {
-                    System.out.println("For entry (" + i + "): end i: " + jumps[i].offset(100).y() + " - start i+1: " + jumps[i+1].offset(0).y() + " and i: " + jumps[i].getPrint());
+                    //System.out.println("For entry (" + i + "): end i: " + jumps[i].offset(100).y() + " - start i+1: " + jumps[i+1].offset(0).y() + " and i: " + jumps[i].getPrint());
                 }
             }
             isActive = true;
@@ -54,7 +54,7 @@ public class ParticleBlockEntity extends BlockEntity {
         if(parabolaIndex < jumps.length) {
 
             Pos off = jumps[parabolaIndex].offset(tick % 100);
-            if(tick % 20 == 0) System.out.println("At tick: " + tick + " ; Accessing entry: " + parabolaIndex + " ; at location: " + off.getPrint());
+            //if(tick % 20 == 0) System.out.println("At tick: " + tick + " ; Accessing entry: " + parabolaIndex + " ; at location: " + off.getPrint());
             world.addParticle(ParticleTypes.END_ROD, true, off.x(), off.y(), off.z(), 0, 0, 0);
 
         }

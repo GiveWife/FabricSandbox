@@ -11,7 +11,7 @@ import net.minecraft.world.World;
  * lines; parabolas in y; parabolas in x,z;
  *
  * We use the default variables in the superclass {@link Vec}:
- *          {@link Vec#from} and {@link Vec#to}
+ *          {@link Vec#from()} and {@link Vec#to()}
  *
  * Furthermore, we provide functions for different implementations for subclasses:
  *

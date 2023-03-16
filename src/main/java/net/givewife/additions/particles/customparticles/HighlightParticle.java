@@ -69,7 +69,6 @@ public class HighlightParticle extends SpriteBillboardParticle {
 
         public Factory(SpriteProvider spriteSet) {
             this.sprites = spriteSet;
-            Main.p = spriteSet;
         }
 
         public Particle createParticle(DefaultParticleType particleType, ClientWorld level, double x, double y, double z,

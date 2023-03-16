@@ -3,6 +3,7 @@ package net.givewife.additions.particles.effects;
 import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.VecTrail;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
@@ -137,7 +138,7 @@ public class EffectBox extends CustomEffect {
                 Pos p = trail.offset(j);
                 //System.out.println("[Server] Spawning at: " + p.getPrint());
 
-                world.spawnParticles(ParticleRegistry.WHITE_STAR, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
+                world.spawnParticles(ParticleTypes.END_ROD, p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
 
             }
 

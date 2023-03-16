@@ -6,7 +6,6 @@ import net.givewife.additions.util.positions.Pos;
 public class SideAllFigure extends ParticleFigure {
 
     private final String modelName;
-    private boolean isCustom;
 
     public SideAllFigure(Pos origin, String modelName) {
         super(origin, true, true);

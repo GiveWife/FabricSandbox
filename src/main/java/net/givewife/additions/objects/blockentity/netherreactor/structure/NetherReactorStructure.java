@@ -1,6 +1,8 @@
 package net.givewife.additions.objects.blockentity.netherreactor.structure;
 
+import net.givewife.additions.particles.customparticles.HighlightParticle;
 import net.givewife.additions.particles.effects.EffectBox;
+import net.givewife.additions.particles.effects.EffectHighlightBlock;
 import net.givewife.additions.registry.registries.BlockRegistry;
 import net.givewife.additions.util.positions.Pos;
 import net.minecraft.block.BlockState;
@@ -18,6 +20,8 @@ import java.util.List;
 public class NetherReactorStructure {
 
     private final BlockPos pos;
+    private final int radius = 20;
+    private final int height = 10;
 
     public NetherReactorStructure(BlockPos origin) {
         this.pos = origin;
@@ -50,17 +54,79 @@ public class NetherReactorStructure {
                 pos.north().east().up(2), pos.north().up(2), pos.north().west().up(2), pos.east().up(2), pos.west().up(2), pos.south().east().up(2), pos.south().up(2), pos.south().west().up(2));
     }
 
+    public void clear(World world) {
+
+        if(world.isClient) return;
+
+        for(BlockPos p : getSurrounding(world))
+            world.breakBlock(p, false);
+
+        for(BlockPos p : getGround(world))
+            world.setBlockState(p, Blocks.GRASS_BLOCK.getDefaultState());
+
+    }
+
+    /**
+     * Determines if the surrounding is appropriate for the nether reactor to activate
+     */
+    public boolean isSurroundingCorrect(World world, boolean printBox) {
+
+        // Get all surrounding blocks
+        List<BlockPos> box = getSurrounding(world);
+        List<BlockPos> ground = getGround(world);
+        List<BlockPos> invalid_positions = getInvalids(box, world, true);
+        List<BlockPos> invalid_ground = getInvalids(ground, world, false);
+
+        if(invalid_positions.size() >= 1 || invalid_ground.size() >= 1) {
+
+            if(printBox && invalid_positions.size() >= 1) {
+                // Initialise the effect
+                Pos ne = getFurthest(true, invalid_positions);
+                Pos sw = getFurthest(false, invalid_positions);
+
+                //Spawn effect
+                EffectBox effect = new EffectBox(ne, sw, 10);
+                effect.run(world);
+
+                //TODO : make box instead of particles
+            } else if(printBox && invalid_ground.size() <= 10) {
+
+                for(int i = 0; i < invalid_ground.size(); i++) {
+
+                    EffectHighlightBlock effectHighlightBlock = new EffectHighlightBlock(invalid_ground.get(i));
+                    effectHighlightBlock.run(world);
+
+                }
+
+            }  else if(printBox && invalid_ground.size() > 10) {
+
+
+                Pos ne = getFurthest(true, invalid_ground);
+                Pos sw = getFurthest(false, invalid_ground);
+
+                //Spawn effect
+                EffectBox effect = new EffectBox(ne, sw, 10);
+                effect.run(world);
+
+
+            }
+
+            return false;
+        }
+
+        return true;
+
+    }
+
     /**
      * Checks all blocks in the vicinity and determines if the structure can activate 
      * Called from {@link net.givewife.additions.objects.blocks.NetherReactorBlock#onUse(BlockState, World, BlockPos, PlayerEntity, Hand, BlockHitResult)}
      */
-    public boolean isSurroundingCorrect(World world) {
+    private List<BlockPos> getSurrounding(World world) {
 
         //Local variable for reference
         BlockPos pos = this.pos.down();
-        int radius = 20;
-        int height = 10;
-        List<BlockPos> ground = new ArrayList<BlockPos>();
+        List<BlockPos> box = new ArrayList<BlockPos>();
         List<BlockPos> struct = getStructurePos(pos);
 
         // Fill the ground array per level i
@@ -74,7 +140,7 @@ public class NetherReactorStructure {
 
                     //layer[((x+radius)*radius*2) + (z+radius)] = pos.north(x).east(z).up(i);
                     if(!struct.contains(pos.north(z).east(x).up(i)))
-                        ground.add(pos.north(z).east(x).up(i));
+                        box.add(pos.north(z).east(x).up(i));
 
                 }
 
@@ -82,39 +148,64 @@ public class NetherReactorStructure {
 
         }
 
+        return box;
+
+    }
+
+    private List<BlockPos> getGround(World world) {
+
+        List<BlockPos> ground = new ArrayList<>();
+
+        for(int x = -radius; x < radius; x++) {
+
+            //z-axis
+            for(int z = -radius; z < radius; z++) {
+
+                //layer[((x+radius)*radius*2) + (z+radius)] = pos.north(x).east(z).up(i);
+                ground.add(this.pos.down(2).north(x).east(z));
+
+            }
+
+        }
+
+        return ground;
+
+
+    }
+
+    /**
+     * Checks for invalids blocks, non air blocks at the structure.
+     */
+    private List<BlockPos> getInvalids(List<BlockPos> box, World world, boolean shouldBeAir) {
+
         // Check the generated blocks per level i
-        int outerLen = ground.size();
+        int outerLen = box.size();
         List<BlockPos> invalids = new ArrayList<BlockPos>();
         for(int i = 0; i < outerLen; i++) {
 
             // If an air block is found, we return false and print the effect
-            if(world.getBlockState(ground.get(i)).getBlock() != Blocks.AIR && !world.isClient) {
+            if(world.getBlockState(box.get(i)).getBlock() != Blocks.AIR && shouldBeAir) {
 
-                invalids.add(ground.get(i));
+                invalids.add(box.get(i));
+
+            } else if(world.getBlockState(box.get(i)).getBlock() == Blocks.AIR && !shouldBeAir) {
+
+                invalids.add(box.get(i));
 
             }
 
 
         }
 
-        if(invalids.size() >= 1) {
-            // Initialise the effect
-            Pos ne = getFurthest(true, invalids);
-            Pos sw = getFurthest(false, invalids);
-
-            //Spawn effect
-            EffectBox effect = new EffectBox(ne, sw, 10);
-            effect.run((ServerWorld) world);
-            return false;
-        }
-
-        return true;
+        return invalids;
 
     }
 
-    private void print(List<BlockPos> list, World world) {
+    /**
+     * Prints out the list of blocks
+     */
+    private void print(List<BlockPos> list) {
         for(int i = 0; i < list.size(); i++) {
-            if(world.getBlockState(list.get(i)).getBlock() == Blocks.GRASS_BLOCK)
                 System.out.println(new Pos(list.get(i)).getPrint() + "\n");
         }
     }

@@ -8,13 +8,13 @@ import org.joml.Math;
 
 
 /**
- * Trail instance that generates a parabola function between {@link Vec#from} and {@link Vec#to}
+ * Trail instance that generates a parabola function between {@link Vec#from()} and {@link Vec#to()}
  *
  * The {@link Parabola#offset(int)} is implemented as follows:
  *
- *  1) We generate a y position. We take the difference between {@link Vec#from} and {@link Vec#to}, and add it to the highest of the two
- *  2) We think about an imaginary trail in the xz plane between {@link Vec#from} and {@link Vec#to}: the offset of the xz coords will increase in this plane
- *  3) In the {@link Trail#offset(int)}, we calculate the y coordinate starting from {@link Vec#from}, add
+ *  1) We generate a y position. We take the difference between {@link Vec#from()} and {@link Vec#to()}, and add it to the highest of the two
+ *  2) We think about an imaginary trail in the xz plane between {@link Vec#from()} and {@link Vec#to()}: the offset of the xz coords will increase in this plane
+ *  3) In the {@link Trail#offset(int)}, we calculate the y coordinate starting from {@link Vec#from()}, add
  *
  */
 public class Parabola extends Trail{

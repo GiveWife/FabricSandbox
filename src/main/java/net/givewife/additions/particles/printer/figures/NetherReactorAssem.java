@@ -17,7 +17,7 @@ public class NetherReactorAssem {
 
         ParticleFigure[] cobble = new ParticleFigure[] {
 
-                /*
+
                 new SideAllFigure(p, name),
                 new SideAllFigure(p.north(), name),
                 new SideAllFigure(p.north(2), name),
@@ -45,7 +45,7 @@ public class NetherReactorAssem {
 
                 new SideAllFigure(p.west(2).up(2), name),
                 new SideAllFigure(p.west(2).north(1).up(2), name),
-                new SideAllFigure(p.west(2).north(2).up(2), name),*/
+                new SideAllFigure(p.west(2).north(2).up(2), name),
 
                 new SideAllFigure(p.north().west().up(), ParticleFigure.formatMod("nether_reactor"))
 
