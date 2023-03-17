@@ -64,6 +64,11 @@ public class NetherReactorStructure {
         for(BlockPos p : getGround(world))
             world.setBlockState(p, Blocks.GRASS_BLOCK.getDefaultState());
 
+        for(BlockPos p : getStructurePos(pos))
+            world.setBlockState(p, Blocks.COBBLESTONE.getDefaultState());
+
+        world.setBlockState(pos, BlockRegistry.NETHER_REACTOR.getDefaultState());
+
     }
 
     /**

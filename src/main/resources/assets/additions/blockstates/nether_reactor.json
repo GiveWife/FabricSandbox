@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": { "model": "additions:block/nether_reactor" }
+        "activated=true": { "model": "additions:block/nether_reactor" },
+        "activated=false": { "model": "additions:block/nether_reactor" }
     }
 }
