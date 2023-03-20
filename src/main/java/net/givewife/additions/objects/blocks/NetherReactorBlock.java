@@ -31,12 +31,12 @@ public class NetherReactorBlock extends BlockWithEntity implements BlockEntityPr
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(world.getBlockEntity(pos) instanceof NetherReactorEntity && world.isClient) {
-            NetherReactorEntity e = (NetherReactorEntity) world.getBlockEntity(pos);
+        if(world.getBlockEntity(pos) instanceof NetherReactorEntity e) {
             if(player.isSneaking() && !world.isClient) e.getStructureHandler().clear(world);
-            if(!e.isActive() && e.getStructureHandler().isStructureCorrect(world) && e.getStructureHandler().isSurroundingCorrect(world, true)) {
+            if(world.isClient && !e.isActive() && e.getStructureHandler().isStructureCorrect(world) && e.getStructureHandler().isSurroundingCorrect(world, true)) {
                 e.activate();
             }
+            return ActionResult.FAIL;
         }
         return super.onUse(state, world, pos, player, hand, hit);
     }

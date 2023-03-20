@@ -32,7 +32,7 @@ public class NetherReactorStructure {
      */
     public boolean isStructureCorrect(World world) {
 
-        BlockPos pos = this.pos.down();
+        BlockPos pos = this.pos;
         List<BlockPos> blocks = getStructurePos(pos);
         int size = blocks.size();
 
@@ -49,14 +49,13 @@ public class NetherReactorStructure {
      * Pass the block under the nether reactor!
      */
     private List<BlockPos> getStructurePos(BlockPos pos) {
+        pos = pos.down();
         return List.of(pos.north().east(), pos.north(), pos.north().west(), pos.east(), pos.west(), pos.south().east(), pos.south(), pos.south().west(), pos, pos.up(), pos.up(2),
                 pos.north().east().up(1), pos.north().west().up(1), pos.south().east().up(1), pos.south().west().up(1),
                 pos.north().east().up(2), pos.north().up(2), pos.north().west().up(2), pos.east().up(2), pos.west().up(2), pos.south().east().up(2), pos.south().up(2), pos.south().west().up(2));
     }
 
     public void clear(World world) {
-
-        if(world.isClient) return;
 
         for(BlockPos p : getSurrounding(world))
             world.breakBlock(p, false);
@@ -82,42 +81,29 @@ public class NetherReactorStructure {
         List<BlockPos> invalid_positions = getInvalids(box, world, true);
         List<BlockPos> invalid_ground = getInvalids(ground, world, false);
 
-        if(invalid_positions.size() >= 1 || invalid_ground.size() >= 1) {
-
-            if(printBox && invalid_positions.size() >= 1) {
-                // Initialise the effect
-                Pos ne = getFurthest(true, invalid_positions);
-                Pos sw = getFurthest(false, invalid_positions);
-
-                //Spawn effect
-                EffectBox effect = new EffectBox(ne, sw, 10);
-                effect.run(world);
-
-                //TODO : make box instead of particles
-            } else if(printBox && invalid_ground.size() <= 10) {
-
-                for(int i = 0; i < invalid_ground.size(); i++) {
-
-                    EffectHighlightBlock effectHighlightBlock = new EffectHighlightBlock(invalid_ground.get(i));
-                    effectHighlightBlock.run(world);
-
-                }
-
-            }  else if(printBox && invalid_ground.size() > 10) {
-
-
-                Pos ne = getFurthest(true, invalid_ground);
-                Pos sw = getFurthest(false, invalid_ground);
-
-                //Spawn effect
-                EffectBox effect = new EffectBox(ne, sw, 10);
-                effect.run(world);
-
-
-            }
-
+        if(printBox && invalid_positions.size() >= 1) {
+            // Initialise the effect
+            Pos ne = getFurthest(true, invalid_positions);
+            Pos sw = getFurthest(false, invalid_positions);
+            //Spawn effect
+            EffectBox effect = new EffectBox(ne, sw, 10);
+            effect.run(world);
             return false;
+
+        } else if(printBox && invalid_ground.size() >= 1) {
+
+            // Initialise the effect
+            Pos ne = getFurthest(true, invalid_ground);
+            Pos sw = getFurthest(false, invalid_ground);
+            //Spawn effect
+            EffectBox effect = new EffectBox(ne, sw, 10);
+            effect.run(world);
+            return false;
+
         }
+
+        System.out.println("everything correct, activating");
+
 
         return true;
 
@@ -131,8 +117,8 @@ public class NetherReactorStructure {
 
         //Local variable for reference
         BlockPos pos = this.pos.down();
-        List<BlockPos> box = new ArrayList<BlockPos>();
-        List<BlockPos> struct = getStructurePos(pos);
+        List<BlockPos> box = new ArrayList<>();
+        List<BlockPos> struct = getStructurePos(pos.up());
 
         // Fill the ground array per level i
         for(int i = 0; i < height; i++) {
@@ -185,17 +171,21 @@ public class NetherReactorStructure {
 
         // Check the generated blocks per level i
         int outerLen = box.size();
-        List<BlockPos> invalids = new ArrayList<BlockPos>();
+        List<BlockPos> invalids = new ArrayList<>();
         for(int i = 0; i < outerLen; i++) {
 
             // If an air block is found, we return false and print the effect
             if(world.getBlockState(box.get(i)).getBlock() != Blocks.AIR && shouldBeAir) {
 
                 invalids.add(box.get(i));
+                EffectBox eff = new EffectBox(new Pos(box.get(i)), new Pos(box.get(i)), 10);
+                eff.run(world);
 
             } else if(world.getBlockState(box.get(i)).getBlock() == Blocks.AIR && !shouldBeAir) {
 
                 invalids.add(box.get(i));
+                EffectBox eff = new EffectBox(new Pos(box.get(i)), new Pos(box.get(i)), 10);
+                eff.run(world);
 
             }
 
@@ -209,9 +199,9 @@ public class NetherReactorStructure {
     /**
      * Prints out the list of blocks
      */
-    private void print(List<BlockPos> list) {
+    private void print(List<BlockPos> list, World world) {
         for(int i = 0; i < list.size(); i++) {
-                System.out.println(new Pos(list.get(i)).getPrint() + "\n");
+                System.out.println("Pos " + i + ": " + new Pos(list.get(i)).getPrint() + " (" + world.getBlockState(list.get(i)).getBlock().getName() + ")");
         }
     }
 
@@ -244,6 +234,8 @@ public class NetherReactorStructure {
         return new Pos(furthestX, furthestY, furthestZ);
 
     }
+
+
 
 
 }

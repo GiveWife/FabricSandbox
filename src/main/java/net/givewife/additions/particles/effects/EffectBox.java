@@ -15,8 +15,6 @@ public class EffectBox extends CustomEffect {
 
     public EffectBox(Pos pos1, Pos pos2, int stepsPerBlock) {
 
-        System.out.println("Pos1/ " + pos1.getPrint() + ", Pos2: " + pos2.getPrint());
-
         final Pos[] fixed = calculate(pos1, pos2);
         assert fixed.length == 2;
 

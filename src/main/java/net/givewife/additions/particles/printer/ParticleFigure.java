@@ -277,8 +277,6 @@ public abstract class ParticleFigure {
 
     }
 
-
-
     /**
      * Helper class that holds the color map for a specific side.
      * Gets setup in {@link ParticleFigure#getMaps()} method, which is obligatory in every instance of {@link ParticleFigure}

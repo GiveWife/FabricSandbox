@@ -35,17 +35,14 @@ public class NetherReactorParticles {
         // Loop over all our registered stages.
         for(int i = 0; i < stages.length; i++) {
 
-            // Debug
-            debughelp.log("stage: " + stages[i]);
-
             // Only spawn on server & check if current stage may print on this tick.
-            if (!world.isClient && stages[i].canPrint(tick)) {
+            if (world.isClient && stages[i].canPrint(tick)) {
 
                 // Get next Pos for tick;
                 Pos p = stages[i].next(tick);
 
                 // Print on server
-                ((ServerWorld) world).spawnParticles(stages[i].getParticle(), p.x(), p.y(), p.z(), 1, 0, 0, 0, 0);
+                world.addParticle(stages[i].getParticle(), p.x(), p.y(), p.z(), 0, 0, 0);
 
             }
         }

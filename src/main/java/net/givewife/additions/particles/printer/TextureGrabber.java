@@ -29,15 +29,20 @@ public class TextureGrabber {
         this.id = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(modelName));
     }
 
+    /**
+     * The pixel reader goes from column 1, row 1 - 16, column 2, row 1 - 16 etc
+     */
     public float[][] getRgb() {
         float[][] rgbs = new float[16*16][3];
         Sprite sprite = id.getSprite();
         NativeImage im = ((NativeImageAccessor) sprite.getContents()).getImage();
         int counter = 0;
 
+        System.out.println("width: " + im.getWidth() + ", height: " + im.getHeight());
+
         for(int i = 0; i < im.getHeight(); i++) {
             for(int j = 0; j < im.getWidth(); j++) {
-                Color color = new Color(im.getColor(i, j));
+                Color color = new Color(im.getColor(j, i));
                 int red = color.getRed();
                 int blue = color.getBlue();
                 int green = color.getGreen();
@@ -46,6 +51,14 @@ public class TextureGrabber {
                 rgbs[counter][1] = (float) ((float) green / 255);
                 rgbs[counter][2] = (float) ((float) red / 255);
 
+                if(i == 0 || i == 2)
+                System.out.println(
+
+                        "Counter = " + counter + " - "
+                        + " rgb = " + getPrint(rgbs[counter][0]*255, rgbs[counter][1]*255, rgbs[counter][2]*255)
+
+                );
+
                 counter++;
             }
         }
@@ -53,7 +66,7 @@ public class TextureGrabber {
         return rgbs;
     }
 
-    private String getPrint(int... i) {
+    private String getPrintInt(int... i) {
 
         String s = "[";
 

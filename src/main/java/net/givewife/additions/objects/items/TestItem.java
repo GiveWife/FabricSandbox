@@ -2,8 +2,10 @@ package net.givewife.additions.objects.items;
 
 import net.givewife.additions.objects.templates.CustomSettings;
 import net.givewife.additions.particles.effects.EffectSingle;
+import net.givewife.additions.particles.printer.ParticleFigure;
 import net.givewife.additions.particles.printer.figures.NetherPortalAssem;
 import net.givewife.additions.particles.printer.figures.NetherReactorAssem;
+import net.givewife.additions.particles.printer.figures.SideAllFigure;
 import net.givewife.additions.registry.registries.ParticleRegistry;
 import net.givewife.additions.util.positions.Pos;
 import net.givewife.additions.util.positions.player.BodyLocations;
@@ -33,7 +35,9 @@ public class TestItem extends ModItem {
         //ObsidianFigure = new ObsidianFigure(pos.north(2), true, true);
         //obsidianFigure.print(world);
 
-        NetherReactorAssem portal = new NetherReactorAssem(pos.north(4), world);
+        String name = ParticleFigure.formatMinecraft("cobblestone");
+        ParticleFigure f = new SideAllFigure(pos.north(4), name);
+        f.print(world);
 
 
         user.getItemCooldownManager().set(this, 20);

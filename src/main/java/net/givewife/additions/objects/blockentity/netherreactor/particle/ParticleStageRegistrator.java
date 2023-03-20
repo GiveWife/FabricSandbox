@@ -18,7 +18,7 @@ public class ParticleStageRegistrator {
     private List<ParticleStage> stageRegistry = new ArrayList<>();
 
     public ParticleStageRegistrator(BlockPos block) {
-        this.origin = block;
+        this.origin = block.down();
         register();
     }
 
@@ -149,8 +149,8 @@ public class ParticleStageRegistrator {
          * We check for interval because some particle stages may require less ticks & steps.
          */
         public boolean canPrint(int tick) {
-            //helper.log("tick - start: " + (tick-start) + " <= " + (duration));
-            //helper.log("interval: " + interval + ", % : " + ((tick-start)%interval == 0));
+            helper.log("tick - start: " + (tick-start) + " <= " + (duration));
+            helper.log("interval: " + interval + ", % : " + ((tick-start)%interval == 0));
             return tick - start <= duration // Make sure tick does not exceed the duration.
                     && (tick-start) % interval == 0; // Make sure we print correctly.
         }
@@ -210,7 +210,7 @@ public class ParticleStageRegistrator {
         public ParticleThread(Pos start, int tick) {
             this.start = start;
             this.beginTick = tick;
-            this.thread = new ArrayList<ParticleStage>();
+            this.thread = new ArrayList<>();
         }
 
         /**

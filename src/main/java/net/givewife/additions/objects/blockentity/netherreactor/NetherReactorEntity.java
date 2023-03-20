@@ -37,7 +37,6 @@ public class NetherReactorEntity extends BlockEntity {
         particles = new NetherReactorParticles(pos);
         structure = new NetherReactorStructure(pos);
         ticker = new NetherReactorTicker(pos, ticks, particles, structure);
-        System.out.println("[TileEntityNetherReactor] This entity has been initialized!");
     }
 
     @Override
