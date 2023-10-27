@@ -1,2 +1,3 @@
-# AdditionsFabric
-A structured modification of Minecraft
+# Fabric Sandbox
+
+Experiments in Fabric's API.
